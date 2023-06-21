@@ -1,0 +1,27 @@
+a{
+    text-decoration: none;
+    color:slateblue;
+    vertical-align: 30%;
+    font-family: "shangshou";
+}
+.lanqiao-div{
+    text-align: center;
+    font-size: 25px;
+}
+span{
+    font-size: 60px;
+    color:darkorange;
+    font-family: "chaozishe";
+}
+body{
+    background: url(img/cartoon-sky.jpg);
+    background-size:cover;
+}
+@font-face {
+font-family: 'shangshou';
+src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
+}
+@font-face {
+font-family: 'chaozishe';
+src: url(ttf/ChaoZi-Regular.ttf);
+}

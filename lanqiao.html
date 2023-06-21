@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>计算云</title>
+    <!-- <link rel="stylesheet" href="css/lanqiao.css" type="text/css"> -->
     <link href="img/target.svg" rel="SHORTCUT ICON">
     <style>
-        a{
+        a {
             text-decoration: none;
-            color:slateblue;
+            color: slateblue;
             vertical-align: 30%;
             font-family: "shangshou";
         }
-        .lanqiao-div{
+
+        .lanqiao-div {
             text-align: center;
             font-size: 25px;
         }
-        span{
+
+        span {
             font-size: 60px;
-            color:darkorange;
+            color: darkorange;
             font-family: "chaozishe";
         }
-        body{
+
+        body {
             background: url(img/cartoon-sky.jpg);
-            background-size:cover;
+            background-size: cover;
         }
+
         @font-face {
-       font-family: 'shangshou';
-       src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
-     }
-     @font-face {
-       font-family: 'chaozishe';
-       src: url(ttf/ChaoZi-Regular.ttf);
-     }
+            font-family: 'shangshou';
+            src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
+        }
+
+        @font-face {
+            font-family: 'chaozishe';
+            src: url(ttf/ChaoZi-Regular.ttf);
+        }
     </style>
     <script>
         //花瓣雨特效
@@ -49,7 +56,7 @@
             this.fn = fn;
         }
 
-        Sakura.prototype.draw = function(cxt) {
+        Sakura.prototype.draw = function (cxt) {
             cxt.save();
             var xc = 40 * this.s / 4;
             cxt.translate(this.x, this.y);
@@ -58,17 +65,17 @@
             cxt.restore();
         }
 
-        Sakura.prototype.update = function() {
+        Sakura.prototype.update = function () {
             this.x = this.fn.x(this.x, this.y);
             this.y = this.fn.y(this.y, this.y);
             this.r = this.fn.r(this.r);
-            if(this.x > window.innerWidth ||
+            if (this.x > window.innerWidth ||
                 this.x < 0 ||
                 this.y > window.innerHeight ||
                 this.y < 0
             ) {
                 this.r = getRandom('fnr');
-                if(Math.random() > 0.4) {
+                if (Math.random() > 0.4) {
                     this.x = getRandom('x');
                     this.y = 0;
                     this.s = getRandom('s');
@@ -82,32 +89,32 @@
             }
         }
 
-        SakuraList = function() {
+        SakuraList = function () {
             this.list = [];
         }
-        SakuraList.prototype.push = function(sakura) {
+        SakuraList.prototype.push = function (sakura) {
             this.list.push(sakura);
         }
-        SakuraList.prototype.update = function() {
-            for(var i = 0, len = this.list.length; i < len; i++) {
+        SakuraList.prototype.update = function () {
+            for (var i = 0, len = this.list.length; i < len; i++) {
                 this.list[i].update();
             }
         }
-        SakuraList.prototype.draw = function(cxt) {
-            for(var i = 0, len = this.list.length; i < len; i++) {
+        SakuraList.prototype.draw = function (cxt) {
+            for (var i = 0, len = this.list.length; i < len; i++) {
                 this.list[i].draw(cxt);
             }
         }
-        SakuraList.prototype.get = function(i) {
+        SakuraList.prototype.get = function (i) {
             return this.list[i];
         }
-        SakuraList.prototype.size = function() {
+        SakuraList.prototype.size = function () {
             return this.list.length;
         }
 
         function getRandom(option) {
             var ret, random;
-            switch(option) {
+            switch (option) {
                 case 'x':
                     ret = Math.random() * window.innerWidth;
                     break;
@@ -122,19 +129,19 @@
                     break;
                 case 'fnx':
                     random = -0.5 + Math.random() * 1;
-                    ret = function(x, y) {
+                    ret = function (x, y) {
                         return x + 0.5 * random - 1.7;
                     };
                     break;
                 case 'fny':
                     random = 1.5 + Math.random() * 0.7
-                    ret = function(x, y) {
+                    ret = function (x, y) {
                         return y + random;
                     };
                     break;
                 case 'fnr':
                     random = Math.random() * 0.03;
-                    ret = function(r) {
+                    ret = function (r) {
                         return r + random;
                     };
                     break;
@@ -159,7 +166,7 @@
             document.getElementsByTagName('body')[0].appendChild(canvas);
             cxt = canvas.getContext('2d');
             var sakuraList = new SakuraList();
-            for(var i = 0; i < 50; i++) {
+            for (var i = 0; i < 50; i++) {
                 var sakura, randomX, randomY, randomS, randomR, randomFnx, randomFny;
                 randomX = getRandom('x');
                 randomY = getRandom('y');
@@ -176,7 +183,7 @@
                 sakura.draw(cxt);
                 sakuraList.push(sakura);
             }
-            stop = requestAnimationFrame(function() {
+            stop = requestAnimationFrame(function () {
                 cxt.clearRect(0, 0, canvas.width, canvas.height);
                 sakuraList.update();
                 sakuraList.draw(cxt);
@@ -184,18 +191,18 @@
             })
         }
 
-        window.onresize = function() {
+        window.onresize = function () {
             var canvasSnow = document.getElementById('canvas_snow');
             canvasSnow.width = window.innerWidth;
             canvasSnow.height = window.innerHeight;
         }
 
-        img.onload = function() {
+        img.onload = function () {
             startSakura();
         }
 
         function stopp() {
-            if(staticx) {
+            if (staticx) {
                 var child = document.getElementById("canvas_sakura");
                 child.parentNode.removeChild(child);
                 window.cancelAnimationFrame(stop);
@@ -208,19 +215,19 @@
         ! function (e, t, a) {
             function r() {
                 for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[
-                        e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x +
+                    e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x +
                     "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e]
-                    .scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+                        .scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
                 requestAnimationFrame(r)
             }
- 
+
             function n() {
                 var t = "function" == typeof e.onclick && e.onclick;
                 e.onclick = function (e) {
                     t && t(), o(e)
                 }
             }
- 
+
             function o(e) {
                 var a = t.createElement("div");
                 a.className = "heart", s.push({
@@ -232,7 +239,7 @@
                     color: c()
                 }), t.body.appendChild(a)
             }
- 
+
             function i(e) {
                 var a = t.createElement("style");
                 a.type = "text/css";
@@ -243,7 +250,7 @@
                 }
                 t.getElementsByTagName("head")[0].appendChild(a)
             }
- 
+
             function c() {
                 return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math
                     .random()) + ")"
@@ -256,27 +263,29 @@
                     ".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"
                 ), n(), r()
         }(window, document);
-</script>
+    </script>
 
 </head>
+
 <body>
     <div class="lanqiao-div">
         <span>Welcome To 志's Web</span>
 
-		<br><a href="https://www.cnblogs.com/" target="_blank" >— 博 客 园 —</a>
-		<br><a href="https://blog.csdn.net/" target="_blank" >— C S D N —</a>
-		<br><a href="https://ikuuu.eu/auth/login" target="_blank" >— ikuuu —</a>
-		        <br><a href="https://gitee.com/yinhongzhi" target="_blank" >— Gitee —</a>
-		        <!-- <br><a href="" target="_blank" >— # —</a> -->
-		<br>
-        <br><a href="https://www.acwing.com/problem/" target="_blank" >— AcWing题库 —</a>
-        <br><a href="http://poj.org" target="_blank" >— 北大poj —</a>
-        <br><a href="https://pintia.cn/home" target="_blank" >— 浙大PTA —</a>
-        <br><a href="https://www.dotcpp.com/oj/problemset.php?mark=6" target="_blank" >— 洛谷 —</a>
-        <br><a href="https://www.dotcpp.com" target="_blank" >— 蓝桥ACM训练系统-C —</a>
-        <br><a href="https://dasai.lanqiao.cn/" target="_blank" >— 蓝桥杯官网 —</a>
-        <br><a href="https://www.codechef.com/ide" target="_blank" >— CodeChef —</a>
-        
+        <br><a href="https://www.cnblogs.com/" target="_blank">— 博 客 园 —</a>
+        <br><a href="https://blog.csdn.net/" target="_blank">— C S D N —</a>
+        <br><a href="https://ikuuu.eu/auth/login" target="_blank">— ikuuu —</a>
+        <br><a href="https://gitee.com/yinhongzhi" target="_blank">— Gitee —</a>
+        <!-- <br><a href="" target="_blank" >— # —</a> -->
+        <br>
+        <br><a href="https://www.acwing.com/problem/" target="_blank">— AcWing题库 —</a>
+        <br><a href="http://poj.org" target="_blank">— 北大poj —</a>
+        <br><a href="https://pintia.cn/home" target="_blank">— 浙大PTA —</a>
+        <br><a href="https://www.dotcpp.com/oj/problemset.php?mark=6" target="_blank">— 洛谷 —</a>
+        <br><a href="https://www.dotcpp.com" target="_blank">— 蓝桥ACM训练系统-C —</a>
+        <br><a href="https://dasai.lanqiao.cn/" target="_blank">— 蓝桥杯官网 —</a>
+        <br><a href="https://www.codechef.com/ide" target="_blank">— CodeChef —</a>
+
     </div>
 </body>
+
 </html>
