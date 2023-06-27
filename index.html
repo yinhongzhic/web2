@@ -35,10 +35,15 @@
         }
         body{
             background: #000;
-            /* overflow: hidden; */
-            overflow-y: hidden;
-            overflow-x: hidden;
-
+            overflow: auto;
+            /* overflow-y: hidden; */
+            /* overflow-x: hidden; */
+            /* overflow-y: auto; */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 10+ */
+        }
+        ::-webkit-scrollbar {
+            display: none; /* Chrome Safari */
         }
         #contact_id {
             font-family: 'shangshou';
