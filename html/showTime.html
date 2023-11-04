@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>time</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: black;
+				user-select: none;
+			}
+			.title_index{	
+				width: 100%;
+				height: 80px;
+				background-image: linear-gradient(to right,red,yellow,orange,blue);
+				font-size: 60px;
+				color: white;
+				font-family:"chaozishe";
+				text-align: center;
+			}
+			#show_time,#show_date {
+				width: 100%;
+				height: 100%;
+				margin-top: 100px;
+				color: aliceblue;
+				font-size: 100px;
+				font-size: 600%;
+				text-align: center;
+				/* line-height: 200px; */
+				/* font-family: '宋体'; */
+				font-family: 'shangshou';
+			}
+			#canvas{
+				/* width: 100%;
+				height: 100%; */
+			}
+			@font-face {
+				font-family: 'shangshou';
+				src: url(../ttf/219SSBaiHuShiFaTi-Regular.ttf);
+			}
+			@font-face {
+			  font-family: 'chaozishe';
+			  src: url(../ttf/ChaoZi-Regular.ttf);
+			}
+			
+		</style>
+		<link rel="stylesheet" href="../css/showTimeStars.css">
+	</head>
+	<body>
+		 <div class="title_index" onclick="toIndexHtml()">Welcome To 志's Web<a href="showTime2.html" target="_self"><img src="../img/钻石.ico" id="show_time_ico2"/></a></div>
+		<div id="show_date">
+			NowDate...
+		</div>
+		<div id="show_time">
+			NowTime...
+		</div>
+		<div id="stars"></div>
+		 <div id="stars2"></div>
+		 <div id="stars3"></div>
+		<script>
+			
+			window.onload = function() {
+				refreshTime(); //当页面加载完时运行时间函数
+			}
+
+			function checkTime(i) {
+				if (i < 10) {
+					i = '0' + i //定义当分钟，秒钟小于10时，使一位数显示为两位数
+				}
+				return i //大于10时，正常显示
+			}
+
+			function refreshTime() { //定义时间函数
+				var date = new Date(); //获取当前默认格式的当前时间
+				var myYear = date.getFullYear(); //在默认格式时间中提取四位数的年份
+				var myMonth = date.getMonth() + 1; //在默认格式时间中提取月份，（月份返回值是0-11，实际月份要返回值+1）
+				var myDate = date.getDate(); //在默认格式实践中提取日期
+				var myDay = date.getDay(); //在默认格式中提取星期（返回值0-6对应星期天-星期六）
+				var week = ['Zh_日', 'Zh_一', 'Zh_二', 'Zh_三', 'Zh_四', 'Zh_五', 'Zh_六', ] //创建数组对应myDay
+				var myHours = date.getHours(); //在默认格式实践中提取日期小时
+				if(myHours>12){
+				                myHours-=12;
+				                var times="PM·";
+				            }else{
+				                var times="AM·";
+				            }
+				var myMinutes = date.getMinutes(); //在默认格式实践中提取日期分钟
+				var mySeconds = date.getSeconds(); //在默认格式实践中提取日期分钟
+				var pushM = checkTime(myMinutes);
+				var pushS = checkTime(mySeconds); //用checkTime函数使时间为0~9时替换为00~09
+				//alert(myDay);//test
+				document.getElementById('show_date').innerHTML = myYear + '-' + myMonth + '-' + myDate + '  ' + week[myDay] + '<br>'; 
+						//使id为'time'的文本值替换为该格式的时间
+						
+				document.getElementById('show_time').innerHTML =  times + myHours + ':' + pushM + ':' + pushS + '<br/>' ;
+						//使id为'time'的文本值替换为该格式的时间
+				setTimeout(refreshTime, 1000) //每1000毫秒运行一次refreshTime函数，即每秒刷新一次时间
+			}
+			
+			function toIndexHtml(){
+				open('https://yinhongzhi.gitee.io/web','_self');
+			}
+			
+			//星星背景
+			
+		</script>
+	</body>
+</html>

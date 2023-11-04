@@ -1,117 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSXY</title>
-    <link href="img/tsxy.jpg" rel="SHORTCUT ICON">
-    <style>
-        a{
-            text-decoration: none;
-            color:rgb(55, 13, 161);
-            vertical-align: 30%;
-            font-family: "shangshou";
-        }
-        .tsxy-div{  
-            text-align: center;
-            font-size: 25px;
-        }
-        span{
-            font-size: 60px;
-            color: #4D6B69;
-            font-family: 'chaozishe';
-        }
-        body{
-            background: url(img/chumen.jpg);
-            background-size:cover;
-        }
-        .putongzi{
-            font-family:'宋体';
-            color:rgb(55, 13, 161);
-            font-size: 22px;
-            font-weight:bold;
-        }
-        @font-face {
-       font-family: 'shangshou';
-       src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
-     }
-     @font-face {
-       font-family: 'chaozishe';
-       src: url(ttf/ChaoZi-Regular.ttf);
-     }
-    </style>
-</head>
-<body>
-    <script>
-        !function () {
-    function n(n, e, t) {
-        return n.getAttribute(e) || t
-    }
- 
-    function e(n) {
-        return document.getElementsByTagName(n)
-    }
- 
-    function t() {
-        var t = e("script"), o = t.length, i = t[o - 1];
-        return {l: o, z: n(i, "zIndex", -1), o: n(i, "opacity", .5), c: n(i, "color", "0,0,0"), n: n(i, "count", 99)}
-    }
- 
-    function o() {
-        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-    }
- 
-    function i() {
-        r.clearRect(0, 0, a, c);
-        var n, e, t, o, m, l;
-        s.forEach(function (i, x) {
-            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e], null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
-        }), x(i)
-    }
- 
-    var a, c, u, m = document.createElement("canvas"), d = t(), l = "c_n" + d.l, r = m.getContext("2d"),
-        x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (n) {
-            window.setTimeout(n, 1e3 / 45)
-        }, w = Math.random, y = {x: null, y: null, max: 2e4};
-    m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o, e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) {
-        n = n || window.event, y.x = n.clientX, y.y = n.clientY
-    }, window.onmouseout = function () {
-        y.x = null, y.y = null
-    };
-    for (var s = [], f = 0; d.n > f; f++) {
-        var h = w() * a, g = w() * c, v = 2 * w() - 1, p = 2 * w() - 1;
-        s.push({x: h, y: g, xa: v, ya: p, max: 6e3})
-    }
-    u = s.concat([y]), setTimeout(function () {
-        i()
-    }, 100)
-}();
-    </script>
-    <div class="tsxy-div">
-        <span>· T  ·  S  ·  X  ·  Y ·</span>
-        <!--<br><a href="study/communist/speech.html" target="_blank" >— # —</a>-->
-<br><a href="img/简历Java开发工程师.jpg" target="_blank" >— 个人简历 —</a> 
-        <br><a href="http://www.hebeea.edu.cn/" target="_blank" >— <span class="putongzi">河北省教育考试院</span> —</a>
-        <br><a href="http://tsc.edu.cn/" target="_blank" >— @唐山学院 官网 —</a>
-        <br><a href="https://jiaowu.tsc.edu.cn/tsxyjw/cas/login.action" target="_blank">— TSXY 教务系统 —</a>
-        <br><a href="http://tsc.fanya.chaoxing.com/portal" target="_blank">— TSXY 学 习 通 —</a>
-        <br><a href="https://www.icourse163.org/" target="_blank" >— MOOC 慕课平台 —</a>
-        <!-- <br><a href="https://yz.chsi.com.cn/" target="_blank" >— 研招网 —</a> -->
-        <!-- <br><a href="https://yjsy.sdust.edu.cn/zhaosheng/" target="_blank" >— 山科大研招 —</a> -->
-        <br><a href="http://172.16.253.1/index_choose?wlanacname=web_wxhx" target="_blank" >— 校园网(out) —</a>
-        <br><a href="http://192.168.0.112" target="_blank" >— 校园网(i n) —</a>
-        <br><a href="https://www.chsi.com.cn/" target="_blank" >— <span class="putongzi">学信网</span> —</a>
-		
-        <br><a href="https://cet-bm.neea.edu.cn/" target="_blank" >— 四六级 —</a>
-        <br><a href="https://ntcebm2.neea.edu.cn/apply/memapp/memLogin" target="_blank" >— <span class="putongzi">教资</span> —</a>
-<br><a href="./study/jiaozi/jiaozi.html" target="_blank">~ #教资 ~</a>         
-<br><a href="https://blog.csdn.net/" target="_blank" >— CSDN —</a>
-        <br><a href="https://gitee.com/yinhongzhi/web" target="_blank" >— WebUp —</a>
-        <br />
-         <br><a href="work/jifangCourse.html" target="_blank" >— 机房成员课表 —</a> 
-        <!-- <br><a href="" target="_blank" >— # —</a> -->
-        
-    </div>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>TSXY</title>
+		<link href="img/tsxy.jpg" rel="SHORTCUT ICON">
+		<style>
+			a {
+				text-decoration: none;
+				color: rgb(55, 13, 161);
+				vertical-align: 30%;
+				font-family: "shangshou";
+			}
+
+			.tsxy-div {
+				text-align: center;
+				font-size: 25px;
+			}
+
+			span {
+				font-size: 60px;
+				color: #4D6B69;
+				font-family: 'chaozishe';
+			}
+
+			body {
+				background: url(img/chumen.jpg);
+				background-size: cover;
+			}
+
+			.putongzi {
+				font-family: '宋体';
+				color: rgb(55, 13, 161);
+				font-size: 22px;
+				font-weight: bold;
+			}
+
+			@font-face {
+				font-family: 'shangshou';
+				src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
+			}
+
+			@font-face {
+				font-family: 'chaozishe';
+				src: url(ttf/ChaoZi-Regular.ttf);
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			! function() {
+				function n(n, e, t) {
+					return n.getAttribute(e) || t
+				}
+
+				function e(n) {
+					return document.getElementsByTagName(n)
+				}
+
+				function t() {
+					var t = e("script"),
+						o = t.length,
+						i = t[o - 1];
+					return {
+						l: o,
+						z: n(i, "zIndex", -1),
+						o: n(i, "opacity", .5),
+						c: n(i, "color", "0,0,0"),
+						n: n(i, "count", 99)
+					}
+				}
+
+				function o() {
+					a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m
+						.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+				}
+
+				function i() {
+					r.clearRect(0, 0, a, c);
+					var n, e, t, o, m, l;
+					s.forEach(function(i, x) {
+						for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ?
+							-1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+							null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n
+								.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) /
+									n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t +
+										.2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+					}), x(i)
+				}
+
+				var a, c, u, m = document.createElement("canvas"),
+					d = t(),
+					l = "c_n" + d.l,
+					r = m.getContext("2d"),
+					x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
+					window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
+						window.setTimeout(n, 1e3 / 45)
+					},
+					w = Math.random,
+					y = {
+						x: null,
+						y: null,
+						max: 2e4
+					};
+				m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o, e("body")[0]
+					.appendChild(m), o(), window.onresize = o, window.onmousemove = function(n) {
+						n = n || window.event, y.x = n.clientX, y.y = n.clientY
+					}, window.onmouseout = function() {
+						y.x = null, y.y = null
+					};
+				for (var s = [], f = 0; d.n > f; f++) {
+					var h = w() * a,
+						g = w() * c,
+						v = 2 * w() - 1,
+						p = 2 * w() - 1;
+					s.push({
+						x: h,
+						y: g,
+						xa: v,
+						ya: p,
+						max: 6e3
+					})
+				}
+				u = s.concat([y]), setTimeout(function() {
+					i()
+				}, 100)
+			}();
+		</script>
+		<div class="tsxy-div">
+			<span>· T · S · X · Y ·</span>
+			<!--<br><a href="study/communist/speech.html" target="_blank" >— # —</a>-->
+			<br><a href="img/简历Java开发工程师.jpg" target="_blank">— 个人简历 —</a>
+			<br><a href="http://www.hebeea.edu.cn/" target="_blank">— <span class="putongzi">河北省教育考试院</span> —</a>
+			<br><a href="http://tsc.edu.cn/" target="_blank">— @唐山学院 官网 —</a>
+			<br><a href="https://jiaowu.tsc.edu.cn/tsxyjw/cas/login.action" target="_blank">— TSXY 教务系统 —</a>
+			<br><a href="http://tsc.fanya.chaoxing.com/portal" target="_blank">— TSXY 学 习 通 —</a>
+			<br><a href="https://www.icourse163.org/" target="_blank">— MOOC 慕课平台 —</a>
+			<!-- <br><a href="https://yz.chsi.com.cn/" target="_blank" >— 研招网 —</a> -->
+			<!-- <br><a href="https://yjsy.sdust.edu.cn/zhaosheng/" target="_blank" >— 山科大研招 —</a> -->
+			<br><a href="http://172.16.253.1/index_choose?wlanacname=web_wxhx" target="_blank">— 校园网(out) —</a>
+			<br><a href="http://192.168.0.112" target="_blank">— 校园网(i n) —</a>
+			<br><a href="https://www.chsi.com.cn/" target="_blank">— <span class="putongzi">学信网</span> —</a>
+
+			<br><a href="https://cet-bm.neea.edu.cn/" target="_blank">— 四六级 —</a>
+			<br><a href="https://ntcebm2.neea.edu.cn/apply/memapp/memLogin" target="_blank">— <span
+					class="putongzi">教资</span> —</a>
+			<br><a href="./study/jiaozi/jiaozi.html" target="_blank">~ #教资 ~</a>
+			<br><a href="https://blog.csdn.net/" target="_blank">— CSDN —</a>
+			<br><a href="https://gitee.com/yinhongzhi/web" target="_blank">— WebUp —</a>
+			<br />
+			<br><a href="work/jifangCourse.html" target="_blank">— 机房成员课表 —</a>
+			<!-- <br><a href="" target="_blank" >— # —</a> -->
+
+		</div>
+	</body>
 </html>

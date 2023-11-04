@@ -9,7 +9,10 @@
     var cols = parseInt(cw / 14); //代码雨列数
     var step = 22;    //步长，每一列内部数字之间的上下间隔
     ctx.font = "bold 18px microsoft yahei"; //声明字体，个人喜欢微软雅黑
- 
+	//点击小太阳跳转到showTime界面
+	function targetToShowTime(){
+		location.href = './html/showTime.html';
+	}
     function createColorCv() {
         //画布基本颜色
         ctx.fillStyle = "#242424";
