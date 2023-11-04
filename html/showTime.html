@@ -16,6 +16,7 @@
 			}
 			
 			.title_index{	
+				/* position: static; */
 				width: 100%;
 				height: 80px;
 				background-image: linear-gradient(to right,red,yellow,orange,blue);
@@ -60,12 +61,28 @@
 			  font-family: 'chaozishe';
 			  src: url(../ttf/ChaoZi-Regular.ttf);
 			}
-			
+			#show_time_ico2{
+				/* float: right; */
+				 /* transition: transform 0.3s ease; */
+			}
+			#show_time_ico2:hover{
+				/* float: right;
+				margin-right: 28%;
+				position: absolute;
+				right: 10px;
+				top: 20px;
+				width: 60px; */
+				transform: scale(1.6);
+				border: none; /* 去掉按钮的默认边框 */
+				border-radius: 55px; /* 按钮的默认圆角 */
+				box-shadow: 0 0 20px white; /* 鼠标悬停时按钮的阴影效果 */
+				animation: pulsate 1s infinite alternate; /* 鼠标悬停时按钮的发光效果 */
+			}
 		</style>
 		<link rel="stylesheet" href="../css/showTimeStars.css">
 	</head>
 	<body>
-		 <div class="title_index" onclick="toIndexHtml()">Welcome To 志's Web<a href="showTime2.html" target="_self"><img src="../img/钻石.ico" id="show_time_ico2"/></a></div>
+		 <div class="title_index" onclick="toIndexHtml()">Welcome To 志's Web <a href="showTime2.html" target="_self"><img src="../img/zuanshi2.gif" width="30px" id="show_time_ico2"/></a></div>
 		<div id="show_date">
 			NowDate...
 		</div>
