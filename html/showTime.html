@@ -6,27 +6,28 @@
 		<title>LocalTime</title>
 		<link href="../img/sun.svg" rel="SHORTCUT ICON">
 		<style>
-			
 			body {
 				margin: 0;
 				padding: 0;
 				background-color: black;
-				user-select: none;/*用户不可选中文字*/
+				user-select: none;
+				/*用户不可选中文字*/
 				overflow: hidden;
 				/* overflow-x: hidden; */
-				overflow-y:hidden;
+				overflow-y: hidden;
 			}
-			
-			.title_index{	
+
+			.title_index {
 				/* position: static; */
 				width: 100%;
 				height: 80px;
-				background-image: linear-gradient(to right,red,yellow,orange,blue);
+				background-image: linear-gradient(to right, red, yellow, orange, blue);
 				font-size: 4em;
 				color: white;
-				font-family:"chaozishe";
+				font-family: "chaozishe";
 				text-align: center;
 			}
+
 			#show_date {
 				width: 100%;
 				height: 100%;
@@ -39,7 +40,8 @@
 				/* font-family: '宋体'; */
 				font-family: 'shangshou';
 			}
-			#show_time{
+
+			#show_time {
 				width: 100%;
 				height: 100%;
 				margin-top: 100px;
@@ -51,38 +53,49 @@
 				/* font-family: '宋体'; */
 				font-family: 'shangshou';
 			}
-			#canvas{
+
+			#canvas {
 				/* width: 100%;
 				height: 100%; */
 			}
+
 			@font-face {
 				font-family: 'shangshou';
 				src: url(../ttf/219SSBaiHuShiFaTi-Regular.ttf);
 			}
+
 			@font-face {
-			  font-family: 'chaozishe';
-			  src: url(../ttf/ChaoZi-Regular.ttf);
+				font-family: 'chaozishe';
+				src: url(../ttf/ChaoZi-Regular.ttf);
 			}
-			#show_time_ico2{
+
+			#show_time_ico2 {
 				/* float: right; */
-				 /* transition: transform 0.3s ease; */
+				/* transition: transform 0.3s ease; */
 			}
-			#show_time_ico2:hover{
-				
+
+			#show_time_ico2:hover {
+
 				transform: scale(1.6);
-				border: none; /* 去掉按钮的默认边框 */
-				border-radius: 55px; /* 按钮的默认圆角 */
-				box-shadow: 0 0 20px white; /* 鼠标悬停时按钮的阴影效果 */
-				animation: pulsate 1s infinite alternate; /* 鼠标悬停时按钮的发光效果 */
+				border: none;
+				/* 去掉按钮的默认边框 */
+				border-radius: 55px;
+				/* 按钮的默认圆角 */
+				box-shadow: 0 0 20px white;
+				/* 鼠标悬停时按钮的阴影效果 */
+				animation: pulsate 1s infinite alternate;
+				/* 鼠标悬停时按钮的发光效果 */
 			}
-			#clock{
+
+			#clock {
 				text-align: center;
 			}
 		</style>
 		<link rel="stylesheet" href="../css/showTimeStars.css">
 	</head>
 	<body>
-		 <div class="title_index" onclick="toIndexHtml()">Welcome To 志's Web <a href="showTime2.html" target="_self"><img src="../img/zuanshi2.gif" width="30px" id="show_time_ico2"/></a></div>
+		<div class="title_index" onclick="toIndexHtml()">Welcome To 志's Web <a href="showTime2.html" target="_self"><img
+					src="../img/zuanshi2.gif" width="30px" id="show_time_ico2" /></a></div>
 		<div id="show_date">
 			NowDate...
 		</div>
@@ -90,10 +103,9 @@
 			NowTime...
 		</div>
 		<div id="stars"></div>
-		 <div id="stars2"></div>
-		 <div id="stars3"></div>
+		<div id="stars2"></div>
+		<div id="stars3"></div>
 		<script>
-			
 			window.onload = function() {
 				refreshTime(); //当页面加载完时运行时间函数
 			}
@@ -111,34 +123,35 @@
 				var myMonth = date.getMonth() + 1; //在默认格式时间中提取月份，（月份返回值是0-11，实际月份要返回值+1）
 				var myDate = date.getDate(); //在默认格式实践中提取日期
 				var myDay = date.getDay(); //在默认格式中提取星期（返回值0-6对应星期天-星期六）
-				var week = ['Sunday_0', 'Monday_1', 'Tuesday_2', 'Wednesday_3', 'Thursday_4', 'Friday_5', 'Saturday_6', ] //创建数组对应myDay
+				var week = ['Sunday_0', 'Monday_1', 'Tuesday_2', 'Wednesday_3', 'Thursday_4', 'Friday_5',
+					'Saturday_6', ] //创建数组对应myDay
 				var myHours = date.getHours(); //在默认格式实践中提取日期小时
-				if(myHours>12){
-				                myHours-=12;
-				                var times="PM·";
-				            }else{
-				                var times="AM·";
-				            }
+				if (myHours > 12) {
+					myHours -= 12;
+					var times = "PM·";
+				} else {
+					var times = "AM·";
+				}
 				var myMinutes = date.getMinutes(); //在默认格式实践中提取日期分钟
 				var mySeconds = date.getSeconds(); //在默认格式实践中提取日期分钟
 				var pushM = checkTime(myMinutes);
 				var pushS = checkTime(mySeconds); //用checkTime函数使时间为0~9时替换为00~09
 				//alert(myDay);//test
-				document.getElementById('show_date').innerHTML = myYear + '-' + myMonth + '-' + myDate + '  ' + week[myDay] + '<br>'; 
-						//使id为'time'的文本值替换为该格式的时间
-						
-				document.getElementById('show_time').innerHTML =  times + myHours + ':' + pushM + ':' + pushS + '<br/>' ;
-						//使id为'time'的文本值替换为该格式的时间
+				document.getElementById('show_date').innerHTML = myYear + '-' + myMonth + '-' + myDate + '  ' + week[myDay] +
+					'<br>';
+				//使id为'time'的文本值替换为该格式的时间
+
+				document.getElementById('show_time').innerHTML = times + myHours + ':' + pushM + ':' + pushS + '<br/>';
+				//使id为'time'的文本值替换为该格式的时间
 				setTimeout(refreshTime, 1000) //每1000毫秒运行一次refreshTime函数，即每秒刷新一次时间
 			}
-			
-			function toIndexHtml(){
-				open('https://yinhongzhi.gitee.io/web','_self');
+
+			function toIndexHtml() {
+				open('https://yinhongzhi.gitee.io/web', '_self');
 			}
-			
+
 			//星星背景
-			
 		</script>
-		
+
 	</body>
 </html>
