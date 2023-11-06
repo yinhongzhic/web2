@@ -111,7 +111,7 @@
 				var myMonth = date.getMonth() + 1; //在默认格式时间中提取月份，（月份返回值是0-11，实际月份要返回值+1）
 				var myDate = date.getDate(); //在默认格式实践中提取日期
 				var myDay = date.getDay(); //在默认格式中提取星期（返回值0-6对应星期天-星期六）
-				var week = ['XQ_日', 'XQ_一', 'XQ_二', 'XQ_三', 'XQ_四', 'XQ_五', 'XQ_六', ] //创建数组对应myDay
+				var week = ['Sunday_0', 'Monday_1', 'Tuesday_2', 'Wednesday_3', 'Thursday_4', 'Friday_5', 'Saturday_6', ] //创建数组对应myDay
 				var myHours = date.getHours(); //在默认格式实践中提取日期小时
 				if(myHours>12){
 				                myHours-=12;
