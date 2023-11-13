@@ -1,70 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>计算云</title>
-    <!-- <link rel="stylesheet" href="css/lanqiao.css" type="text/css"> -->
-    <link href="img/target.svg" rel="SHORTCUT ICON">
-    <style>
-        a {
-            text-decoration: none;
-            color: slateblue;
-            vertical-align: 30%;
-            font-family: "shangshou";
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>计算云</title>
+		<!-- <link rel="stylesheet" href="css/lanqiao.css" type="text/css"> -->
+		<link href="img/target.svg" rel="SHORTCUT ICON">
+		<style>
+			a {
+				text-decoration: none;
+				/* color: #fc5531; */
+				color: slateblue;
+				vertical-align: 30%;
+				font-family: "KaiTi";
+				font-weight: bold;
+				/*            font-family: "shangshou"; */
+				text-shadow: 2px 2px #fc5531,-1px -1px #ede0c0;
+			}
 
-        .lanqiao-div {
-            text-align: center;
-            font-size: 25px;
-        }
+			.lanqiao-div {
+				text-align: center;
+				font-size: 1.8em;
+				
+			}
+			
+			#lanqiao-div-left{
+				display: inline-block;
+				text-align: center;
+				float: left;
+				margin-left: 4em;
+				line-height: 1.4em;
+				
+			}
+			#lanqiao-div-right{
+				display: inline-block;
+				text-align: center;
+				float: right;
+				margin-right: 4em;
+				line-height: 1.4em;
+				text-shadow: 0.6em white;
+			}
 
-        span {
-            font-size: 60px;
-            color: darkorange;
-            font-family: "chaozishe";
-        }
+			#span_title_lanqiao {
+				display: block;
+				
+				font-size: 60px;
+				color: darkorange;
+				font-family: "chaozishe";
+			}
 
-        body {
-            background: url(img/cartoon-sky.jpg);
-            background-size: cover;
-        }
+			body {
+				background: url(img/cartoon-sky.jpg);
+				background-size: cover;
+				user-select: none;
+			}
 
-        @font-face {
+			/* @font-face {
             font-family: 'shangshou';
             src: url(ttf/219SSBaiHuShiFaTi-Regular.woff2);
-        }
+        } */
 
-        @font-face {
-            font-family: 'chaozishe';
-            src: url(ttf/ChaoZi-Regular.ttf);
-        }
-    </style>
-    <script src="js/lanqiao.js"></script>
+			@font-face {
+				font-family: 'chaozishe';
+				src: url(ttf/ChaoZi-Regular.ttf);
+			}
+		</style>
+		<script src="js/lanqiao.js"></script>
 
-</head>
+	</head>
 
-<body>
-    <div class="lanqiao-div">
-        <span>Welcome To 志's Web</span>
-        <br><a href="https://gitee.com/yinhongzhi/important-personal-documents" target="_blank">~ 个 人 信 息 ~</a>
-        <br><a href="https://www.cnblogs.com/" target="_blank">— 博 客 园 —</a>
-        <br><a href="https://blog.csdn.net/" target="_blank">— C S D N —</a>
-        <br><a href="https://ikuuu.club" target="_blank">— ikuuu —</a>
-        <br><a href="https://gitee.com/yinhongzhi" target="_blank">— Gitee —</a>
-        <!-- <br><a href="" target="_blank" >— # —</a> -->
-        <br>
-        <br><a href="https://www.acwing.com/problem/" target="_blank">— AcWing题库 —</a>
-        <br><a href="http://poj.org" target="_blank">— 北大poj —</a>
-        <br><a href="https://pintia.cn/home" target="_blank">— 浙大PTA —</a>
-        <br><a href="https://www.dotcpp.com/oj/problemset.php?mark=6" target="_blank">— 洛谷 —</a>
-        <br><a href="https://www.dotcpp.com" target="_blank">— 蓝桥ACM训练系统-C —</a>
-        <br><a href="https://dasai.lanqiao.cn/" target="_blank">— 蓝桥杯官网 —</a>
-        <br><a href="https://www.codechef.com/ide" target="_blank">— CodeChef —</a>
+	<body>
+		<div class="lanqiao-div">
+				<span id="span_title_lanqiao">Welcome To 志's Web</span>
+			<div id="lanqiao-div-left">
+				<br><a href="https://gitee.com/yinhongzhi/important-personal-documents" target="_blank">“ 个 人 信 息 ”</a>
+				<br><a href="https://www.cnblogs.com/" target="_blank">— 博 客 园 —</a>
+				<br><a href="https://blog.csdn.net/" target="_blank">— C S D N —</a>
+				<br><a href="https://ikuuu.club" target="_blank">— ikuuu —</a>
+				<br><a href="https://gitee.com/yinhongzhi" target="_blank">— Gitee —</a>
+				<!-- <br><a href="" target="_blank" >— # —</a> -->
+				<br>
+				
+			</div>
+			
+			<div id="lanqiao-div-right">
+				<br><a href="https://www.acwing.com/problem/" target="_blank">— AcWing题库 —</a>
+				<br><a href="http://poj.org" target="_blank">— 北大poj —</a>
+				<br><a href="https://pintia.cn/home" target="_blank">— 浙大PTA —</a>
+				<br><a href="https://www.dotcpp.com/oj/problemset.php?mark=6" target="_blank">— 洛谷 —</a>
+				<br><a href="https://www.dotcpp.com" target="_blank">— 蓝桥ACM训练系统-C —</a>
+				<br><a href="https://dasai.lanqiao.cn/" target="_blank">— 蓝桥杯官网 —</a>
+				<br><a href="https://www.codechef.com/ide" target="_blank">— CodeChef —</a>
+			</div>
 
-    </div>
-</body>
+		</div>
+	</body>
 
 </html>
