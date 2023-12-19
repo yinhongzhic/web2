@@ -90,6 +90,20 @@
 			#clock {
 				text-align: center;
 			}
+			#siji{
+				/* width: 16em; */
+				/* display: inline-block; */
+				/* background-color: gold; */
+				text-align: center;
+				color: green;
+				font-size: 2em;
+				line-height: 3em;
+				font-weight: bold;
+			}
+			#siji_time{
+				font-size: 3em;
+				color: gold;
+			}
 		</style>
 		<link rel="stylesheet" href="../css/showTimeStars.css">
 	</head>
@@ -105,6 +119,11 @@
 		<div id="stars"></div>
 		<div id="stars2"></div>
 		<div id="stars3"></div>
+		<div id="siji">
+			<span>CET4倒计时：</span>
+			<span id="siji_time"></span>
+			<span>天</span>
+		</div>
 		<script>
 			window.onload = function() {
 				refreshTime(); //当页面加载完时运行时间函数
@@ -118,10 +137,18 @@
 			}
 
 			function refreshTime() { //定义时间函数
+				
 				var date = new Date(); //获取当前默认格式的当前时间
 				var myYear = date.getFullYear(); //在默认格式时间中提取四位数的年份
 				var myMonth = date.getMonth() + 1; //在默认格式时间中提取月份，（月份返回值是0-11，实际月份要返回值+1）
 				var myDate = date.getDate(); //在默认格式实践中提取日期
+				//显示cet4考试剩余时间
+				var showDay = document.getElementById("siji_time");
+				var toDay = new Date();
+				var cet4Day = new Date("2023,12,16");
+				var leftDay = (cet4Day - toDay)/(1000*60*60*24);
+				showDay.innerHTML = parseInt(leftDay);
+				
 				var myDay = date.getDay(); //在默认格式中提取星期（返回值0-6对应星期天-星期六）
 				var week = ['Sunday_0', 'Monday_1', 'Tuesday_2', 'Wednesday_3', 'Thursday_4', 'Friday_5',
 					'Saturday_6', ] //创建数组对应myDay
@@ -151,6 +178,25 @@
 			}
 
 			//星星背景
+			
+			    var flag = 0;
+			    var int = '';
+			    function start() {
+			        var text = document.getElementById("siji_time");
+			        if (flag == 1) {
+			            text.style.color = "red";
+			            flag = 2;
+			        } else if(flag ==2){
+			            text.style.color = "white";
+			            flag = 3;
+			        }else{
+						text.style.color = "";
+						flag = 1;
+					}
+			        int = setTimeout("start()", 500);
+			    }
+			
+			    start();
 		</script>
 
 	</body>
