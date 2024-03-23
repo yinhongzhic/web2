@@ -31,25 +31,31 @@ a{
 .navicontainer div{
 	display:block;
 	float:left;
-	width:313px;
+	width:234px;
+/* 	width:313px; */
 	line-height:40px;
 	text-align:center;
 }
-.navicontainer a img{
-	position: absolute;
-	top: 6px;
-	left: 10px;
-	width:200px;
+#tscBBSlong1 img{
+	height: 41.4px;
+	border-bottom: 1px;
 }
+
 .navicontainer a div{
 	color: #540703;
 	font-size:18px;
 	border-top: #CCC 1px solid;
 	border-left: transparent 1px solid;
 	border-right: transparent 1px solid;
-	border-bottom: #540703 1px solid;
+	border-bottom: #540703 0px solid;
 }
 
+#tscBBSlong1{
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: #540703 1px solid;
+}
 .navicontainer a.selected div{
 	color: #C40703;
 	background:#EEE;
