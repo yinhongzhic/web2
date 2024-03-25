@@ -90,6 +90,16 @@
 			#clock {
 				text-align: center;
 			}
+			
+			#echoWeek{
+				display: inline-block;
+				color: gold;
+				font-size: 2em;
+				line-height: 3em;
+				font-weight: bold;
+				margin-right: 1em;
+			}
+			
 			#siji{
 				/* width: 16em; */
 				/* display: inline-block; */
@@ -120,6 +130,9 @@
 		<div id="stars2"></div>
 		<div id="stars3"></div>
 		<div id="siji">
+			<div id="echoWeek">
+				第<span id="weekNo"></span>周
+			</div>
 			<span>CET4倒计时：</span>
 			<span id="siji_time"></span>
 			<span>天</span>
@@ -142,12 +155,16 @@
 				var myYear = date.getFullYear(); //在默认格式时间中提取四位数的年份
 				var myMonth = date.getMonth() + 1; //在默认格式时间中提取月份，（月份返回值是0-11，实际月份要返回值+1）
 				var myDate = date.getDate(); //在默认格式实践中提取日期
-				//显示cet4考试剩余时间
+				//显示考试剩余时间
 				var showDay = document.getElementById("siji_time");
 				var toDay = new Date();
-				var cet4Day = new Date("2023,12,16");
+				var cet4Day = new Date("2024,4,8");
+				// var testDay = new Date("2024,3,31");
+				var studyLastDay = new Date("2024,6,24");
 				var leftDay = (cet4Day - toDay)/(1000*60*60*24);
+				var nowWeekNo = 18 - ((studyLastDay - toDay)/(1000*60*60*24))/7;
 				showDay.innerHTML = parseInt(leftDay);
+				weekNo.innerHTML = parseInt(nowWeekNo);
 				
 				var myDay = date.getDay(); //在默认格式中提取星期（返回值0-6对应星期天-星期六）
 				var week = ['Sunday_0', 'Monday_1', 'Tuesday_2', 'Wednesday_3', 'Thursday_4', 'Friday_5',
