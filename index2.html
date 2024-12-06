@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>志's WEB</title>
+    <!-- <linkrel="icon" type="image/x-icon" href="#"/> -->
+    <link href="img/earth01.svg" rel="SHORTCUT ICON">
+
+    <style>
+		*{
+			user-select: none;/*用户不可以选中文字*/
+		}
+        a{
+            text-decoration: none;
+            color: rgb(125, 204, 150);
+            vertical-align: 50%;
+            font-family:"chaozishe";
+            font-size: 150%;
+        }
+        .one{
+            text-align: center;
+            font-size: 25px;
+            position: absolute;
+            left: 0;
+            right:0;
+            margin: 0 auto;
+        }
+        .one span{
+            font-size: 60px;
+            color: white;
+            font-family:"chaozishe";
+        }
+		#tscBBSFriendlyLink,#tscBBSFriendlyLink span{
+			font-size: 6px;
+		}
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            background: #000;
+			/*隐藏滚动条*/
+            overflow: auto;
+            /*overflow-y: hidden;*/
+            overflow-x: hidden;
+            /* overflow-y: auto; */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 10+ */
+        }
+        ::-webkit-scrollbar {
+			//滚动条
+            display: none; /* Chrome Safari */
+        }
+        #contact_id {
+            font-family: 'shangshou';
+            font-size: 20px;
+            color: #fff;
+            color: dodgerblue;
+            float: right;
+            margin-right: 8%;
+        }
+        
+        
+    
+     @font-face {
+       font-family: 'chaozishe';
+       src: url(ttf/ChaoZi-Regular.ttf);
+     }
+     @font-face {
+            font-family: 'shangshou';
+            src: url(ttf/219SSBaiHuShiFaTi-Regular.ttf);
+        }
+    
+     
+        </style>
+
+</head>
+<body>
+    <div class="one" style="text-align: center;">
+        <span>Welcome To 志's Web</span>
+		<a id="tscBBSFriendlyLink" href="html/tscBBSFriendlyLinks.html"><span>©fl</span></a>
+        <br>
+        <!-- <br><a href="https://kdocs.cn/l/cpQiWe1nknzz" target="_blank" >~ 2023计本课表 ~</a> -->
+        <br><a href="login.html" target="_blank">~ 计 · 算 ·  云 ~</a>
+        <!-- <br><a href="lanqiao.html" target="_blank">~ 计 · 算 ·  云 ~</a> -->
+        <!-- <br><a href="tsxy.html" target="_blank">~ 唐 山 学 院 ~</a> -->
+        <br><a href="https://yhzfree.cpolar.cn" target="_blank">~ yhzfree ~</a>
+        <br><a href="https://yhzfile.cpolar.cn" target="_blank">~ yhzfile ~</a>
+        <!-- <br><a href="https://tools.liumingye.cn/music/#/" target="_blank">~ 音  乐  网  站 ~</a> -->
+        <!-- <br><a href="https://pc.woozooo.com/mydisk.php" target="_blank">~ 蓝奏云空间 ~</a> -->
+        <br><a href="https://www.wenshushu.cn/" target="_blank">~ 文叔叔传文件 ~</a>
+        <!-- <br><a href="https://im.iamtsm.cn/" target="_blank">~ webrtc ~</a> -->
+		<br><a href="https://yiyan.baidu.com" target="_blank">~ BaiduAI ~</a>
+        <br><a href="https://filehelper.weixin.qq.com/" target="_blank">~ WeChatHelper ~</a>
+        <br><a href="https://www.baidu.com" target="_blank">~ Baidu ~</a>
+        <br><p id="contact_id"><img onclick="targetToShowTime()" src="img/sun.svg" draggable="false" alt="..." width="22px">ContactE_mail:yhzstudy@163.com</p>
+         
+        <!-- <br><a href="" target="_blank">~ # ~</a> -->
+
+
+    </div>
+    <canvas id="cvs"></canvas> 
+    <script src="js/index.js" type="text/javascript"></script> 
+	<script>
+		function targetToShowTime(){
+			location.href = './html/showTime.html';
+		}
+	</script>
+</body>
+</html>
