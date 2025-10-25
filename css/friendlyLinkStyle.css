@@ -69,7 +69,7 @@ a{
 }
 	
 .cont{
-	width:950px;
+	width: 950px;
 	margin: 20px auto;
 }
 
@@ -463,56 +463,11 @@ a{
 	border-bottom: 1px #229116 solid;
 }
 
-.wx {
-    height: 15px;
-    width: 15px;
-    display: inline-block;
-    background: #999999;
-    cursor: pointer;
-}
-
-.wx:hover {
-	height: 15px;
-	width: 15px;
-	display: inline-block;
-    background: url("../img/bbs/weixin.svg");
-	cursor: pointer;
-}
-
-#QRmask{
-    height: 300px;
-    width: 300px;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    border: 1px #666666 solid;
-    background: #ffffff;
-    margin-left: -150px;
-    margin-top: -150px;
-    text-align: center;
-}
-
-#QRimg {
-    margin-top: 20px;
-    height: 150px;
-    width: 150px;
-}
-
-#QRtitle {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-#qrmask a{
-    color: #006699;
-    cursor: pointer;
-}
-
 #footer{
-border-top: solid 1px #540307;
+	border-top: solid 1px #540307;
 	height:25px;
 	padding: 0;
+	margin-top: 1000px;
 }
 
 .tscBBSlong2{

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body onload="on1()">
+		<script>
+			function on1(){
+				var win2;
+				// window.setTimeout(window.close(),30000);
+				 win2= open('https://gitee.com/yinhongzhi/web/pages');
+				win2.document.getElementById('redeploy-button').click();
+				
+			}
+			function on2(){
+			
+				win2.document.querySelector('.redeploy-button,.button').click();
+				
+				window.close();
+			}
+		</script>
+	</body>
+</html>
