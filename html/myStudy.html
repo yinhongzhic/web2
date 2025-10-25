@@ -1,0 +1,452 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>我的学习</title>
+	</head>
+	<body>
+		<h2>专业学习</h2>
+		<div>
+			<a href="https://compress-video-online.com/zh">蓝桥云课</a>
+		</div>
+		<h2>语言学习</h2>
+		<h2>其他学习</h2>
+	</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的学习资源</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .learning-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .category-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .category-icon {
+            font-size: 2.2rem;
+            margin-right: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-decoration: none;
+            color: #555;
+            transition: all 0.2s ease;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .resource-item:hover {
+            background: #f8f9ff;
+            transform: translateX(5px);
+            border-color: #d0d7ff;
+            color: #667eea;
+        }
+        
+        .resource-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        .resource-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+        
+        .resource-arrow {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+        }
+        
+        .resource-item:hover .resource-arrow {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+        
+        .add-resource {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed #ccc;
+            color: #888;
+        }
+        
+        .add-resource:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .add-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* 专业学习样式 */
+        .professional .category-icon {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+        
+        .professional .resource-icon {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+        
+        /* 语言学习样式 */
+        .language .category-icon {
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+        }
+        
+        .language .resource-icon {
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+        }
+        
+        /* 其他学习样式 */
+        .other .category-icon {
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+        }
+        
+        .other .resource-icon {
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .category-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .learning-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>我的学习资源</h1>
+            <p class="subtitle">持续学习，不断提升自我</p>
+            <p class="subtitle">精心整理的学习资源，助您高效成长</p>
+        </header>
+        
+        <div class="learning-categories">
+            <!-- 专业学习 -->
+            <div class="category-card professional">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h2 class="category-title">专业学习</h2>
+                </div>
+                <div class="resources-list">
+                    <a href="https://www.lanqiao.cn/courses/?from_login_page=true" target="_blank" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="resource-name">蓝桥云课</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.luogu.com.cn/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">洛谷 官网</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://leetcode-cn.com/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">LeetCode 官网</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.w3school.com.cn/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">w3school官网</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.runoob.com/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">菜鸟教程</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.nowcoder.com" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">牛客网</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.elecfans.com/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="resource-name">电子发烧友(硬件)</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <div class="add-resource">
+                        <div class="add-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div>添加专业学习资源</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 语言学习 -->
+            <div class="category-card language">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h2 class="category-title">语言学习</h2>
+                </div>
+                <div class="resources-list">
+                    <a href="https://www.oxfordlearnersdictionaries.com/wordlists/oxford3000-5000" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="resource-name">牛津3000词(全英)</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.kekenet.com/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <div class="resource-name">可可英语</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="https://qwerty.kaiyi.cool/" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <div class="resource-name">单词练习PC</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <div class="add-resource">
+                        <div class="add-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div>添加语言学习资源</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他学习 -->
+            <div class="category-card other">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h2 class="category-title">其他学习</h2>
+                </div>
+                <div class="resources-list">
+                    <a href="https://www.bilibili.com/video/BV14W411P7YW?p=3" target="_blank" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="resource-name">AU全套教程BiliBili</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <a href="#" class="resource-item">
+                        <div class="resource-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="resource-name">YouTube 学习频道</div>
+                        <div class="resource-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <div class="add-resource">
+                        <div class="add-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div>添加其他学习资源</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 我的学习资源 | 持续学习，终身成长</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const addResourceButtons = document.querySelectorAll('.add-resource');
+            
+            addResourceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.closest('.category-card').querySelector('.category-title').textContent;
+                    alert(`将在"${category}"类别中添加新资源\n此功能开发中...`);
+                });
+            });
+            
+            // 资源项点击效果
+            const resourceItems = document.querySelectorAll('.resource-item');
+            resourceItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        const resourceName = this.querySelector('.resource-name').textContent;
+                        alert(`正在访问: ${resourceName}\n此链接暂未配置`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

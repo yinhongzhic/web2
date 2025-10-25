@@ -409,6 +409,12 @@ a{
 .c-o6 a div:hover{
 	background: #a58b6a;
 }
+.c-o7 a div{
+	background: #aa00ff;
+}
+.c-o7 a div:hover{
+	background: #aa55ff;
+}
 
 .t2-1{
 	color: #94070A;

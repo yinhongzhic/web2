@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邮箱合集 - 常用邮箱快速访问</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        header {
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+        
+        .email-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .email-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .email-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+        
+        .email-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .email-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            height: 80px;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .email-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .email-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.05);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .add-email {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .add-email:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .add-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* 各邮箱特色颜色 */
+        .qq-email::before {
+            background: linear-gradient(90deg, #12B7F5, #1E90FF);
+        }
+        
+        .qq-email .email-icon {
+            color: #12B7F5;
+        }
+        
+        .email-163::before {
+            background: linear-gradient(90deg, #D71A1A, #FF4500);
+        }
+        
+        .email-163 .email-icon {
+            color: #D71A1A;
+        }
+        
+        .gmail::before {
+            background: linear-gradient(90deg, #EA4335, #FBBC05);
+        }
+        
+        .gmail .email-icon {
+            color: #EA4335;
+        }
+        
+        .other-email::before {
+            background: linear-gradient(90deg, #6A5ACD, #9370DB);
+        }
+        
+        .other-email .email-icon {
+            color: #6A5ACD;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .email-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .email-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        .email-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        
+        .email-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        
+        .email-card:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+        
+        @media (max-width: 768px) {
+            .email-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>邮箱合集</h1>
+            <p class="subtitle">常用邮箱服务，一键快速访问</p>
+            <p class="subtitle">高效管理您的电子邮件</p>
+        </header>
+        
+        <div class="email-grid">
+            <!-- QQ邮箱 -->
+            <a href="https://wx.mail.qq.com/" target="_blank" class="email-card qq-email">
+                <div class="email-icon">
+                    <i class="fab fa-qq"></i>
+                </div>
+                <h3 class="email-name">QQ邮箱</h3>
+                <p class="email-desc">腾讯QQ邮箱，与QQ号绑定，方便快捷</p>
+                <div class="btn">
+                    <i class="fas fa-external-link-alt"></i> 立即访问
+                </div>
+            </a>
+            
+            <!-- 163邮箱 -->
+            <a href="https://mail.163.com/" target="_blank" class="email-card email-163">
+                <div class="email-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3 class="email-name">163邮箱</h3>
+                <p class="email-desc">网易163免费邮箱，稳定可靠的电子邮件服务</p>
+                <div class="btn">
+                    <i class="fas fa-external-link-alt"></i> 立即访问
+                </div>
+            </a>
+            
+            <!-- Google邮箱 -->
+            <a href="https://gmail.google.com/" target="_blank" class="email-card gmail">
+                <div class="email-icon">
+                    <i class="fab fa-google"></i>
+                </div>
+                <h3 class="email-name">Google邮箱</h3>
+                <p class="email-desc">Gmail谷歌邮箱，强大的搜索和过滤功能</p>
+                <div class="btn">
+                    <i class="fas fa-external-link-alt"></i> 立即访问
+                </div>
+            </a>
+            
+            <!-- 预留邮箱 -->
+            <a href="#" target="_blank" class="email-card other-email">
+                <div class="email-icon">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <h3 class="email-name">添加邮箱</h3>
+                <p class="email-desc">添加您常用的其他邮箱服务</p>
+                <div class="btn">
+                    <i class="fas fa-plus-circle"></i> 添加邮箱
+                </div>
+            </a>
+        </div>
+        
+        <footer>
+            <p>© 2025 邮箱合集 | 让邮件管理更高效</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.email-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 添加邮箱按钮点击效果
+            const addEmailBtn = document.querySelector('.other-email');
+            addEmailBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('添加新邮箱功能开发中...\n您可以修改代码添加更多邮箱服务');
+            });
+        });
+    </script>
+</body>
+</html>
