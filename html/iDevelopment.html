@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的开发工具集</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<!-- https://fontawesome.com.cn/v5图标库 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        header {
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .module-icon {
+            font-size: 1.8rem;
+            margin-right: 12px;
+            color: #ffcc00;
+        }
+        
+        .module-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-align: left;
+        }
+        
+        .module-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.4;
+        }
+        
+        .tools-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .tool-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tool-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .tool-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .tool-name {
+            font-size: 1rem;
+            font-weight: 500;
+            flex-grow: 1;
+            text-align: left;
+        }
+        
+        .tool-arrow {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .add-module {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-module:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .add-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .add-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        footer {
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .module-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>我的开发工具集</h1>
+            <p class="subtitle">高效开发，一键直达</p>
+            <p class="subtitle">精心整理的工具集合，助您提升工作效率</p>
+        </header>
+        
+        <div class="modules-grid">
+            <!-- 一键挪车模块 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="module-name">一键挪车</h3>
+                </div>
+                <p class="module-desc">车辆管理相关工具，提供便捷的挪车服务</p>
+                <div class="tools-list">
+                    <!-- <a href="./call.html" target="_blank" class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="tool-name">一键挪车主页</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a> -->
+					<a href="./call/index.html" target="_blank" class="tool-item">
+					    <div class="tool-icon">
+					        <i class="fas fa-external-link-alt"></i>
+					    </div>
+					    <div class="tool-name">一键挪车主页Pro</div>
+					    <div class="tool-arrow">
+					        <i class="fas fa-chevron-right"></i>
+					    </div>
+					</a>
+                    <a href="https://wxpusher.zjiecode.com/admin/main/app/appInfo" target="_blank" class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="tool-name">一键挪车后台</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+			    <!-- 添加新模块 -->
+			    <!-- <div class="module-card">
+			        <div class="module-header"><div class="module-icon">
+			                <i class="fas fa-car"></i>
+			            </div><h3 class="module-name">模块名称</h3></div>
+			        <p class="module-desc">模块介绍</p>
+			        <div class="tools-list"><a href="标签链接" target="_blank" class="tool-item">
+			                <div class="tool-icon">
+			                    <i class="fas fa-external-link-alt"></i>
+			                </div>
+			                <div class="tool-name">标签名称</div>
+			                <div class="tool-arrow">
+			                    <i class="fas fa-chevron-right"></i>
+			                </div>
+			            </a>
+			        </div>
+			    </div> -->
+            <!-- 预留模块1 -->
+			<div class="module-card">
+			    <div class="module-header"><div class="module-icon">
+			            <i class="fas fa-comment-dots"></i>
+			        </div><h3 class="module-name">微信工具</h3></div>
+			    <p class="module-desc">微信公众号&小程序开发管理</p>
+			    <div class="tools-list">
+					<a href="https://mp.weixin.qq.com/cgi-bin/home?t=home/index&token=994808819&lang=zh_CN" target="_blank" class="tool-item">
+			            <div class="tool-icon">
+			                <i class="fa fa-bullseye"></i>
+			            </div>
+			            <div class="tool-name">公众号管理</div>
+			            <div class="tool-arrow">
+			                <i class="fas fa-chevron-right"></i>
+			            </div>
+			        </a>
+					<a href="#" target="_blank" class="tool-item" style="opacity: 0.7; pointer-events: none;">
+					    <div class="tool-icon">
+					        <i class="fas fa-external-link-alt"></i>
+					    </div>
+					    <div class="tool-name">more</div>
+					    <div class="tool-arrow">
+					        <i class="fas fa-chevron-right"></i>
+					    </div>
+					</a>
+			    </div>
+			</div>
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="module-name">开发工具</h3>
+                </div>
+                <p class="module-desc">前端开发、调试和部署相关工具</p>
+                <div class="tools-list">
+                    <div class="tool-item" style="opacity: 0.5;">
+                        <div class="tool-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="tool-name">添加新工具</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="tool-item" style="opacity: 0.5;">
+                        <div class="tool-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="tool-name">添加新工具</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 预留模块2 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="module-name">数据管理</h3>
+                </div>
+                <p class="module-desc">数据库管理和API调试工具</p>
+                <div class="tools-list">
+                    <div class="tool-item" style="opacity: 0.5;">
+                        <div class="tool-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="tool-name">添加新工具</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="tool-item" style="opacity: 0.5;">
+                        <div class="tool-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="tool-name">添加新工具</div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 添加新模块 -->
+            <div class="module-card add-module">
+                <div class="add-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="add-text">添加新模块</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 我的开发工具集 | 让开发更高效</p>
+        </footer>
+    </div>
+</body>
+</html>

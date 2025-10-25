@@ -1,0 +1,292 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>外设驱动</title>
+	</head>
+	<body>
+		<a href="https://sayodevice.com/device/feature/button" target="_blank"><div>双键小键盘1驱动</div></a>
+		<a href="https://vial.rocks/" target="_blank"><div>双键小键盘2驱动</div></a>
+		
+		
+	</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外设驱动管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+        
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .device-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .device-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6dd5ed, #2193b0);
+        }
+        
+        .device-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .device-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #6dd5ed;
+        }
+        
+        .device-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .device-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #6dd5ed, #2193b0);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(109, 213, 237, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(109, 213, 237, 0.4);
+        }
+        
+        .add-device {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .add-device:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .add-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .device-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .devices-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>外设驱动管理</h1>
+            <p class="subtitle">一站式外设驱动下载与更新平台</p>
+            <p class="subtitle">支持多种外设设备，确保您的设备发挥最佳性能</p>
+        </header>
+        
+        <div class="devices-grid">
+            <!-- 双键小键盘1 -->
+            <div class="device-card">
+                <div class="device-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3 class="device-name">双键小键盘1</h3>
+                <p class="device-desc">高性能双键小键盘，支持自定义宏和快捷键设置，可设置电脑密码</p>
+                <a href="https://sayodevice.com/device/feature/button" target="_blank" class="btn">敕</a>
+            </div>
+            
+            <!-- 双键小键盘2 -->
+            <div class="device-card">
+                <div class="device-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3 class="device-name">双键小键盘2</h3>
+                <p class="device-desc">Vial兼容双键小键盘，提供丰富的自定义选项</p>
+                <a href="https://vial.rocks/" target="_blank" class="btn">敕</a>
+            </div>
+            
+            <!-- 预留设备1 -->
+            <div class="device-card">
+                <div class="device-icon">
+                    <i class="fas fa-mouse"></i>
+                </div>
+                <h3 class="device-name">游戏鼠标</h3>
+                <p class="device-desc">高精度游戏鼠标，支持DPI调节和RGB灯效</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+            
+            <!-- 预留设备2 -->
+            <div class="device-card">
+                <div class="device-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="device-name">游戏耳机</h3>
+                <p class="device-desc">7.1环绕声游戏耳机，提供沉浸式音频体验</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+            
+            <!-- 预留设备3 -->
+            <div class="device-card">
+                <div class="device-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="device-name">游戏手柄</h3>
+                <p class="device-desc">多功能游戏手柄，支持多平台连接和自定义映射</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+            
+            <!-- 添加新设备 -->
+            <div class="device-card add-device">
+                <div class="add-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="add-text">添加新设备</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 外设驱动管理 | 让设备发挥最佳性能</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.device-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 添加新设备按钮点击效果
+            const addDeviceBtn = document.querySelector('.add-device');
+            addDeviceBtn.addEventListener('click', function() {
+                alert('添加新设备功能开发中...');
+            });
+        });
+    </script>
+</body>
+</html>
+

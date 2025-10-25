@@ -1,0 +1,356 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>计算机考研资源</title>
+	</head>
+	<body>
+		 <div>
+			 干货
+			 <div>数据结构与算法
+				<A HREF="https://www.cnblogs.com/VanHa0101/p/16051782.html#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-8"  >acwing算法基础课整理ACM模板- 博客园</A>
+			 </div>
+			 <div>计算机操作系统</div>
+			 <div>计算机组成原理</div>
+			 <div>计算机网络</div>
+			 <div>其他</div>
+		 </div>
+		 <div>
+			 经验贴
+			 <A HREF="https://zhuanlan.zhihu.com/p/510635318"  >2022清华计算机912上岸干货贴 - 知乎</A>
+			 <A HREF="https://www.zhihu.com/question/41059945/answer/2474204636"  >清华大学计算机考研专业课912如何复习？ - 知乎</A>
+			<A HREF="https://www.zhihu.com/question/41059945/answers/updated"  >清华大学计算机考研专业课912如何复习？ - 知乎</A>
+			<A HREF="https://www.xiaohongshu.com/discovery/item/5fa60fac000000000100158e"  >计算机专业本科生，想要科研，该怎么做？</A>
+		 </div>
+		 <div>
+			 院校数据
+			 <A HREF="https://mp.weixin.qq.com/s?__biz=Mzg4MDcyODU1OA==&mid=2247483940&idx=1&sn=c44882676931f9712c04cf2725737254&chksm=cf7182a5f8060bb3a9733e5cb9ad3ed8d63d7521b8e0352a318ee9ac6d4cd343fee5c68fc695#rd"  >最低分365，最高分408，进入复试22人，清华大学，计算机科学与技术系，2022年复试名单</A>
+		 </div>
+		 <div>
+			 其他
+			 <A HREF="https://blog.csdn.net/csseky?type=blog"  >计算机与软件考研的博客_CSDN博客-领域博主</A>
+			 <A HREF="https://author.baidu.com/home?from=bjh_article&app_id=1589459038598138"  >IT人刘俊明</A>
+			 <A HREF="https://www.csdn.net/tags/NtzaEg1sMzEwMzItYmxvZwO0O0OO0O0O.html"  >计算机专业研究生平时干什么 - CSDN</A>
+		 </div>
+	</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机考研资源导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-header {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .category-content {
+            padding: 20px;
+        }
+        
+        .resource-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .resource-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .resource-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .resource-link {
+            display: block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+            word-break: break-all;
+        }
+        
+        .resource-link:hover {
+            background: #e3f2fd;
+            color: #1a73e8;
+            transform: translateX(5px);
+        }
+        
+        .subcategory {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+        }
+        
+        .subcategory-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .category-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>计算机考研资源导航</h1>
+            <p class="subtitle">一站式收集计算机考研相关资料，包括专业课复习、经验分享、院校数据等，助您高效备考</p>
+        </header>
+        
+        <div class="categories-grid">
+            <!-- 干货分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h2 class="category-title">干货</h2>
+                </div>
+                <div class="category-content">
+                    <div class="subcategory">
+                        <h3 class="subcategory-title">数据结构与算法</h3>
+                        <div class="resource-item">
+                            <a href="https://www.cnblogs.com/VanHa0101/p/16051782.html#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-8" target="_blank" class="resource-link">
+                                acwing算法基础课整理ACM模板- 博客园
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="subcategory">
+                        <h3 class="subcategory-title">计算机操作系统</h3>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link" style="color: #95a5a6; pointer-events: none;">
+                                资源整理中...
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="subcategory">
+                        <h3 class="subcategory-title">计算机组成原理</h3>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link" style="color: #95a5a6; pointer-events: none;">
+                                资源整理中...
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="subcategory">
+                        <h3 class="subcategory-title">计算机网络</h3>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link" style="color: #95a5a6; pointer-events: none;">
+                                资源整理中...
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="subcategory">
+                        <h3 class="subcategory-title">其他</h3>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link" style="color: #95a5a6; pointer-events: none;">
+                                资源整理中...
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 经验贴分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="category-title">经验贴</h2>
+                </div>
+                <div class="category-content">
+                    <div class="resource-item">
+                        <a href="https://zhuanlan.zhihu.com/p/510635318" target="_blank" class="resource-link">
+                            2022清华计算机912上岸干货贴 - 知乎
+                        </a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <a href="https://www.zhihu.com/question/41059945/answer/2474204636" target="_blank" class="resource-link">
+                            清华大学计算机考研专业课912如何复习？ - 知乎
+                        </a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <a href="https://www.zhihu.com/question/41059945/answers/updated" target="_blank" class="resource-link">
+                            清华大学计算机考研专业课912如何复习？ - 知乎
+                        </a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <a href="https://www.xiaohongshu.com/discovery/item/5fa60fac000000000100158e" target="_blank" class="resource-link">
+                            计算机专业本科生，想要科研，该怎么做？
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 院校数据分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h2 class="category-title">院校数据</h2>
+                </div>
+                <div class="category-content">
+                    <div class="resource-item">
+                        <a href="https://mp.weixin.qq.com/s?__biz=Mzg4MDcyODU1OA==&mid=2247483940&idx=1&sn=c44882676931f9712c04cf2725737254&chksm=cf7182a5f8060bb3a9733e5cb9ad3ed8d63d7521b8e0352a318ee9ac6d4cd343fee5c68fc695#rd" target="_blank" class="resource-link">
+                            最低分365，最高分408，进入复试22人，清华大学，计算机科学与技术系，2022年复试名单
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <h2 class="category-title">其他</h2>
+                </div>
+                <div class="category-content">
+                    <div class="resource-item">
+                        <a href="https://blog.csdn.net/csseky?type=blog" target="_blank" class="resource-link">
+                            计算机与软件考研的博客_CSDN博客-领域博主
+                        </a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <a href="https://author.baidu.com/home?from=bjh_article&app_id=1589459038598138" target="_blank" class="resource-link">
+                            IT人刘俊明
+                        </a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <a href="https://www.csdn.net/tags/NtzaEg1sMzEwMzItYmxvZwO0O0OO0O0O.html" target="_blank" class="resource-link">
+                            计算机专业研究生平时干什么 - CSDN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 计算机考研资源导航 | 助您高效备考，一战成硕</p>
+        </footer>
+    </div>
+</body>
+</html>

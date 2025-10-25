@@ -1,0 +1,314 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>创业与就业</title>
+	</head>
+	<body>
+		<h2>就业</h2>
+				<A HREF="http://jnhrss.jinan.gov.cn/"  >济南市人社局</A>
+				<A HREF="http://zp.jnldjy.cn/"  >济南市求职招聘平台</A>
+				<A HREF="https://rc.jinan.gov.cn/index.jsp"  >济南市人才网</A>
+		<h2>创业</h2>
+		<A HREF="https://cy.ncss.cn/"  >全国大学生创业服务网</A>
+		<A HREF="https://cy.ncss.cn/"  >全国大学生创业服务网</A>
+	</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创业与就业资源导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .sections-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid;
+        }
+        
+        .employment .section-header {
+            border-color: #3498db;
+        }
+        
+        .entrepreneurship .section-header {
+            border-color: #2ecc71;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .employment .section-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .entrepreneurship .section-icon {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+        
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .resource-link {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-decoration: none;
+            color: #34495e;
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .employment .resource-link {
+            border-left-color: #3498db;
+        }
+        
+        .entrepreneurship .resource-link {
+            border-left-color: #2ecc71;
+        }
+        
+        .resource-link:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+        
+        .link-icon {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .link-text {
+            flex-grow: 1;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .external-icon {
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sections-container {
+                flex-direction: column;
+            }
+            
+            .section {
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>创业与就业资源导航</h1>
+            <p class="subtitle">一站式求职与创业服务平台</p>
+            <p class="subtitle">汇集优质资源，助您实现职业梦想</p>
+        </header>
+        
+        <div class="sections-container">
+            <!-- 就业板块 -->
+            <div class="section employment">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2 class="section-title">就业资源</h2>
+                </div>
+                <div class="links-container">
+                    <a href="http://jnhrss.jinan.gov.cn/" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div class="link-text">济南市人社局</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="http://zp.jnldjy.cn/" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="link-text">济南市求职招聘平台</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="https://rc.jinan.gov.cn/index.jsp" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="link-text">济南市人才网</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 创业板块 -->
+            <div class="section entrepreneurship">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h2 class="section-title">创业资源</h2>
+                </div>
+                <div class="links-container">
+                    <a href="https://cy.ncss.cn/" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="link-text">全国大学生创业服务网</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- 预留空间 - 示例链接 -->
+                    <a href="#" class="resource-link" style="opacity: 0.6;">
+                        <div class="link-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="link-text">添加创业资源</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- 预留空间 - 示例链接 -->
+                    <a href="#" class="resource-link" style="opacity: 0.6;">
+                        <div class="link-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="link-text">添加创业资源</div>
+                        <div class="external-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 创业与就业资源导航 | 助力您的职业发展之路</p>
+        </footer>
+    </div>
+
+    <script>
+        // 添加简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.resource-link');
+            
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

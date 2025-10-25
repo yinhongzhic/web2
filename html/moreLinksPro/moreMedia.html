@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分类媒体导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #ffcc00, #ff9966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 10px;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .category-tab {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .category-tab.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-content {
+            display: none;
+        }
+        
+        .category-content.active {
+            display: block;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .media-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .media-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+        
+        .entertainment-card::before {
+            background: linear-gradient(90deg, #ff9966, #ff5e62);
+        }
+        
+        .learning-card::before {
+            background: linear-gradient(90deg, #00cdac, #02aab0);
+        }
+        
+        .media-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .media-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            height: 70px;
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .entertainment-icon {
+            background: rgba(255, 158, 102, 0.3);
+        }
+        
+        .learning-icon {
+            background: rgba(0, 205, 172, 0.3);
+        }
+        
+        .media-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .media-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .entertainment-btn {
+            background: linear-gradient(90deg, #ff9966, #ff5e62);
+            color: white;
+        }
+        
+        .learning-btn {
+            background: linear-gradient(90deg, #00cdac, #02aab0);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+        
+        .add-media {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .add-media:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .add-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .media-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-tab {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>分类媒体导航</h1>
+            <p class="subtitle">不常用媒体网站分类整理，快速访问</p>
+            <p class="subtitle">按学习与娱乐分类，让您的网络体验更有条理</p>
+        </header>
+        
+        <div class="categories">
+            <div class="category-tab active" data-category="entertainment">娱乐类</div>
+            <div class="category-tab" data-category="learning">学习类</div>
+        </div>
+        
+        <!-- 娱乐类媒体 -->
+        <div class="category-content active" id="entertainment">
+            <div class="media-grid">
+                <!-- 快手 -->
+                <div class="media-card entertainment-card animate-float">
+                    <div class="media-icon entertainment-icon">
+                        <i class="fas fa-play-circle" style="color: #ff5e62;"></i>
+                    </div>
+                    <h3 class="media-name">快手</h3>
+                    <p class="media-desc">记录生活，分享快乐。发现有趣短视频内容。</p>
+                    <a href="https://www.kuaishou.com/new-reco" target="_blank" class="btn entertainment-btn">访问平台</a>
+                </div>
+                
+                <!-- QQ音乐 -->
+                <div class="media-card entertainment-card animate-float" style="animation-delay: 0.5s;">
+                    <div class="media-icon entertainment-icon">
+                        <i class="fas fa-music" style="color: #ff9966;"></i>
+                    </div>
+                    <h3 class="media-name">QQ音乐</h3>
+                    <p class="media-desc">海量正版音乐，高品质音乐体验，随时随地享受好音乐。</p>
+                    <a href="https://y.qq.com/" target="_blank" class="btn entertainment-btn">访问平台</a>
+                </div>
+                
+                <!-- 预留娱乐媒体1 -->
+                <div class="media-card entertainment-card">
+                    <div class="media-icon entertainment-icon">
+                        <i class="fas fa-film" style="color: #ff9966;"></i>
+                    </div>
+                    <h3 class="media-name">影视平台</h3>
+                    <p class="media-desc">热门电影电视剧在线观看，高清流畅播放体验。</p>
+                    <a href="#" class="btn entertainment-btn" style="opacity: 0.7; pointer-events: none;">即将添加</a>
+                </div>
+                
+                <!-- 添加新娱乐媒体 -->
+                <div class="media-card entertainment-card add-media">
+                    <div class="add-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="add-text">添加娱乐媒体</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 学习类媒体 -->
+        <div class="category-content" id="learning">
+            <div class="media-grid">
+                <!-- 预留学习媒体1 -->
+                <div class="media-card learning-card">
+                    <div class="media-icon learning-icon">
+                        <i class="fas fa-graduation-cap" style="color: #00cdac;"></i>
+                    </div>
+                    <h3 class="media-name">学堂在线</h3>
+                    <p class="media-desc">专业课程学习平台。</p>
+                    <a href="https://www.xuetangx.com/?channel=i.area.navigation_bar" target="_blank" class="btn learning-btn" >访问</a>
+                </div>
+            
+			<div class="media-card learning-card">
+			    <div class="media-icon learning-icon">
+			        <i class="fas fa-graduation-cap" style="color: #00cdac;"></i>
+			    </div>
+			    <h3 class="media-name">学银在线</h3>
+			    <p class="media-desc">超星学习通专业课程学习平台。</p>
+			    <a href="https://www.xueyinonline.com/" class="btn learning-btn">访问</a>
+			</div>
+			
+                <!-- 预留学习媒体2 -->
+                <div class="media-card learning-card">
+                    <div class="media-icon learning-icon">
+                        <i class="fas fa-book" style="color: #02aab0;"></i>
+                    </div>
+                    <h3 class="media-name">MOOC慕课</h3>
+                    <p class="media-desc">好的大学，没有围墙。</p>
+                    <a href="https://www.icourse163.org/" class="btn learning-btn" >访问</a>
+                </div>
+                
+                <!-- 预留学习媒体3 -->
+                <div class="media-card learning-card">
+                    <div class="media-icon learning-icon">
+                        <i class="fas fa-language" style="color: #00cdac;"></i>
+                    </div>
+                    <h3 class="media-name">语言学习</h3>
+                    <p class="media-desc">多语言学习平台。</p>
+                    <a href="#" class="btn learning-btn" style="opacity: 0.7; pointer-events: none;">即将添加</a>
+                </div>
+                
+                <!-- 添加新学习媒体 -->
+                <div class="media-card learning-card add-media">
+                    <div class="add-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="add-text">添加学习媒体</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 分类媒体导航 | 让网络体验更有条理</p>
+        </footer>
+    </div>
+
+    <script>
+        // 分类切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.category-tab');
+            const contents = document.querySelectorAll('.category-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新标签状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 更新内容显示
+                    contents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === category) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // 添加媒体卡片点击效果
+            const addMediaCards = document.querySelectorAll('.add-media');
+            addMediaCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    alert('添加新媒体功能开发中...');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

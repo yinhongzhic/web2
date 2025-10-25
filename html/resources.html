@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源下载中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #e65c00, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e65c00, #f9d423);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .resource-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #f9d423;
+        }
+        
+        .resource-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .resource-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .resource-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .resource-link {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .resource-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .link-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .link-name {
+            font-size: 1rem;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+        
+        .link-arrow {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .coming-soon {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        footer {
+            margin-top: 60px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .resource-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>资源下载中心</h1>
+            <p class="subtitle">精选优质资源，提升您的创作效率</p>
+            <p class="subtitle">字体、图片、指针、图标等各类资源一应俱全</p>
+        </header>
+        
+        <div class="resources-grid">
+            <!-- 字体资源 -->
+            <div class="resource-card">
+                <div class="resource-header">
+                    <div class="resource-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3 class="resource-title">字体资源</h3>
+                </div>
+                <p class="resource-desc">精选各类中英文字体，满足不同设计需求</p>
+                <div class="resource-links">
+                    <a href="http://www.reeji.com/font.html" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="link-name">锐字字库</div>
+                        <div class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 图片资源 -->
+            <div class="resource-card">
+                <div class="resource-header">
+                    <div class="resource-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="resource-title">图片资源</h3>
+                </div>
+                <p class="resource-desc">高清壁纸、素材图片，为您的项目增添色彩</p>
+                <div class="resource-links">
+                    <a href="#" target="_blank" class="resource-link coming-soon">
+                        <div class="link-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="link-name">免费壁纸</div>
+                        <div class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 指针资源 -->
+            <div class="resource-card">
+                <div class="resource-header">
+                    <div class="resource-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3 class="resource-title">指针资源</h3>
+                </div>
+                <p class="resource-desc">个性化鼠标指针，让您的桌面与众不同</p>
+                <div class="resource-links">
+                    <a href="https://zhutix.com/tag/cursors/" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="link-name">致美指针</div>
+                        <div class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 图标资源 -->
+            <div class="resource-card">
+                <div class="resource-header">
+                    <div class="resource-icon">
+                        <i class="fas fa-icons"></i>
+                    </div>
+                    <h3 class="resource-title">图标资源</h3>
+                </div>
+                <p class="resource-desc">矢量图标库，适用于网页和应用程序设计</p>
+                <div class="resource-links">
+                    <a href="https://fontawesome.com.cn/v5" target="_blank" class="resource-link">
+                        <div class="link-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="link-name">FontAwesome图标</div>
+                        <div class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 资源下载中心 | 持续更新优质资源</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.resource-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 为即将上线的资源添加提示
+            const comingSoonLinks = document.querySelectorAll('.coming-soon');
+            comingSoonLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('该资源正在整理中，即将上线，敬请期待！');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

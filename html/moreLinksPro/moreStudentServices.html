@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生服务导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #a8edea, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #a8edea, #fed6e3);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #a8edea;
+        }
+        
+        .service-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .service-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #a8edea, #fed6e3);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(168, 237, 234, 0.4);
+        }
+        
+        .add-service {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .add-service:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .add-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            color: #a8edea;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .service-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>学生服务导航</h1>
+            <p class="subtitle">一站式学习考试服务平台</p>
+            <p class="subtitle">汇集各类学习资源与考试信息，助力学生成长</p>
+        </header>
+        <h2 class="category-title">官方信息网站</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <h3 class="service-name">河北省教育考试院</h3>
+                <p class="service-desc">河北省教育考试院官网</p>
+                <a href="http://www.hebeea.edu.cn/" class="btn" >访问网站</a>
+            </div>
+            
+            <!-- 预留学习服务2 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <h3 class="service-name">河北省科学技术厅</h3>
+                <p class="service-desc">河北省科学技术厅官网</p>
+                <a href="https://kjt.hebei.gov.cn/www/index/index.html" class="btn" >访问网站</a>
+            </div>
+            
+            <!-- 添加新服务 -->
+            <div class="service-card add-service">
+                <div class="add-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="add-text">添加新服务</div>
+            </div>
+        </div>
+        <h2 class="category-title">教师资格相关</h2>
+        <div class="services-grid">
+            <!-- 中国教师资格网 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 class="service-name">中国教师资格网</h3>
+                <p class="service-desc">官方教师资格认证平台，提供资格认定、政策查询等服务</p>
+                <a href="http://www.jszg.edu.cn/" target="_blank" class="btn">访问网站</a>
+            </div>
+            
+            <!-- 中小学教资考试网 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3 class="service-name">中小学教资考试网</h3>
+                <p class="service-desc">全国中小学教师资格考试报名、成绩查询官方平台</p>
+                <a href="https://ntcebm2.neea.edu.cn/apply/memapp/memLogin" target="_blank" class="btn">访问网站</a>
+            </div>
+            
+            <!-- 预留教师资格服务 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="service-name">教师资格备考资料</h3>
+                <p class="service-desc">教师资格考试复习资料、模拟试题与备考指南</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+        </div>
+        
+        <h2 class="category-title">语言考试服务</h2>
+        <div class="services-grid">
+            <!-- 预留语言考试服务1 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3 class="service-name">大学英语四六级</h3>
+                <p class="service-desc">全国大学英语四、六级考试报名</p>
+                <a href="http://cet-bm.neea.edu.cn/" class="btn" >访问网站</a>
+            </div>
+            
+            <!-- 预留语言考试服务2 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3 class="service-name">托福考试中心</h3>
+                <p class="service-desc">托福考试报名、备考资料与成绩查询服务</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+            
+            <!-- 预留语言考试服务3 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-globe-europe"></i>
+                </div>
+                <h3 class="service-name">雅思考试中心</h3>
+                <p class="service-desc">雅思考试报名、备考资料与成绩查询服务</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+        </div>
+        
+        <h2 class="category-title">其他学习服务</h2>
+        <div class="services-grid">
+            <!-- 预留学习服务1 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="service-name">计算机水平考试</h3>
+                <p class="service-desc">全国计算机技术与软件专业技术资格（水平）考试</p>
+                <a href="https://bm.ruankao.org.cn/sign/in?time=2" class="btn" >访问网站</a>
+            </div>
+            
+            <!-- 预留学习服务2 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="service-name">考研信息平台</h3>
+                <p class="service-desc">研究生招生信息、院校专业查询与备考指导</p>
+                <a href="#" class="btn" style="opacity: 0.7; pointer-events: none;">即将推出</a>
+            </div>
+            
+            <!-- 添加新服务 -->
+            <div class="service-card add-service">
+                <div class="add-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="add-text">添加新服务</div>
+            </div>
+        </div>
+		
+		
+        
+        <footer>
+            <p>© 2023 学生服务导航 | 助力学生成长与发展</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 添加新服务按钮点击效果
+            const addServiceBtn = document.querySelector('.add-service');
+            addServiceBtn.addEventListener('click', function() {
+                alert('添加新服务功能开发中...');
+            });
+        });
+    </script>
+</body>
+</html>
+

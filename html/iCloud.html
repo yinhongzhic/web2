@@ -1,0 +1,210 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>云定</title>
+	</head>
+	<body>
+		<a href="https://i.mi.com/" target="_self"><div>小米云I</div></a>
+		<a href="https://cloud.huawei.com?15373400873Name1" target="_self"><div>华为云Y</div></a>
+		<a href="https://cloud.huawei.com?17320740213码无留疤无硫疤" target="_self"><div>华为云M</div></a>
+	</body>
+</html>
+ -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云定</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .clouds-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .cloud-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 25px;
+            width: 220px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cloud-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+        
+        .cloud-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .cloud-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+        
+        .cloud-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .cloud-desc {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .clouds-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>云定</h1>
+            <p class="subtitle">一站式云服务导航平台</p>
+        </header>
+        
+        <div class="clouds-container">
+            <div class="cloud-card animate-float" style="animation-delay: 0s;">
+                <div class="cloud-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="cloud-name">小米云</h3>
+                <p class="cloud-desc">小米生态链云服务，安全可靠的数据存储与同步</p>
+                <a href="https://i.mi.com/" target="_self" class="btn">敕</a>
+            </div>
+            
+            <div class="cloud-card animate-float" style="animation-delay: 0.5s;">
+                <div class="cloud-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <h3 class="cloud-name">华为云Y</h3>
+                <p class="cloud-desc">企业级云服务平台，提供全面的云计算解决方案</p>
+                <a href="https://cloud.huawei.com?15373400873Name1" target="_self" class="btn">敕</a>
+            </div>
+            
+            <div class="cloud-card animate-float" style="animation-delay: 1s;">
+                <div class="cloud-icon">
+                    <i class="fas fa-cloud-moon"></i>
+                </div>
+                <h3 class="cloud-name">华为云M</h3>
+                <p class="cloud-desc">高性能云存储与计算服务，满足多样化业务需求</p>
+                <a href="https://cloud.huawei.com?17320740213码无留疤无硫疤" target="_self" class="btn">敕</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 云定 - 让云服务更简单</p>
+        </footer>
+    </div>
+</body>
+</html>

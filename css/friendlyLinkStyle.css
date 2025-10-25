@@ -204,7 +204,7 @@ a{
 }
 
 .t-6{
-	height:145px;
+	height:100px;
 }
 
 .t-a{
@@ -215,7 +215,7 @@ a{
 	height:52px;
 }
 
-.s-1, .s-2, .s-4, .s-7{
+.s-1, .s-2, .s-4{
 	height:50px;
 }
 .s-3, .s-5{
@@ -223,7 +223,10 @@ a{
 }
 
 .s-6{
-	height:150px;
+	height:100px;
+}
+.s-7{
+	height:100px;
 }
 
 .s-a{
