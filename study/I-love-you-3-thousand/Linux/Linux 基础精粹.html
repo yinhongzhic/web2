@@ -1,0 +1,702 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>Linux 基础精粹</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='linux-基础精粹'><span>Linux 基础精粹</span></h1><blockquote><p><span>原创内容，转载请注明出处！</span></p></blockquote><blockquote><p><span>Linux，全称 GNU/Linux，是一种免费使用和自由传播的 </span><a href='https://baike.baidu.com/item/类UNIX/9032872'><span>类UNIX</span></a><span> 操作系统，其内核由 </span><a href='https://baike.baidu.com/item/林纳斯·本纳第克特·托瓦兹/1034429'><span>林纳斯·本纳第克特·托瓦兹</span></a><span> 于1991年10月5日首次发布，它主要受到 </span><a href='https://baike.baidu.com/item/Minix/7106045'><span>Minix</span></a><span> 和 Unix 思想的启发，是一个基于 </span><a href='https://baike.baidu.com/item/POSIX/3792413'><span>POSIX</span></a><span> 的多用户、</span><a href='https://baike.baidu.com/item/多任务/1011764'><span>多任务</span></a><span>、支持</span><a href='https://baike.baidu.com/item/多线程/1190404'><span>多线程</span></a><span>和多 </span><a href='https://baike.baidu.com/item/CPU/120556'><span>CPU</span></a><span> 的操作系统。它能运行主要的 </span><a href='https://baike.baidu.com/item/Unix/219943'><span>Unix</span></a><span> 工具软件、应用程序和网络协议。它支持 </span><a href='https://baike.baidu.com/item/32位/5812218'><span>32位</span></a><span> 和 </span><a href='https://baike.baidu.com/item/64位/2262282'><span>64位</span></a><span> 硬件。Linux 继承了 Unix 以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。Linux 有上百种不同的发行版，如基于社区开发的 </span><a href='https://baike.baidu.com/item/ubuntu/155795'><span>Ubuntu</span></a><span>、</span><a href='https://baike.baidu.com/item/CentOS'><span>CentOS</span></a><span>、</span><a href='https://baike.baidu.com/item/debian/748667'><span>Debian</span></a><span>，和基于商业开发的 </span><a href='https://baike.baidu.com/item/Red Hat Enterprise Linux/10770503'><span>Red Hat Enterprise Linux</span></a><span>、</span><a href='https://baike.baidu.com/item/SUSE/60409'><span>SUSE</span></a><span>、</span><a href='https://baike.baidu.com/item/Oracle Linux/6876458'><span>Oracle Linux</span></a><span> 等。</span></p></blockquote><h1 id='一linux目录结构'><span>一、Linux目录结构</span></h1><p><img src="mark-img/d0c50-linux2bfile2bsystem2bhierarchy.jpg" referrerpolicy="no-referrer" alt="img"></p><ul><li><p><strong><span>/bin</span></strong>
+<span>bin 是 Binaries（二进制文件）的缩写，这个目录存放着最经常使用的命令。</span></p></li><li><p><strong><span>/boot</span></strong>
+<span>这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</span></p></li><li><p><strong><span>/dev</span></strong>
+<span>dev 是 Device（设备）的缩写，该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。</span></p></li><li><p><strong><span>/etc</span></strong>
+<span>etc 是 Etcetera（等等）的缩写，这个目录用来存放所有的系统管理所需要的配置文件和子目录。</span></p></li><li><p><strong><span>/home</span></strong>
+<span>用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的，如上图中的 alice、bob 和 eve。</span></p></li><li><p><strong><span>/lib</span></strong>
+<span>lib 是 Library（库）的缩写，这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件，几乎所有的应用程序都需要用到这些共享库。</span></p></li><li><p><strong><span>/lost+found</span></strong>
+<span>这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</span></p></li><li><p><strong><span>/media</span></strong>
+<span>Linux 系统会自动识别一些设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下。</span></p></li><li><p><strong><span>/mnt</span></strong>
+<span>系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。</span></p></li><li><p><strong><span>/opt</span></strong>
+<span>opt 是 optional（可选）的缩写，这是给主机额外安装软件所摆放的目录，比如你安装一个 ORACLE 数据库则就可以放到这个目录下，默认是空的。</span></p></li><li><p><strong><span>/proc</span></strong>
+<span>proc 是 Processes（进程）的缩写，/proc 是一种伪文件系统（即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。</span>
+<span>这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的 ping 命令，使别人无法 ping 你的机器：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.5173px; left: 7.99921px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre></li><li><p><strong><span>/root</span></strong>
+<span>该目录为系统管理员，也称作超级权限者的用户主目录。</span></p></li><li><p><strong><span>/sbin</span></strong>
+<span>s 就是 Super User 的意思，是 Superuser Binaries（超级用户的二进制文件）的缩写，这里存放的是系统管理员使用的系统管理程序。</span></p></li><li><p><strong><span>/selinux</span></strong>
+<span>这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于 Windows 的防火墙，但是这套机制比较复杂，这个目录就是存放 Selinux 相关的文件的。</span></p></li><li><p><strong><span>/srv</span></strong>
+<span>该目录存放一些服务启动之后需要提取的数据。</span></p></li><li><p><strong><span>/sys</span></strong></p><p><span>这是 Linux2.6 内核的一个很大的变化，该目录下安装了 2.6 内核中新出现的一个文件系统 sysfs。</span></p><p><span>sysfs 文件系统集成了下面 3 种文件系统的信息：针对进程信息的 proc 文件系统、针对设备的 devfs 文件系统以及针对伪终端的 devpts 文件系统。</span></p><p><span>该文件系统是内核设备树的一个直观反映。</span></p><p><span>当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</span></p></li><li><p><strong><span>/tmp</span></strong>
+<span>tmp 是 temporary（临时）的缩写这个目录是用来存放一些临时文件的。</span></p></li><li><p><strong><span>/usr</span></strong>
+<span>usr 是 unix shared resources（共享资源）的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 Windows 下的 program files 目录。</span></p></li><li><p><strong><span>/usr/bin</span></strong>
+<span>系统用户使用的应用程序。</span></p></li><li><p><strong><span>/usr/sbin</span></strong>
+<span>超级用户使用的比较高级的管理程序和系统守护程序。</span></p></li><li><p><strong><span>/usr/src</span></strong>
+<span>内核源代码默认的放置目录。</span></p></li><li><p><strong><span>/var</span></strong>
+<span>var 是 variable（变量）的缩写，这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下，包括各种日志文件。</span></p></li><li><p><strong><span>/run</span></strong>
+<span>是一个临时文件系统，存储系统启动以来的信息，当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</span></p></li></ul><blockquote><p><span>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。</span></p><p><strong><span>/etc</span></strong><span>：上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。</span></p><p><strong><span>/bin、/sbin、/usr/bin、/usr/sbin</span></strong><span>：这是系统预设的执行文件的放置目录，比如 </span><strong><span>ls</span></strong><span> 就是在 </span><strong><span>/bin/ls</span></strong><span> 目录下的。</span></p><p><span>值得提出的是 </span><strong><span>/bin、/usr/bin</span></strong><span> 是给系统用户使用的指令（除 root 外的通用用户），而 </span><strong><span>/sbin、/usr/sbin</span></strong><span> 则是给 root 使用的指令。</span></p><p><strong><span>/var</span></strong><span>：这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。</span></p></blockquote><blockquote><p><span>其中对于开发者要注意：</span></p><ul><li><span>/root：系统管理员目录</span></li><li><span>/home/用户名：普通用户目录</span></li><li><span>/usr：软件安装目录（一般情况下，环境配置安装的软件都放在 /usr/local 目录下）</span></li></ul><p><span>Linux 的软件安装目录是有讲究的：</span></p><ul><li><code>/usr</code><span>：系统级的目录，可以理解为 </span><code>C:/Windows/</code></li><li><code>/usr/lib</code><span>：理解为 </span><code>C:/Windows/System32</code></li><li><code>/usr/local</code><span>：用户级的程序目录，可以理解为</span><code>C:/Progrem Files/</code><span>，用户自己编译的软件默认会安装到这个目录下（环境配置安装的软件也推荐放在该目录下）</span></li><li><code>/opt</code><span>：用户级的程序目录，可以理解为</span><code>D:/Software</code><span>，opt 有可选的意思，这里可以用于放置第三方大型软件（如，办公软件、应用软件），当你不需要时，直接</span><code>rm -rf</code><span>掉即可，在硬盘容量不够时，也可将 /opt 单独挂载到其他磁盘上使用</span></li></ul><p><span>源码放哪里？</span></p><ul><li><code>/usr/src</code><span>：系统级的源码目录</span></li><li><code>/usr/local/src</code><span>：用户级的源码目录</span></li></ul></blockquote><h1 id='二常用命令'><span>二、常用命令</span></h1><ul><li><p><code>ls</code><span>：列出文件及目录的名称</span></p><ul><li><p><code>ls -a</code><span>：列出所有文件及目录（</span><code>.</code><span> 开头的隐藏文件及目录也会列出）</span></p></li><li><p><code>ls -l</code><span> 或 </span><code>ll</code><span>：列出文件及目录详细信息（文件属性、文件数、拥有者、所属组、文件大小、建档日期、文件名）</span></p><ul><li><p><span>注意：对于 “文件大小” 这一块，文件、目录有所区别：</span></p><ol start='' ><li><span>对于普通文件，显示的是文件的实际大小（字节数）</span></li><li><span>对于设备文件是指主设备号（后一列为次设备号）</span></li><li><span>对于目录，是指目录大小（目录内 inode 列表所占空间，而不是目录内文件所占的空间大小，一般情况大多是 4096）</span></li><li><span>对于符号链接，是指链接文件的路径名的字节数</span></li></ol></li></ul></li><li><p><code>ls -t</code><span>：将文件及目录依建立时间之先后次序列出</span></p></li></ul></li><li><p><code>du -sh</code><span>：查看所在目录的大小</span></p><ul><li><code>du -sh 文件名或目录名</code><span>：查看指定文件或目录的大小</span></li><li><code>du -sh *</code><span>：查看当前路径下所有文件及目录各自的大小</span></li></ul></li><li><p><code>pwd</code><span>：查看当前所在绝对路径</span></p></li><li><p><code>cd 目录路径</code><span>：切换路径下的目录</span></p><ul><li><code>cd 目录名</code><span>：切换到当前路径下的目录（相对路径、绝对路径）</span></li><li><code>cd /</code><span>：切换到根目录（不是 /root）</span></li><li><code>cd ~</code><span>：切换到 /home 目录</span></li><li><code>cd ..</code><span>：切换到父级目录</span></li><li><code>cd -</code><span>：切换到上一次所在的目录</span></li></ul></li><li><p><code>mkdir 目录名</code><span>：创建目录</span></p></li><li><p><code>rmdir 目录名</code><span>：删除目录（前提：目录为空！）</span></p></li><li><p><code>cat 文件名</code><span>：浏览文件的所有内容</span></p><ul><li><code>cat &gt; 文件名 &lt;&lt; EOF</code><span>：写入内容进文件，会先清空文件内容（键入 EOF 并回车便会退出）</span></li><li><code>cat &gt;&gt; 文件名 &lt;&lt; EOF</code><span>：追加内容进文件（键入 EOF 并回车便会退出）</span></li><li><code>cat a.txt &gt; b.txt</code><span>：将 a.txt 的内容放到 b.txt 中，会先清空 b.txt</span></li><li><code>cat a.txt &gt;&gt; b.txt</code><span>：将 a.txt 的内容追加到 b.txt 的末尾</span></li><li><span>注意：其实 &gt; 及 &gt;&gt; 的本质是重定向输出，任何可以输出内容的命令都可以借助其进行重定向输出，比如：</span><code>ifconfig &gt;&gt; ip.txt</code><span> 就是将 ifconfig 命令的输出内容（网络配置信息）追加到 ip.txt 文件中</span></li></ul></li><li><p><code>more 文件名</code><span>：分页浏览文件的所有内容（空格显示下一页、回车显示下一行、按 Q 退出）</span></p></li><li><p><code>less 文件名</code><span>：与 more 类似，不同的是还可以通过键盘上下键来控制</span></p></li><li><p><code>tail</code><span>：用于显示文件末尾几行的内容</span></p><ul><li><code>tail -行数 文件名</code><span>：查看文件倒数几行（常用于查看日志文件）</span></li><li><code>tail - f 文件名</code><span>：动态查看文件（文件内容有变化会动态更新，常用于查看运行生成文件）</span></li></ul></li><li><p><code>cp 原文件 目标路径</code><span>：复制文件</span></p><ul><li><code>cp 原文件 目标路径/重命名文件</code><span>：复制并重命名文件</span></li><li><span>注意：cp 命令只对文件生效，如果是对目录进行操作请使用 </span><code>cp -r</code></li></ul></li><li><p><code>mv 原文件 目标路径</code><span>：剪切文件</span></p><ul><li><code>mv 原文件 目标路径/重命名文件</code><span>：剪切并重命名文件</span></li><li><code>mv 原文件 ./重命名文件</code><span>：重命名文件</span></li><li><span>注意：mv 命令对文件和目录都生效</span></li></ul></li><li><p><code>rm</code><span>：删除文件命令</span></p><ul><li><code>rm 文件名</code><span>：删除文件（默认会有确认提示：y 确认，n 取消）</span></li><li><code>rm -r 目录名</code><span>：删除目录（默认会有确认提示：y 确认，n 取消），相比 rmdir 可以删除非空目录</span></li><li><span>注意：Ubuntu 对 rm 默认没有提示，所以需要加 </span><code>-i</code><span> 参数。</span><code>-f</code><span> 在任何 Linux 系统中都可以用来取消提示，但是非常不推荐这么做！</span></li><li><span>注意：对于文件夹的删除 </span><code>-i</code><span> 会递归提醒（即：文件夹中包含的所有文件都会单独确认一次），如果不想这样可以使用 </span><code>-I</code><span> 一次性确认</span></li></ul></li><li><p><code>*</code><span>：通配符，表示所有内容（</span><code>*.zip</code><span>：表示该路径下的所有 </span><code>.zip</code><span> 后缀结尾的文件）</span></p></li><li><p><code>tar</code><span>：Linux 打包或解压命令（tar 命令位于 /bin 目录下，它能够将用户所指定的文件或目录打包成一个文件，但不做压缩）一般 Linux 上常用的压缩方式是选用 tar 将许多文件打包成一个文件，再以 gzip 压缩命令压缩成 xxx.tar.gz 的文件</span></p><ul><li><code>tar -cvf 打包文件名.tar 目标目录或文件</code><span>：打包为 tar 文件</span></li><li><code>tar -zcvf 打包并压缩文件名.tar.gz 目标目录或文件</code><span>：打包并压缩为 tar 文件</span></li><li><code>tar -zxvf 文件.tar.gz -C 目标目录</code><span>：解压 tar.gz 文件到目标目录下</span></li></ul></li><li><p><code>zip -r 打包压缩文件名.zip 目标目录或文件</code><span>：打包压缩为 zip 文件</span></p><ul><li><code>-r</code><span> 的含义：递归处理，将指定目录下的所有文件和子目录一并处理</span></li><li><code>zip 打包文件名.zip 目标目录或文件</code><span>：只打包不压缩</span></li></ul></li><li><p><code>unzip 文件.zip -d 目标路径</code><span>：解压 zip 文件到目标路径</span></p><ul><li><code>unzip -l 文件.zip</code><span>：查看压缩文件中包含的文件（不解压）</span></li></ul></li><li><p><code>find</code><span>：查找文件</span></p><ul><li><p><code>find 查找路径 -name 文件名</code><span>：在某路径下查找文件</span></p><ul><li><code>find / -name zjr*.zip</code><span>：在根路径下查找 zjr 开头的 zip 文件</span></li></ul></li></ul></li><li><p><code>grep</code><span>：查找文件内容</span></p><ul><li><code>grep 查找字符串 查找文件</code><span>：显示查找到的那一行</span></li><li><code>grep 查找字符串 查找文件 -A1</code><span>：显示查找到的那一行及其上一行</span></li><li><code>grep 查找字符串 查找文件 -B1</code><span>：显示查找到的那一行及其下一行</span></li><li><code>grep 查找字符串 查找文件 --color</code><span>：高亮显示搜索到的目标字符串</span></li></ul></li><li><p><code>touch</code><span>：创建一个空文件</span></p><ul><li><code>touch zjr.txt</code></li></ul></li><li><p><code>clear</code><span>：清屏</span></p></li><li><p><code>ps -ef</code><span>：查看所有进程</span></p><ul><li><code>ps -ef | grep 要查内容</code><span>：查看某一进程</span></li></ul></li><li><p><code>kill 进程号</code><span>：杀掉 进程号 编号的进程</span></p><ul><li><code>kill -9 进程号</code><span>：强制杀死进程</span></li></ul></li><li><p><code>|</code><span>：管道，Linux 命令中重要的一个概念，其作用是将一个命令的输出作用于另一个命令的输入</span></p><ul><li><code>ls --help | more</code><span>：分页查询帮助信息</span></li><li><code>cat index.html | more</code><span>：分页查看 index.html 文件内容</span></li><li><code>ps -ef |grep java</code><span>：查询名称中包含 java 的进程</span></li></ul></li></ul><hr /><p><span>【Linux 权限】</span></p><p><span>当我们用 </span><code>ls -l</code><span> 查看时，会发现第一列有 10 个字符（分四个部分），这就是文件或目录的权限。</span></p><ul><li><p><span>第一部分：代表文件类型（占 1 个字符）</span></p><ul><li><code>-</code><span>：表示文件</span></li><li><code>d</code><span>：表示目录</span></li><li><code>l</code><span>：表示连接（可以理解为快捷方式）</span></li></ul></li><li><p><span>第二部分：代表当前用户该文件或目录所具有的权限（占 3 个字符）</span></p><ul><li><code>r</code><span>：读</span></li><li><code>w</code><span>：写</span></li><li><code>x</code><span>：可执行</span></li></ul></li><li><p><span>第三部分：代表当前组内其他用户具有该文件或目录的权限（占 3 个字符）</span></p><ul><li><code>r</code><span>：读</span></li><li><code>w</code><span>：写</span></li><li><code>x</code><span>：可执行</span></li></ul></li><li><p><span>第四部分：代表其他组的用户具有该文件或目录的权限（占 3 个字符）</span></p><ul><li><code>r</code><span>：读</span></li><li><code>w</code><span>：写</span></li><li><code>x</code><span>：可执行</span></li></ul></li></ul><blockquote><p><span>r：对文件是指可读取内容，对目录是可以 ls</span></p><p><span>w：对文件是指可修改文件内容，对目录是指可以在其中创建或删除子节点（目录或文件）</span></p><p><span>x：对文件是指是否可以运行这个文件，对目录是指是否可以 cd 进入这个目录</span></p></blockquote><p><span>【举例】</span></p><p><span>      </span><img src="mark-img/image-20220713205741598.png" alt="image-20220713205741598" style="zoom:25%;" /><span>                    </span></p><p><span>【权限修改】</span></p><ul><li><p><span>方式一：</span><code>chmod u=权限, g=权限, o=权限 文件或目录名</code></p><ul><li><span>例如：</span><code>chmod u=rwx, g=rx, o=rx a.txt</code></li></ul></li><li><p><span>方式二：r 对应 4、w 对应 2、x 对应 1，（设置时对其进行累加）</span></p><ul><li><span>例如：</span><code>chmod 755 a.txt</code><span>（4+2+1=7、4+1=5、4+1=5）</span></li></ul></li></ul><hr /><p><span>【Linux 常用网络操作】</span></p><ul><li><p><span>主机名配置</span></p><ul><li><code>hostname</code><span>：查看主机名</span></li><li><code>hostname 新主机名</code><span>：修改主机名（重启后无效，如果要永久生效，需要修改 /etc/sysconfig/network 文件中的 HOSTNAME）</span></li></ul></li><li><p><span>IP 地址配置</span></p><ul><li><p><code>ifconfig</code><span>：查看 ip 地址</span></p><ul><li><p><code>ifconfig eth0 192.168.12.22</code><span>：修改 ip 地址（重启后无效）</span></p></li><li><p><span>如果要永久性修改 ip 地址，需要修改 /etc/sysconfig/network-scripts/ifcfg-eth0 文件</span></p><ul><li><code>DEVICE=eth0</code><span>：网卡</span></li><li><code>ONBOOT=no</code><span>：系统启动时是否激活该网卡（yes 使用，no 不使用）</span></li><li><code>BOOTPROTO=dhcp</code><span>：是否自动获取 ip 地址（dhcp 自动获取，static 静态 ip）</span></li><li><code>HWADDR=00:0C:29:B5:B2:69</code><span> ：MAC 地址</span></li><li><code>IPADDR=12.168.177.129</code><span> ：IP 地址</span></li><li><code>NETMASK=255.255.255.0</code><span> ：子网掩码</span></li><li><code>NETWORK=192.168.177.0</code><span> ：网络地址</span></li><li><code>BROADCAST=192.168.0.255</code><span> ：广播地址</span></li></ul></li></ul></li><li><p><span>在修改后 </span><code>service network restart</code><span>：重启网络服务</span></p></li></ul></li><li><p><span>域名映射</span></p><blockquote><p><span>Linux 域名映射：/etc/hosts 文件用于在通过主机名进行访问时做 ip 地址解析之用，相当于 Windows 系统的 C:\Windows\System32\drivers\etc\hosts 文件的功能，即：将一个域名映射到一个 ip 地址，当访问这个域名时（ping 这个域名时）会自动访问该 ip 地址</span></p></blockquote></li><li><p><span>网络服务管理</span></p><ul><li><p><code>service network status</code><span>：查看指定服务的状态</span></p></li><li><p><code>service network stop</code><span>：停止指定服务</span></p></li><li><p><code>service network start</code><span>：启动指定服务</span></p></li><li><p><code>service network restart</code><span>：重启指定服务</span></p></li><li><p><code>service --status–all</code><span>：查看系统中所有后台服务</span></p></li><li><p><code>netstat –nltp</code><span>：查看系统中网络进程的端口监听情况</span></p></li><li><p><span>防火墙设置</span></p><ul><li><p><span>防火墙根据配置文件 /etc/sysconfig/iptables 来控制本机的 ”出”、”入” 网络访问行为</span></p><ul><li><code>service iptables status</code><span>：查看防火墙状态</span></li><li><code>service iptables stop</code><span>：关闭防火墙</span></li><li><code>service iptables start</code><span>：启动防火墙</span></li><li><code>chkconfig iptables off</code><span>：禁止防火墙自启</span></li></ul></li></ul><blockquote><p><span>当我们在 Linux 服务器上部署项目时，经常需要放行一些防火墙的端口，否则某些运行中的服务就会在外界访问失败，例如：</span></p><blockquote><p><span>MySQL：3306 端口（以 CentOS 为例）</span></p></blockquote><blockquote><ul><li><code>/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</code></li><li><code>/etc/rc.d/init.d/iptables save</code></li><li><code>/etc/init.d/iptables status</code></li></ul></blockquote><blockquote><p><span>当然，也可以直接关闭防火墙，但是强烈不建议这样！</span></p></blockquote><blockquote><blockquote><p><span>目前，一般的项目组或是小型公司的网站服务器基本都是云服务器（例如：阿里云、腾讯云），而这些云服务器的防火墙安全组配置不需要手动配置，而是去控制台设置即可！</span></p><p><span>同时，普通网站所需的环境可以借助第三方的 Linux 配置面板进行安装和配置（如：</span><a href='https://www.bt.cn/new/index.html'><span>宝塔面板</span></a><span>），而且一般情况下面板不仅能一键安装项目环境，还提供了系统资源及安全监控等功能，可以说是在一定程度上解决了环境配置繁琐易错的难题（注意：放行防火墙端口的时候，必须云服务器控制台与面板后台都要同时放行！）</span></p></blockquote></blockquote></blockquote></li></ul></li></ul><hr /><p><span>【Vim 编辑器】</span></p><p><span>在 Linux 下一般使用 Vim 编辑器来编辑文件，Vim 既可以查看文件也可以编辑文件，三种模式：命令行、插入、底行模式。</span></p><p><span>打开文件：</span><code>vim 文件名</code><span>（默认进入命令模式）</span></p><p><span>切换到插入模式：按 i 、o、a 键</span></p><p><span>三种进入插入模式：</span></p><ul><li><span>i：在当前的光标所在处插入</span></li><li><span>o：在当前光标所在的行的下一行插入</span></li><li><span>a：在光标所在的下一个字符插入</span></li></ul><p><span>切换到命令行模式：按 Esc 键</span></p><p><span>切换到底行模式：在命令模式下按 </span><code>:</code><span>（更多详细用法，查询文档）</span></p><p><span>退出：</span><code>Esc</code><span> ——&gt; </span><code>:q</code></p><p><span>保存并退出：</span><code>Esc</code><span> ——&gt; </span><code>:wq</code></p><p><span>不保存退出：</span><code>Esc</code><span> ——&gt; </span><code>:q!</code></p><p><span>搜索：命令模式下 </span><code>/搜索内容</code><span>（向前搜索），</span><code>?搜索内容</code><span>（向后搜索），之后按 Enter 开始搜索，按 n 搜索下一个匹配结果，按 N 查找前面一个匹配结果</span></p><hr /><p><span>【Linux 软件安装】</span></p><p><span>Linux 上的软件安装有以下几种常见方式：</span></p><ul><li><span>二进制发布包：软件已经针对具体平台编译打包发布，只要解压，修改配置即可，缺陷是各个 Linux 平台不兼容</span></li><li><span>RPM 包：软件已经按照 redhat 的包管理工具规范 RPM 进行打包发布，需要获取到相应的软件 RPM 发布包，然后用 RPM 命令进行安装，缺陷是不会自动解决软件依赖</span></li><li><span>Yum 在线安装：软件已经以 RPM 规范打包，但发布在了网络上的一些服务器上，可用 yum 在线安装服务器上的 rpm 软件，并且会自动解决软件安装过程中的库依赖问题，</span><a href='https://www.runoob.com/linux/linux-yum.html'><span>linux yum 命令 | 菜鸟教程 (runoob.com)</span></a></li><li><span>源码编译安装：软件以源码工程的形式发布，需要获取到源码工程后用相应开发工具进行编译打包部署</span></li></ul><hr /><p><span>【Linux 文件上传下载工具】</span></p><ul><li><a href='https://baike.baidu.com/item/FTP/13839'><span>FTP</span></a></li><li><a href='https://baike.baidu.com/item/lrzsz/5592701'><span>lrzsz</span></a></li></ul><p>&nbsp;</p></div></div>
+</body>
+</html>

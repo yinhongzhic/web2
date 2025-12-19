@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我爱你，不止三千遍 | 技术学习笔记</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff7eb3, #65c7f7, #9d50bb);
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #ff7eb3, #65c7f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #aaa;
+            font-weight: 300;
+        }
+        
+        .author {
+            display: inline-block;
+            background: rgba(101, 199, 247, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            border: 1px solid rgba(101, 199, 247, 0.3);
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        /* 分类卡片 */
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            height: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(157, 80, 187, 0.5);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+        }
+        
+        .database .category-icon {
+            background: linear-gradient(135deg, #9d50bb, #6a11cb);
+        }
+        
+        .linux .category-icon {
+            background: linear-gradient(135deg, #f46b45, #eea849);
+        }
+        
+        .git .category-icon {
+            background: linear-gradient(135deg, #1d976c, #93f9b9);
+        }
+        
+        .category-card h2 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        
+        /* 链接样式 */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .note-link {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #ddd;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .note-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        .note-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .note-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .note-content p {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 25px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer a {
+            color: #65c7f7;
+            text-decoration: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-card {
+                padding: 20px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .category-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .database { animation-delay: 0.1s; }
+        .linux { animation-delay: 0.3s; }
+        .git { animation-delay: 0.5s; }
+        
+        /* 装饰元素 */
+        .decoration {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        /* 悬浮粒子动画 */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -50px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .float-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+        
+        .float-1 {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ff7eb3, transparent 70%);
+            animation-delay: 0s;
+        }
+        
+        .float-2 {
+            top: 70%;
+            right: 15%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #65c7f7, transparent 70%);
+            animation-delay: 5s;
+        }
+        
+        .float-3 {
+            top: 40%;
+            right: 20%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #9d50bb, transparent 70%);
+            animation-delay: 10s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰元素 -->
+    <div class="decoration">
+        <div class="float-element float-1"></div>
+        <div class="float-element float-2"></div>
+        <div class="float-element float-3"></div>
+    </div>
+    
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>我爱你，不止三千遍</h1>
+            <p>这是一个技术学习笔记合集，记录成长与积累</p>
+            <div class="author">周吉瑞 · GitHub</div>
+        </header>
+        
+        <!-- 主要内容 -->
+        <main class="main-content">
+            <!-- 数据库分类 -->
+            <div class="category-card database">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h2>数据库</h2>
+                </div>
+                <div class="links-container">
+                    <a href="../../study/I-love-you-3-thousand/MySQL/MySQL 精简笔记.html" target="_blank" class="note-link">
+                        <div class="note-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>MySQL 精简笔记</h3>
+                            <p>MySQL核心知识点与实用技巧总结</p>
+                        </div>
+                    </a>
+                    <a href="../../study/I-love-you-3-thousand/MySQL/《SQL&MySQL必知必会》读书笔记.html" target="_blank" class="note-link">
+                        <div class="note-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>《SQL&MySQL必知必会》读书笔记</h3>
+                            <p>经典数据库书籍学习笔记与实战经验</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Linux分类 -->
+            <div class="category-card linux">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h2>Linux</h2>
+                </div>
+                <div class="links-container">
+                    <a href="../../study/I-love-you-3-thousand/Linux/Linux 基础精粹.html" target="_blank" class="note-link">
+                        <div class="note-icon">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>Linux 基础精粹</h3>
+                            <p>Linux常用命令与系统管理核心知识</p>
+                        </div>
+                    </a>
+                    <a href="../../study/I-love-you-3-thousand/Linux/VMware Player & Ubuntu 环境搭建.html" target="_blank" class="note-link">
+                        <div class="note-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>VMware Player & Ubuntu 环境搭建</h3>
+                            <p>虚拟机与Linux系统安装配置完整指南</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Git分类 -->
+            <div class="category-card git">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <h2>Git</h2>
+                </div>
+                <div class="links-container">
+                    <a href="../../study/I-love-you-3-thousand/Git/Git基础精粹.html" target="_blank" class="note-link">
+                        <div class="note-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>Git基础精粹</h3>
+                            <p>版本控制核心概念与常用命令详解</p>
+                        </div>
+                    </a>
+                    <!-- 可以添加更多Git相关笔记链接 -->
+                    <div class="note-link coming-soon">
+                        <div class="note-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3>更多笔记整理中</h3>
+                            <p>持续更新，敬请期待</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2023 周吉瑞 | 学习笔记合集 | <i class="fas fa-heart" style="color: #ff7eb3;"></i> 我爱你，不止三千遍 <i class="fas fa-heart" style="color: #ff7eb3;"></i></p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">知识如爱情，需要不断积累与呵护</p>
+        </footer>
+    </div>
+
+    <script>
+        // 添加一些简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为每个卡片添加悬停效果增强
+            const cards = document.querySelectorAll('.category-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 为页面标题添加打字机效果
+            const title = document.querySelector('.header h1');
+            const originalText = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    title.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            // 延迟开始打字机效果
+            setTimeout(typeWriter, 500);
+            
+            // 添加背景粒子效果
+            createParticles();
+        });
+        
+        // 创建背景粒子
+        function createParticles() {
+            const decoration = document.querySelector('.decoration');
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小和位置
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // 随机颜色
+                const colors = ['rgba(255, 126, 179, 0.5)', 'rgba(101, 199, 247, 0.5)', 'rgba(157, 80, 187, 0.5)'];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 随机动画
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s infinite linear`;
+                
+                decoration.appendChild(particle);
+            }
+        }
+    </script>
+</body>
+</html>
