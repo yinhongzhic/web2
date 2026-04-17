@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>myWork · 导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2f7 0%, #d4dfed 100%);
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* 装饰光晕 */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(79, 109, 179, 0.2) 0%, rgba(79, 109, 179, 0) 70%);
+            border-radius: 50%;
+            top: -80px;
+            left: -80px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(56, 182, 255, 0.18) 0%, rgba(56, 182, 255, 0) 70%);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -70px;
+            pointer-events: none;
+        }
+
+        /* 主容器 */
+        .dashboard {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.2s;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #1F2F4F, #2C4C6E);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1::before {
+            content: "⚡";
+            font-size: 2.6rem;
+            color: #2c5a7a;
+        }
+
+        .header h1::after {
+            content: "🧩";
+            font-size: 2.6rem;
+            color: #2c5a7a;
+        }
+
+        .sub {
+            color: #2c3e50cc;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            background: rgba(235, 245, 255, 0.7);
+            display: inline-block;
+            padding: 0.3rem 1.4rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 卡片网格 — 手动扩展时只需复制 .nav-card 块 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 1rem;
+        }
+
+        /* 单个卡片样式 */
+        .nav-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 1.8rem;
+            padding: 2rem 1.2rem;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            text-align: center;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            background: #ffffff;
+            box-shadow: 0 24px 32px -12px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 1);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
+            transition: transform 0.2s;
+        }
+
+        .nav-card:hover .card-icon {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #1F2F4F, #2C4C6E);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: #4a627a;
+            font-weight: 500;
+            background: rgba(100, 120, 150, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+        }
+
+        /* 底部提示 */
+        .footer-note {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.75rem;
+            color: #2c3e50aa;
+            border-top: 1px dashed rgba(72, 94, 144, 0.3);
+            padding-top: 1.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            background: rgba(235, 245, 255, 0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 680px) {
+            .dashboard {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .card-title {
+                font-size: 1.6rem;
+            }
+            .card-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="header">
+        <h1>myWork</h1>
+        <div class="sub">✦ 人生打怪中心 ✦</div>
+    </div>
+
+    <div class="cards-grid">
+        <!-- 卡片 1：北辰 -->
+        <a href="./html/beichen.html" class="nav-card">
+            <span class="card-icon">⛰️✨</span>
+            <span class="card-title">北辰</span>
+            <span class="card-desc">山东北辰机电设备股份有限公司</span>
+        </a>
+
+        <!-- 卡片 2：蓝奏云 -->
+        <a href="./html/lanzouyun.html" class="nav-card">
+            <span class="card-icon">☁️📦</span>
+            <span class="card-title">蓝奏云</span>
+            <span class="card-desc">极速云享 · 文件中枢</span>
+        </a>
+
+        <a href="./html/noteBook.html" class="nav-card">
+            <span class="card-icon">📓✍️</span>
+            <span class="card-title">Note</span>
+            <span class="card-desc">笔记本</span>
+        </a>
+        <!-- ========== 以后添加新模块，请复制上面 <a> 块，修改 href、图标、标题和描述即可 ========== -->
+        <!-- 示例：
+        <a href="./html/newpage.html" class="nav-card">
+            <span class="card-icon">📚🚀</span>
+            <span class="card-title">新模块</span>
+            <span class="card-desc">文档中心 · 团队知识库</span>
+        </a>
+        -->
+    </div>
+
+    <div class="footer-note">
+        <span>⚡ 我爱上班</span>
+        <span>🔐 不要惹我</span>
+        <span>💡 yhzwork@163.com</span>
+    </div>
+</div>
+</body>
+</html>

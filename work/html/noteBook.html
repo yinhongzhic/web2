@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>记事本 · 我的笔记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2f7 0%, #d4dfed 100%);
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', sans-serif;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 装饰光晕 */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(79, 109, 179, 0.2) 0%, rgba(79, 109, 179, 0) 70%);
+            border-radius: 50%;
+            top: -80px;
+            left: -80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(56, 182, 255, 0.18) 0%, rgba(56, 182, 255, 0) 70%);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -70px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 主容器 */
+        .notebook-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #2c5a7a;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .back-link:hover {
+            background: white;
+            transform: translateX(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #1F2F4F, #2C4C6E);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1::before {
+            content: "📓";
+            font-size: 2.6rem;
+            color: #2c5a7a;
+        }
+
+        .header h1::after {
+            content: "✍️";
+            font-size: 2.6rem;
+            color: #2c5a7a;
+        }
+
+        .sub {
+            color: #2c3e50cc;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            background: rgba(235, 245, 255, 0.7);
+            display: inline-block;
+            padding: 0.3rem 1.4rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 笔记内容区域 — 纯展示 */
+        .notes-content {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 笔记排版 */
+        .note-section {
+            margin-bottom: 2rem;
+        }
+
+        .note-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1f3b4c;
+            border-left: 5px solid #2c5f8a;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .note-section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2c3e4e;
+            margin-bottom: 0.8rem;
+        }
+
+        .note-section ul, .note-section ol {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e4e;
+        }
+
+        .note-section li {
+            margin: 0.5rem 0;
+            line-height: 1.5;
+        }
+
+        .note-tip {
+            background: rgba(44, 95, 138, 0.1);
+            padding: 1rem 1.2rem;
+            border-radius: 1rem;
+            border-left: 4px solid #2c5f8a;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #2c5a7a;
+        }
+
+        hr {
+            margin: 1.5rem 0;
+            border: none;
+            height: 1px;
+            background: rgba(72, 94, 144, 0.2);
+        }
+
+        /* 脚注 */
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #2c3e50aa;
+            border-top: 1px dashed rgba(72, 94, 144, 0.3);
+            padding-top: 1.5rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 680px) {
+            .notebook-container {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .notes-content {
+                padding: 1.2rem;
+            }
+            .note-section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="notebook-container">
+    <div class="header">
+        <a href="../mywork.html" class="back-link" title="返回工作台">← 返回 myWork</a>
+        <h1>记事本</h1>
+        <div class="sub">随手记录 · 灵感碎片</div>
+    </div>
+
+    <!-- 纯展示的笔记内容（直接写入HTML，前端只读） -->
+    <div class="notes-content">
+        <div class="note-section">
+            <h2>📌 工作备忘</h2>
+            <ul>
+                <li>DT登录地址：http://47.121.132.253:8086</li>
+                <li>✅ 增加“记事本”静态页面</li>
+                <li>📅 下午三点与团队同步数字化看板进度</li>
+                <li>🔧 修复蓝奏云链接跳转问题</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="note-section">
+            <h2>💡 灵感收集</h2>
+            <p>毛玻璃效果 + 渐变背景，整体视觉轻盈现代。<br>
+            后续可以考虑给卡片增加微交互，比如点击波纹。</p>
+            <p>“北辰”模块可以扩展为待办、采购、销售三个子卡片，已经完成设计。</p>
+        </div>
+
+        <hr>
+
+        <div class="note-section">
+            <h2>📚 待读文档</h2>
+            <ol>
+                <li>DT平台操作手册 v2.3</li>
+                <li>Q2 产品路线图</li>
+                <li>前端组件库更新日志</li>
+            </ol>
+        </div>
+
+        <div class="note-tip">
+            💡 提示：本页面内容直接写在 HTML 中，如需修改请编辑代码。所有笔记仅作展示，不包含编辑保存功能。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <span>静态记事本 · 内容可自定义</span>
+    </div>
+</div>
+</body>
+</html>
