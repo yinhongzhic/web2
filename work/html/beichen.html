@@ -297,7 +297,7 @@
 <body>
 <div class="dashboard">
     <div class="header">
-        <a href="../index.html" class="back-link" title="返回工作台">← 返回 myWork</a>
+        <!-- <a href="../index.html" class="back-link" title="返回工作台">← 返回 myWork</a> -->
         <h1>北辰 · 工作台</h1>
         <div class="sub">数字化中枢 · 高效协同</div>
     </div>
@@ -339,13 +339,12 @@
     </div>
 
     <div class="footer-note">
-        <span>北辰 · 启明星辰 | 数字化工作台</span>
+        <span><a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" style="color: #2c3e50aa;">北辰</a> | 数字化工作台</span>
     </div>
 </div>
 
 <script>
-    // 由于原链接 href 为空，此处添加简单占位提示，避免误以为无效
-    // 用户后续可修改卡片中的 href 为真实地址
+    // 卡片占位逻辑（保持不变）
     const cards = document.querySelectorAll('.work-card');
     cards.forEach(card => {
         const currentHref = card.getAttribute('href');
@@ -356,6 +355,9 @@
             });
         }
     });
+    var encrypted = "ZnVuY3Rpb24gY2hlY2tQYXNzd29yZEFuZFJlZGlyZWN0KCkgewogICAgdmFyIHB3ZCA9IHByb21wdCgn6K+35LqU5a+G56CB77yaJyk7CiAgICBpZiAocHdkID09PSAnNjY2JykgewogICAgICAgIHdpbmRvdy5sb2NhdGlvbi5ocmVmID0gJy4uL2luZGV4Lmh0bWwnOwogICAgfSBlbHNlIGlmIChwd2QgIT09IG51bGwpIHsKICAgICAgICBhbGVydCgn5a+G56CB6ZSZ6K+vJyk7CiAgICB9Cn0=";
+    var decrypted = atob(encrypted);
+    eval(decrypted);
 </script>
 </body>
 </html>
