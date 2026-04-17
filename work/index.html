@@ -223,7 +223,7 @@
             <span class="card-desc">极速云享 · 文件中枢</span>
         </a>
 
-        <a href="./html/noteBook.html" class="nav-card">
+        <a  class="nav-card" href="javascript:void(0);" onclick="checkPasswordAndRedirect()">
             <span class="card-icon">📓✍️</span>
             <span class="card-title">Note</span>
             <span class="card-desc">笔记本</span>
@@ -245,4 +245,9 @@
     </div>
 </div>
 </body>
+<script>
+    var encrypted = "ZnVuY3Rpb24gY2hlY2tQYXNzd29yZEFuZFJlZGlyZWN0KCkgewogICAgdmFyIHB3ZCA9IHByb21wdCgncGFzc3dkJyk7CiAgICBpZiAocHdkID09PSAneWh6JykgewogICAgICAgIHdpbmRvdy5sb2NhdGlvbi5ocmVmID0gJy4vaHRtbC9ub3RlQm9vay5odG1sJzsKICAgIH0gZWxzZSBpZiAocHdkICE9PSBudWxsKSB7CiAgICAgICAgYWxlcnQoJ2ZhbHNlJyk7CiAgICB9Cn0=";
+    var decrypted = atob(encrypted);
+    eval(decrypted);
+</script>
 </html>

@@ -1,14 +1,2 @@
-function check(){
-            var password = "666";
-            var temPassword = login_form.lpasswd.value;
-
-            if(password==temPassword){
-                window.location.href="lanqiao.html";
-                alert("登录成功!");
-                window.event.returnValue=false;
-                // window.location.href="lanqiao.html";
-                // location.href="lanqiao.html"
-            }else{
-                alert("用户名或密码错误!");
-             }
-        }  
+var encrypted = "ZnVuY3Rpb24gY2hlY2soKXsKICAgICAgICAgICAgdmFyIHBhc3N3b3JkID0gIjY2NiI7CiAgICAgICAgICAgIHZhciB0ZW1QYXNzd29yZCA9IGxvZ2luX2Zvcm0ubHBhc3N3ZC52YWx1ZTsKCiAgICAgICAgICAgIGlmKHBhc3N3b3JkPT10ZW1QYXNzd29yZCl7CiAgICAgICAgICAgICAgICB3aW5kb3cubG9jYXRpb24uaHJlZj0ibGFucWlhby5odG1sIjsKICAgICAgICAgICAgICAgIHdpbmRvdy5ldmVudC5yZXR1cm5WYWx1ZT1mYWxzZTsKICAgICAgICAgICAgICAgIC8vIHdpbmRvdy5sb2NhdGlvbi5ocmVmPSJsYW5xaWFvLmh0bWwiOwogICAgICAgICAgICAgICAgLy8gbG9jYXRpb24uaHJlZj0ibGFucWlhby5odG1sIgogICAgICAgICAgICB9ZWxzZXsKICAgICAgICAgICAgICAgIGFsZXJ0KCLnlKjmiLflkI3lj43pobXplovplpMiKTsKICAgICAgICAgICAgIH0KICAgICAgICB9";
+    eval(atob(encrypted));
