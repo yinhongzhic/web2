@@ -1,0 +1,3222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单日历备忘录</title>
+    <style>
+        :root {
+            /* 默认配色方案 - 明亮模式 */
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8fafc;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --today-highlight: #10b981;
+            --memo-indicator: #f59e0b;
+            --border-color: #e2e8f0;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            --edit-color: #3b82f6;
+            --count-badge-bg: #ef4444;
+            --count-badge-text: #ffffff;
+            --completed-color: #10b981;
+            --completed-badge-bg: #dc2626;
+            --search-highlight: #f59e0b;
+            --incomplete-highlight: #ef4444;
+            --day-hover-bg: #f1f5f9;
+            --other-month-bg: #f1f5f9;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+			/* 新增蓝色渐变背景变量 */
+			--blue-gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			--blue-light-gradient: linear-gradient(135deg, #a3bffa 0%, #d0b7fa 100%);
+			--calendar-bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+			--memo-bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0e9ff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+        }
+		
+        .calendar-container {
+            background: var(--primary-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .memo-container {
+            background: var(--primary-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .calendar-header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .calendar-header-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .calendar-header-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .nav-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .month-year {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .data-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .complete-all-btn, .import-btn, .export-btn, .search-btn, .incomplete-filter-btn {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 100px;
+            height: 40px;
+        }
+
+        .complete-all-btn {
+            background: var(--completed-color);
+            color: white;
+            border-color: var(--completed-color);
+        }
+
+        .import-btn {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .export-btn {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .search-btn {
+            background: var(--edit-color);
+            color: white;
+            border-color: var(--edit-color);
+        }
+
+        .incomplete-filter-btn {
+            background: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .complete-all-btn:hover, .import-btn:hover, .export-btn:hover, .search-btn:hover, .incomplete-filter-btn:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .import-file-input {
+            display: none;
+        }
+
+        .search-panel {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-panel.active {
+            display: block;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .search-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .close-search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .close-search-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .search-input-container input {
+            flex: 1;
+            padding: 10px 14px;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-input-container input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .search-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .search-option label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .search-option input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: var(--accent-color);
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 12px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            background: var(--primary-bg);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .search-result-item:hover {
+            background: var(--day-hover-bg);
+            border-color: var(--accent-color);
+        }
+
+        .search-result-date {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .search-result-memo {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .search-result-memo .highlight {
+            background-color: var(--search-highlight);
+            color: var(--text-primary);
+            padding: 0 2px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        .memo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .memo-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .memo-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .selected-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .memo-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-selector label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .theme-selector select {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: top;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 4px;
+            border: 1px solid transparent;
+			overflow: hidden; /* 防止内容溢出 */
+			/* 新增虚线边框 */
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+        }
+
+        .calendar-day:hover {
+            background: var(--day-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .day-number {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+		
+		/* 备忘录预览文本样式 */
+		.memo-preview {
+			font-size: 12px;
+			line-height: 1.2;
+			text-align: left;
+			color: var(--text-secondary);
+			word-break: break-word; /* 在单词内断行 */
+			word-wrap: break-word; /* 兼容性 */
+			overflow-wrap: break-word; /* 现代标准 */
+			hyphens: auto; /* 英文单词连字符 */
+			overflow: hidden;
+			width: 100%;
+			max-height: 100%;
+			margin-top: 2px;
+			padding: 0 2px;
+			opacity: 0.9;
+		}
+
+		/* 当有备忘录时，缩小日期数字的字体 */
+		.calendar-day.has-memos .day-number {
+			font-size: 14px;
+			margin-bottom: 0;
+		}
+
+		/* 其他月份不显示预览 */
+		.calendar-day.other-month .memo-preview {
+			display: none;
+		}
+
+        .other-month {
+            color: var(--text-muted);
+            background: var(--other-month-bg);
+        }
+
+        .today {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--today-highlight);
+            color: var(--today-highlight);
+        }
+
+        .has-incomplete {
+            border: 1px solid var(--incomplete-highlight);
+            box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3);
+        }
+
+        .has-incomplete .day-number {
+            color: var(--incomplete-highlight);
+        }
+
+        .search-match {
+            border: 1px solid var(--search-highlight);
+            box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3);
+        }
+
+        .search-match .day-number {
+            color: var(--search-highlight);
+        }
+
+        .memo-count-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            min-width: 20px;
+            height: 20px;
+            background: var(--count-badge-bg);
+            color: var(--count-badge-text);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 0 5px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            z-index: 2;
+        }
+
+        .memo-count-badge.completed {
+            background: var(--completed-badge-bg);
+        }
+
+        .memo-count-badge.incomplete {
+            background: var(--incomplete-highlight);
+        }
+
+        .selected {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .memo-input {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .memo-input input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px 0 0 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .memo-input input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .add-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 12px 12px 0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .memo-list {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 55%;
+            min-height: 50%;
+        }
+
+        .memo-item {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin-bottom: 8px;
+            animation: fadeIn 0.3s ease;
+            min-height: 50px;
+        }
+
+        .memo-item.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--completed-color);
+        }
+
+        .memo-item.completed .memo-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .memo-item.completed .memo-index {
+            color: var(--completed-color);
+        }
+
+        .memo-item.editing {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--edit-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .memo-item-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .memo-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .memo-index {
+            font-weight: 700;
+            color: var(--accent-color);
+            min-width: 20px;
+            font-size: 13px;
+        }
+
+        .memo-text {
+            flex: 1;
+            word-break: break-word;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .memo-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .memo-edit-container {
+            display: none;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .memo-edit-container.active {
+            display: block;
+        }
+
+        .memo-edit-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--edit-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+
+        .memo-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .complete-btn, .edit-btn, .save-btn, .cancel-btn, .delete-btn {
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .complete-btn {
+            background: var(--completed-color);
+        }
+
+        .complete-btn.incomplete {
+            background: var(--danger-color);
+        }
+
+        .complete-btn:hover {
+            opacity: 0.9;
+        }
+
+        .edit-btn {
+            background: var(--edit-color);
+        }
+
+        .edit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .save-btn {
+            background: var(--success-color);
+        }
+
+        .save-btn:hover {
+            opacity: 0.9;
+        }
+
+        .cancel-btn {
+            background: var(--text-secondary);
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.9;
+        }
+
+        .delete-btn {
+            background: var(--danger-color);
+        }
+
+        .delete-btn:hover {
+            opacity: 0.9;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        .notification.error {
+            background: var(--danger-color);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .memo-container {
+                order: -1;
+            }
+            
+            .memo-actions {
+                flex-direction: column;
+            }
+            
+            .memo-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            
+            .memo-time {
+                font-size: 11px;
+            }
+            
+            .calendar-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .calendar-header-left, .calendar-header-center, .calendar-header-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .calendar-header-left {
+                order: 1;
+            }
+            
+            .calendar-header-center {
+                order: 2;
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .calendar-header-right {
+                order: 3;
+            }
+            
+            .data-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .complete-all-btn, .import-btn, .export-btn, .search-btn, .incomplete-filter-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .memo-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .memo-header-left, .memo-header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .search-panel {
+                padding: 12px;
+            }
+            
+            .search-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* 数据库加载指示器 */
+        .db-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .db-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 数据库加载指示器 -->
+    <div class="db-loading" id="db-loading">
+        <div class="spinner"></div>
+        <div>正在加载数据库...</div>
+    </div>
+    
+    <div class="container">
+        <div class="calendar-container">
+            <!-- 隐藏的文件输入框 -->
+            <input type="file" id="import-file-input" class="import-file-input" accept=".json">
+            
+            <div class="calendar-header">
+                <div class="calendar-header-left">
+                    <button class="nav-btn" id="prev-month">←</button>
+                </div>
+                
+                <div class="calendar-header-center">
+                    <div class="month-year" id="current-month-year"></div>
+                    
+                    <div class="data-actions">
+                        <button class="search-btn" id="search-btn">🔍 搜索</button>
+                        <button class="complete-all-btn" id="complete-all-btn">✓ 一键完成</button>
+                        <button class="incomplete-filter-btn" id="incomplete-filter-btn">⭕ 未完成</button>
+                        <button class="import-btn" id="import-btn">📥 导入</button>
+                        <button class="export-btn" id="export-btn">📤 导出</button>
+                    </div>
+					<div> </div>
+                </div>
+                
+                <div class="calendar-header-right">
+                    <button class="nav-btn" id="next-month">→</button>
+                </div>
+            </div>
+            
+            <!-- 搜索面板 -->
+            <div class="search-panel" id="search-panel">
+                <div class="search-header">
+                    <div class="search-title">备忘录搜索</div>
+                    <button class="close-search-btn" id="close-search-btn">×</button>
+                </div>
+                <div class="search-input-container">
+                    <input type="text" id="search-input" placeholder="输入关键词搜索备忘录...">
+                    <button class="add-btn" id="search-execute-btn">搜索</button>
+                </div>
+                <div class="search-options">
+                    <div class="search-option">
+                        <input type="checkbox" id="search-incomplete-only" >
+                        <label for="search-incomplete-only">仅搜索未完成备忘录</label>
+                    </div>
+                    <div class="search-option">
+                        <input type="checkbox" id="search-current-month" >
+                        <label for="search-current-month">仅搜索当前月份</label>
+                    </div>
+                    <div class="search-option">
+                        <input type="checkbox" id="search-highlight-calendar" checked>
+                        <label for="search-highlight-calendar">在日历中高亮显示</label>
+                    </div>
+                </div>
+                <div class="search-results" id="search-results"></div>
+            </div>
+            
+            <div class="weekdays">
+                <div class="weekday">一</div>
+                <div class="weekday">二</div>
+                <div class="weekday">三</div>
+                <div class="weekday">四</div>
+                <div class="weekday">五</div>
+                <div class="weekday">六</div>
+                <div class="weekday">日</div>
+            </div>
+            
+            <div class="calendar-grid" id="calendar-days"></div>
+        </div>
+        
+        <div class="memo-container">
+            <div class="memo-header">
+                <div class="memo-header-left">
+                    <div class="memo-title">备忘录</div>
+                    <div class="selected-date" id="selected-date-display">选择日期查看备忘录</div>
+                </div>
+                
+                <div class="memo-header-right">
+                    <div class="theme-selector">
+                        <label for="theme-select">主题:</label>
+                        <select id="theme-select">
+                            <option value="light-mode">明亮模式</option>
+                            <option value="deep-blue">深蓝科技</option>
+                            <option value="forest-green">森林绿意</option>
+                            <option value="sunset-orange">日落橙光</option>
+                            <option value="midnight-purple">午夜紫韵</option>
+                            <option value="ocean-teal">海洋青蓝</option>
+                            <option value="warm-amber">温暖琥珀</option>
+                            <option value="cool-gray">冷灰商务</option>
+                            <option value="rose-pink">玫瑰粉红</option>
+                            <option value="cyberpunk">赛博朋克</option>
+                            <option value="nature-earth">自然大地</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="memo-input">
+                <input type="text" id="memo-input" placeholder="添加新备忘录...">
+                <button class="add-btn" id="add-memo">添加</button>
+            </div>
+            
+            <div class="memo-list" id="memo-list"></div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="days-with-memos">0</div>
+                    <div class="stat-label">当月有备忘日期</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-memos">0</div>
+                    <div class="stat-label">当月总备忘</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="completion-percentage">0%</div>
+                    <div class="stat-label">当月完成百分比</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // IndexedDB 数据库类
+        class MemoDatabase {
+            constructor() {
+                this.dbName = 'CalendarMemoDBList';
+                this.db = null;
+                this.storeName = 'memos';
+                this.version = 5; // 提高版本号到5，以兼容现有的版本4
+            }
+            
+            // 获取数据库版本（兼容现有数据库）
+            async getCurrentVersion() {
+                return new Promise((resolve) => {
+                    const request = indexedDB.open(this.dbName);
+                    
+                    request.onsuccess = () => {
+                        const db = request.result;
+                        const version = db.version;
+                        db.close();
+                        resolve(version);
+                    };
+                    
+                    request.onerror = () => {
+                        resolve(1); // 如果无法获取版本，则返回默认版本1
+                    };
+                });
+            }
+            
+            // 打开或创建数据库
+            async open() {
+                return new Promise((resolve, reject) => {
+                    // 先尝试打开数据库而不指定版本，以获取当前版本
+                    const versionRequest = indexedDB.open(this.dbName);
+                    
+                    versionRequest.onsuccess = () => {
+                        const db = versionRequest.result;
+                        const currentVersion = db.version;
+                        db.close();
+                        
+                        // 使用当前版本或更高版本重新打开
+                        const request = indexedDB.open(this.dbName, Math.max(currentVersion, this.version));
+                        
+                        request.onerror = () => {
+                            console.error('IndexedDB 打开失败:', request.error);
+                            reject(request.error);
+                        };
+                        
+                        request.onsuccess = () => {
+                            this.db = request.result;
+                            console.log('IndexedDB 打开成功，版本:', this.db.version);
+                            resolve(this.db);
+                        };
+                        
+                        request.onupgradeneeded = (event) => {
+                            const db = event.target.result;
+                            console.log('数据库升级，旧版本:', event.oldVersion, '新版本:', event.newVersion);
+                            
+                            // 如果对象存储不存在，则创建
+                            if (!db.objectStoreNames.contains(this.storeName)) {
+                                const store = db.createObjectStore(this.storeName, { keyPath: 'id' });
+                                // 创建索引以便按日期查询
+                                store.createIndex('dateKey', 'dateKey', { unique: false });
+                                store.createIndex('completed', 'completed', { unique: false });
+                                store.createIndex('dateKey_completed', ['dateKey', 'completed'], { unique: false });
+                                console.log('IndexedDB 对象存储创建成功');
+                            } else {
+                                // 对象存储已存在，检查是否需要创建索引
+                                const transaction = event.currentTarget.transaction;
+                                const store = transaction.objectStore(this.storeName);
+                                
+                                // 检查索引是否存在，不存在则创建
+                                if (!store.indexNames.contains('dateKey')) {
+                                    store.createIndex('dateKey', 'dateKey', { unique: false });
+                                }
+                                
+                                if (!store.indexNames.contains('completed')) {
+                                    store.createIndex('completed', 'completed', { unique: false });
+                                }
+                                
+                                if (!store.indexNames.contains('dateKey_completed')) {
+                                    store.createIndex('dateKey_completed', ['dateKey', 'completed'], { unique: false });
+                                }
+                                
+                                console.log('检查并更新了数据库索引');
+                            }
+                        };
+                    };
+                    
+                    versionRequest.onerror = () => {
+                        // 如果数据库不存在，则创建新数据库
+                        const request = indexedDB.open(this.dbName, this.version);
+                        
+                        request.onerror = () => {
+                            console.error('IndexedDB 创建失败:', request.error);
+                            reject(request.error);
+                        };
+                        
+                        request.onsuccess = () => {
+                            this.db = request.result;
+                            console.log('IndexedDB 创建成功');
+                            resolve(this.db);
+                        };
+                        
+                        request.onupgradeneeded = (event) => {
+                            const db = event.target.result;
+                            
+                            // 创建对象存储
+                            const store = db.createObjectStore(this.storeName, { keyPath: 'id' });
+                            // 创建索引以便按日期查询
+                            store.createIndex('dateKey', 'dateKey', { unique: false });
+                            store.createIndex('completed', 'completed', { unique: false });
+                            store.createIndex('dateKey_completed', ['dateKey', 'completed'], { unique: false });
+                            console.log('IndexedDB 对象存储创建成功');
+                        };
+                    };
+                });
+            }
+            
+            // 添加备忘录
+            async addMemo(memo) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.add(memo);
+                    
+                    request.onerror = () => {
+                        console.error('添加备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        console.log('备忘录添加成功，ID:', request.result);
+                        resolve(request.result);
+                    };
+                });
+            }
+            
+            // 更新备忘录
+            async updateMemo(memo) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.put(memo);
+                    
+                    request.onerror = () => {
+                        console.error('更新备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        console.log('备忘录更新成功');
+                        resolve(request.result);
+                    };
+                });
+            }
+            
+            // 删除备忘录
+            async deleteMemo(id) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.delete(id);
+                    
+                    request.onerror = () => {
+                        console.error('删除备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        console.log('备忘录删除成功');
+                        resolve(true);
+                    };
+                });
+            }
+            
+            // 获取指定日期的所有备忘录
+            async getMemosByDate(dateKey) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    
+                    // 尝试使用索引，如果不存在则使用游标
+                    try {
+                        const index = store.index('dateKey');
+                        const request = index.getAll(dateKey);
+                        
+                        request.onerror = () => {
+                            console.error('通过索引获取备忘录失败:', request.error);
+                            // 如果索引失败，回退到游标方式
+                            this.getMemosByDateViaCursor(dateKey).then(resolve).catch(reject);
+                        };
+                        
+                        request.onsuccess = () => {
+                            const memos = request.result || [];
+                            // 按创建时间降序排序（最新的在前面）
+                            memos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                            resolve(memos);
+                        };
+                    } catch (error) {
+                        console.warn('索引可能不存在，使用游标方式:', error);
+                        // 如果索引不存在，使用游标方式
+                        this.getMemosByDateViaCursor(dateKey).then(resolve).catch(reject);
+                    }
+                });
+            }
+            
+            // 使用游标获取指定日期的备忘录
+            async getMemosByDateViaCursor(dateKey) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.openCursor();
+                    const results = [];
+                    
+                    request.onerror = () => {
+                        console.error('使用游标获取备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = (event) => {
+                        const cursor = event.target.result;
+                        
+                        if (cursor) {
+                            const memo = cursor.value;
+                            if (memo.dateKey === dateKey) {
+                                results.push(memo);
+                            }
+                            cursor.continue();
+                        } else {
+                            // 按创建时间降序排序（最新的在前面）
+                            results.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                            resolve(results);
+                        }
+                    };
+                });
+            }
+            
+            // 获取所有备忘录（用于导出）
+            async getAllMemos() {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.getAll();
+                    
+                    request.onerror = () => {
+                        console.error('获取所有备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        const memos = request.result || [];
+                        resolve(memos);
+                    };
+                });
+            }
+            
+            // 搜索备忘录
+            async searchMemos(keyword, options = {}) {
+				return new Promise((resolve, reject) => {
+					if (!this.db) {
+						reject(new Error('数据库未连接'));
+						return;
+					}
+					
+					const { 
+						incompleteOnly = false, 
+						currentMonthOnly = false,
+						currentDate = new Date()
+					} = options;
+					
+					const transaction = this.db.transaction([this.storeName], 'readonly');
+					const store = transaction.objectStore(this.storeName);
+					const request = store.getAll(); // 使用 getAll 获取所有记录
+					
+					const results = [];
+					const keywordLower = keyword.toLowerCase();
+					
+					request.onerror = () => {
+						console.error('搜索备忘录失败:', request.error);
+						reject(request.error);
+					};
+					
+					request.onsuccess = (event) => {
+						const allMemos = event.target.result || [];
+						
+						allMemos.forEach(memo => {
+							let match = true;
+							
+							// 检查是否包含关键词
+							if (!memo.text || !memo.text.toLowerCase().includes(keywordLower)) {
+								match = false;
+							}
+							
+							// 检查是否只搜索未完成
+							if (incompleteOnly && memo.completed) {
+								match = false;
+							}
+							
+							// 检查是否只搜索当前月份
+							if (currentMonthOnly && match) {
+								try {
+									// 使用 dateKey 而不是 createdAt 来判断月份
+									if (!memo.dateKey) {
+										match = false;
+									} else {
+										// 解析 dateKey 格式: "YYYY-M-D"
+										const dateParts = memo.dateKey.split('-');
+										if (dateParts.length === 3) {
+											const year = parseInt(dateParts[0]);
+											const month = parseInt(dateParts[1]) - 1; // 月份从0开始
+											
+											if (year !== currentDate.getFullYear() || 
+												month !== currentDate.getMonth()) {
+												match = false;
+											}
+										} else {
+											match = false;
+										}
+									}
+								} catch (e) {
+									console.warn('解析日期失败:', memo.dateKey, e);
+									match = false;
+								}
+							}
+							
+							if (match) {
+								// 使用 dateKey 来创建日期对象
+								let memoDate;
+								if (memo.dateKey) {
+									try {
+										const dateParts = memo.dateKey.split('-');
+										if (dateParts.length === 3) {
+											const year = parseInt(dateParts[0]);
+											const month = parseInt(dateParts[1]) - 1;
+											const day = parseInt(dateParts[2]);
+											memoDate = new Date(year, month, day);
+										} else {
+											memoDate = new Date(memo.createdAt);
+										}
+									} catch (e) {
+										memoDate = new Date(memo.createdAt);
+									}
+								} else {
+									memoDate = new Date(memo.createdAt);
+								}
+								
+								results.push({
+									dateKey: memo.dateKey || this.getDateKeyFromMemo(memo),
+									memo: memo,
+									date: memoDate
+								});
+							}
+						});
+						
+						// 按日期降序排序
+						results.sort((a, b) => b.date - a.date);
+						resolve(results);
+					};
+				});
+			}
+			
+			// 添加辅助方法获取日期键
+			getDateKeyFromMemo(memo) {
+				if (memo.dateKey) return memo.dateKey;
+				
+				try {
+					const date = new Date(memo.createdAt);
+					return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+				} catch (e) {
+					return new Date().toISOString().split('T')[0];
+				}
+			}
+            
+            // 获取指定月份的所有备忘录
+            async getMemosByMonth(year, month) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.openCursor();
+                    const results = [];
+                    
+                    request.onerror = () => {
+                        console.error('获取月份备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = (event) => {
+                        const cursor = event.target.result;
+                        
+                        if (cursor) {
+                            const memo = cursor.value;
+                            try {
+                                const memoDate = new Date(memo.dateKey);
+                                
+                                // 检查是否是指定月份的备忘录
+                                if (memoDate.getFullYear() === year && memoDate.getMonth() === month) {
+                                    results.push(memo);
+                                }
+                            } catch (e) {
+                                // 如果日期格式无效，跳过
+                            }
+                            
+                            cursor.continue();
+                        } else {
+                            resolve(results);
+                        }
+                    };
+                });
+            }
+            
+            // 统计指定月份的数据
+            async getMonthStats(year, month) {
+                try {
+                    const memos = await this.getMemosByMonth(year, month);
+                    
+                    const dateSet = new Set();
+                    let totalMemos = 0;
+                    let completedMemos = 0;
+                    
+                    memos.forEach(memo => {
+                        dateSet.add(memo.dateKey);
+                        totalMemos++;
+                        if (memo.completed) {
+                            completedMemos++;
+                        }
+                    });
+                    
+                    return {
+                        daysWithMemos: dateSet.size,
+                        totalMemos,
+                        completedMemos,
+                        completionPercentage: totalMemos > 0 ? Math.round((completedMemos / totalMemos) * 100) : 0
+                    };
+                } catch (error) {
+                    console.error('获取月份统计失败:', error);
+                    return {
+                        daysWithMemos: 0,
+                        totalMemos: 0,
+                        completedMemos: 0,
+                        completionPercentage: 0
+                    };
+                }
+            }
+            
+            // 导入备忘录数据
+            async importMemos(memosArray) {
+                if (!Array.isArray(memosArray)) {
+                    throw new Error('导入的数据必须是数组');
+                }
+                
+                let importedCount = 0;
+                
+                for (const memo of memosArray) {
+                    try {
+                        // 检查备忘录是否已存在
+                        const existing = await this.getMemoById(memo.id);
+                        if (!existing) {
+                            // 确保memo有dateKey属性
+                            if (!memo.dateKey) {
+                                // 尝试从createdAt提取日期
+                                try {
+                                    const date = new Date(memo.createdAt);
+                                    memo.dateKey = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                                } catch (e) {
+                                    memo.dateKey = new Date().toISOString().split('T')[0];
+                                }
+                            }
+                            await this.addMemo(memo);
+                            importedCount++;
+                        }
+                    } catch (error) {
+                        console.error('导入单个备忘录失败:', error);
+                    }
+                }
+                
+                return importedCount;
+            }
+            
+            // 根据ID获取备忘录
+            async getMemoById(id) {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.get(id);
+                    
+                    request.onerror = () => {
+                        console.error('获取备忘录失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        resolve(request.result || null);
+                    };
+                });
+            }
+            
+            // 一键完成当月所有备忘录
+            async completeAllMemos(year, month) {
+                try {
+                    const memos = await this.getMemosByMonth(year, month);
+                    let updatedCount = 0;
+                    
+                    for (const memo of memos) {
+                        if (!memo.completed) {
+                            memo.completed = true;
+                            memo.updatedAt = new Date().toISOString();
+                            await this.updateMemo(memo);
+                            updatedCount++;
+                        }
+                    }
+                    
+                    return updatedCount;
+                } catch (error) {
+                    console.error('一键完成失败:', error);
+                    return 0;
+                }
+            }
+            
+            // 清空所有数据
+            async clearAll() {
+                return new Promise((resolve, reject) => {
+                    if (!this.db) {
+                        reject(new Error('数据库未连接'));
+                        return;
+                    }
+                    
+                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.clear();
+                    
+                    request.onerror = () => {
+                        console.error('清空数据失败:', request.error);
+                        reject(request.error);
+                    };
+                    
+                    request.onsuccess = () => {
+                        console.log('所有数据已清空');
+                        resolve(true);
+                    };
+                });
+            }
+            
+            // 从localStorage迁移数据
+            async migrateFromLocalStorage() {
+                try {
+                    const localStorageData = localStorage.getItem('calendarMemos');
+                    if (!localStorageData) {
+                        console.log('没有找到localStorage数据需要迁移');
+                        return 0;
+                    }
+                    
+                    const oldMemos = JSON.parse(localStorageData);
+                    let migratedCount = 0;
+                    
+                    // 遍历旧的memos对象
+                    for (const dateKey in oldMemos) {
+                        if (Array.isArray(oldMemos[dateKey])) {
+                            for (const memo of oldMemos[dateKey]) {
+                                // 确保memo有dateKey属性
+                                if (!memo.dateKey) {
+                                    memo.dateKey = dateKey;
+                                }
+                                
+                                // 确保memo有completed属性
+                                if (memo.completed === undefined) {
+                                    memo.completed = false;
+                                }
+                                
+                                // 添加或更新到IndexedDB
+                                try {
+                                    await this.addMemo(memo);
+                                    migratedCount++;
+                                } catch (error) {
+                                    console.error('迁移单个备忘录失败:', error);
+                                }
+                            }
+                        }
+                    }
+                    
+                    // 迁移完成后，可以删除localStorage数据
+                    localStorage.removeItem('calendarMemos');
+                    console.log(`从localStorage迁移了 ${migratedCount} 条备忘录`);
+                    
+                    return migratedCount;
+                } catch (error) {
+                    console.error('数据迁移失败:', error);
+                    return 0;
+                }
+            }
+            
+            // 关闭数据库连接
+            close() {
+                if (this.db) {
+                    this.db.close();
+                    this.db = null;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 初始化数据库
+            const db = new MemoDatabase();
+            let isDbReady = false;
+            
+            // 显示加载指示器
+            const dbLoadingElement = document.getElementById('db-loading');
+            
+            try {
+                // 打开数据库
+                await db.open();
+                isDbReady = true;
+                
+                // 从localStorage迁移数据（如果有）
+                const migratedCount = await db.migrateFromLocalStorage();
+                
+                // 隐藏加载指示器
+                dbLoadingElement.style.display = 'none';
+                
+                if (migratedCount > 0) {
+                    showNotification(`已从本地存储迁移 ${migratedCount} 条备忘录`);
+                }
+            } catch (error) {
+                console.error('数据库初始化失败:', error);
+                dbLoadingElement.innerHTML = `
+                    <div style="color: #ef4444; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
+                        <div>数据库加载失败</div>
+                        <div style="font-size: 14px; margin-top: 10px; margin-bottom: 20px;">${error.message}</div>
+                        <div style="margin-bottom: 15px;">尝试解决方案：</div>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button onclick="window.location.reload()" style="padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer;">重新加载</button>
+                            <button onclick="clearDatabaseAndReload()" style="padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer;">清除数据库</button>
+                        </div>
+                    </div>
+                `;
+                
+                // 添加清除数据库的函数到全局作用域
+                window.clearDatabaseAndReload = async function() {
+                    if (confirm('确定要清除所有数据吗？此操作不可撤销！')) {
+                        try {
+                            // 尝试删除数据库
+                            await new Promise((resolve, reject) => {
+                                const request = indexedDB.deleteDatabase('CalendarMemoDB');
+                                request.onsuccess = () => {
+                                    console.log('数据库删除成功');
+                                    resolve();
+                                };
+                                request.onerror = () => {
+                                    console.error('数据库删除失败:', request.error);
+                                    reject(request.error);
+                                };
+                                request.onblocked = () => {
+                                    alert('数据库被其他页面占用，请关闭其他标签页后重试');
+                                    reject(new Error('数据库被占用'));
+                                };
+                            });
+                            
+                            // 清除localStorage中的主题设置
+                            localStorage.removeItem('calendarTheme');
+                            
+                            // 重新加载页面
+                            window.location.reload();
+                        } catch (error) {
+                            alert('清除数据库失败: ' + error.message);
+                        }
+                    }
+                };
+                
+                return;
+            }
+            
+            // 日历和备忘录状态管理
+            let currentDate = new Date();
+            let selectedDate = null;
+            let editingMemoId = null; // 当前正在编辑的备忘录ID
+            let isSearchActive = false; // 是否正在搜索
+            let searchResults = []; // 搜索结果
+            let isIncompleteFilterActive = false; // 是否显示未完成过滤
+            
+            // DOM元素
+            const monthYearElement = document.getElementById('current-month-year');
+            const calendarDaysElement = document.getElementById('calendar-days');
+            const prevMonthButton = document.getElementById('prev-month');
+            const nextMonthButton = document.getElementById('next-month');
+            const selectedDateDisplay = document.getElementById('selected-date-display');
+            const memoInput = document.getElementById('memo-input');
+            const addMemoButton = document.getElementById('add-memo');
+            const memoListElement = document.getElementById('memo-list');
+            const totalMemosElement = document.getElementById('total-memos');
+            const daysWithMemosElement = document.getElementById('days-with-memos');
+            const completionPercentageElement = document.getElementById('completion-percentage');
+            const themeSelect = document.getElementById('theme-select');
+            const importBtn = document.getElementById('import-btn');
+            const exportBtn = document.getElementById('export-btn');
+            const completeAllBtn = document.getElementById('complete-all-btn');
+            const importFileInput = document.getElementById('import-file-input');
+            
+            // 新增DOM元素
+            const searchBtn = document.getElementById('search-btn');
+            const incompleteFilterBtn = document.getElementById('incomplete-filter-btn');
+            const searchPanel = document.getElementById('search-panel');
+            const closeSearchBtn = document.getElementById('close-search-btn');
+            const searchInput = document.getElementById('search-input');
+            const searchExecuteBtn = document.getElementById('search-execute-btn');
+            const searchResultsElement = document.getElementById('search-results');
+            const searchIncompleteOnly = document.getElementById('search-incomplete-only');
+            const searchCurrentMonth = document.getElementById('search-current-month');
+            const searchHighlightCalendar = document.getElementById('search-highlight-calendar');
+            
+            // 定义十一种配色方案（新增明亮模式为默认）
+            const colorSchemes = {
+                'light-mode': { // 明亮模式
+                    'primary-bg': '#ffffff',
+                    'secondary-bg': '#f8fafc',
+                    'accent-color': '#3b82f6',
+                    'accent-hover': '#2563eb',
+                    'text-primary': '#1e293b',
+                    'text-secondary': '#64748b',
+                    'text-muted': '#94a3b8',
+                    'today-highlight': '#10b981',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#e2e8f0',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#10b981',
+                    'completed-badge-bg': '#dc2626',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#f1f5f9',
+                    'other-month-bg': '#f1f5f9',
+                    'shadow-color': 'rgba(0, 0, 0, 0.1)'
+                },
+                'deep-blue': { // 深蓝科技
+                    'primary-bg': '#1a1d28',
+                    'secondary-bg': '#252a3a',
+                    'accent-color': '#6366f1',
+                    'accent-hover': '#4f46e5',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#94a3b8',
+                    'text-muted': '#64748b',
+                    'today-highlight': '#10b981',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#374151',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#10b981',
+                    'completed-badge-bg': '#dc2626',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'forest-green': { // 森林绿意
+                    'primary-bg': '#0f172a',
+                    'secondary-bg': '#1e293b',
+                    'accent-color': '#10b981',
+                    'accent-hover': '#059669',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#94a3b8',
+                    'text-muted': '#64748b',
+                    'today-highlight': '#f59e0b',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#374151',
+                    'success-color': '#10b981',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#059669',
+                    'completed-badge-bg': '#dc2626',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'sunset-orange': { // 日落橙光
+                    'primary-bg': '#1c1917',
+                    'secondary-bg': '#292524',
+                    'accent-color': '#f97316',
+                    'accent-hover': '#ea580c',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#94a3b8',
+                    'text-muted': '#64748b',
+                    'today-highlight': '#f59e0b',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#44403c',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#ea580c',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'midnight-purple': { // 午夜紫韵
+                    'primary-bg': '#1e1b4b',
+                    'secondary-bg': '#312e81',
+                    'accent-color': '#8b5cf6',
+                    'accent-hover': '#7c3aed',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#c7d2fe',
+                    'text-muted': '#a5b4fc',
+                    'today-highlight': '#c084fc',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#4c1d95',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#7c3aed',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'ocean-teal': { // 海洋青蓝
+                    'primary-bg': '#0f172a',
+                    'secondary-bg': '#1e293b',
+                    'accent-color': '#06b6d4',
+                    'accent-hover': '#0891b2',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#94a3b8',
+                    'text-muted': '#64748b',
+                    'today-highlight': '#22d3ee',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#374151',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#0891b2',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'warm-amber': { // 温暖琥珀
+                    'primary-bg': '#292524',
+                    'secondary-bg': '#44403c',
+                    'accent-color': '#f59e0b',
+                    'accent-hover': '#d97706',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#d6d3d1',
+                    'text-muted': '#a8a29e',
+                    'today-highlight': '#f97316',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#57534e',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#d97706',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'cool-gray': { // 冷灰商务
+                    'primary-bg': '#1f2937',
+                    'secondary-bg': '#374151',
+                    'accent-color': '#6b7280',
+                    'accent-hover': '#4b5563',
+                    'text-primary': '#f9fafb',
+                    'text-secondary': '#d1d5db',
+                    'text-muted': '#9ca3af',
+                    'today-highlight': '#10b981',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#4b5563',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#4b5563',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'rose-pink': { // 玫瑰粉红
+                    'primary-bg': '#451a03',
+                    'secondary-bg': '#7c2d12',
+                    'accent-color': '#f472b6',
+                    'accent-hover': '#db2777',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#fbcfe8',
+                    'text-muted': '#f9a8d4',
+                    'today-highlight': '#fda4af',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#9d174d',
+                    'success-color': '#22c55e',
+                    'danger-color': '#ef4444',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#ef4444',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#db2777',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ef4444',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'cyberpunk': { // 赛博朋克
+                    'primary-bg': '#0a0a0a',
+                    'secondary-bg': '#171717',
+                    'accent-color': '#00ff9d',
+                    'accent-hover': '#00cc7a',
+                    'text-primary': '#ffffff',
+                    'text-secondary': '#b3b3b3',
+                    'text-muted': '#808080',
+                    'today-highlight': '#ff00ff',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#333333',
+                    'success-color': '#00ff9d',
+                    'danger-color': '#ff0055',
+                    'edit-color': '#00ccff',
+                    'count-badge-bg': '#ff0055',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#00cc7a',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#ff0055',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                },
+                'nature-earth': { // 自然大地
+                    'primary-bg': '#292524',
+                    'secondary-bg': '#44403c',
+                    'accent-color': '#a16207',
+                    'accent-hover': '#854d0e',
+                    'text-primary': '#f8fafc',
+                    'text-secondary': '#d6d3d1',
+                    'text-muted': '#a8a29e',
+                    'today-highlight': '#65a30d',
+                    'memo-indicator': '#f59e0b',
+                    'border-color': '#57534e',
+                    'success-color': '#65a30d',
+                    'danger-color': '#dc2626',
+                    'edit-color': '#3b82f6',
+                    'count-badge-bg': '#dc2626',
+                    'count-badge-text': '#ffffff',
+                    'completed-color': '#854d0e',
+                    'completed-badge-bg': '#991b1b',
+                    'search-highlight': '#f59e0b',
+                    'incomplete-highlight': '#dc2626',
+                    'day-hover-bg': '#2d3448',
+                    'other-month-bg': '#1f2430',
+                    'shadow-color': 'rgba(0, 0, 0, 0.3)'
+                }
+            };
+            
+            // 显示通知
+            function showNotification(message, isError = false) {
+                const notification = document.createElement('div');
+                notification.className = `notification${isError ? ' error' : ''}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // 3秒后自动移除
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 3000);
+            }
+            
+            // 导出备忘录数据
+            async function exportMemos() {
+                try {
+                    const allMemos = await db.getAllMemos();
+                    
+                    if (allMemos.length === 0) {
+                        showNotification('没有备忘录数据可导出', true);
+                        return;
+                    }
+                    
+                    // 创建导出数据对象
+                    const exportData = {
+                        memos: allMemos,
+                        exportDate: new Date().toISOString(),
+                        version: '2.0', // 更新版本号，表示IndexedDB版本
+                        count: allMemos.length
+                    };
+                    
+                    // 转换为JSON字符串
+                    const dataStr = JSON.stringify(exportData, null, 2);
+                    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                    
+                    // 创建下载链接
+                    const downloadUrl = URL.createObjectURL(dataBlob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = downloadUrl;
+                    downloadLink.download = `calendar-memos-${new Date().toISOString().split('T')[0]}.json`;
+                    
+                    // 触发下载
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // 清理URL对象
+                    URL.revokeObjectURL(downloadUrl);
+                    
+                    showNotification(`成功导出 ${allMemos.length} 条备忘录！`);
+                } catch (error) {
+                    console.error('导出失败:', error);
+                    showNotification('导出失败: ' + error.message, true);
+                }
+            }
+            
+            // 导入备忘录数据
+            async function importMemos(file) {
+                if (!file) return;
+                
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    try {
+                        const fileContent = e.target.result;
+                        const importData = JSON.parse(fileContent);
+                        
+                        // 验证导入的数据格式
+                        if (!importData.memos || !Array.isArray(importData.memos)) {
+                            showNotification('无效的备忘录数据文件', true);
+                            return;
+                        }
+                        
+                        // 确认导入操作
+                        if (!confirm(`导入操作将添加 ${importData.memos.length} 条备忘录。是否继续？`)) {
+                            return;
+                        }
+                        
+                        // 导入数据
+                        const importedCount = await db.importMemos(importData.memos);
+                        
+                        // 更新显示
+                        if (selectedDate) {
+                            const dateKey = getDateKey(selectedDate);
+                            await displayMemosForDate(dateKey);
+                        }
+                        
+                        // 重新渲染日历
+                        await renderCalendar();
+                        updateSelectedDayInCalendar();
+                        await updateStats();
+                        
+                        showNotification(`成功导入 ${importedCount} 条备忘录`);
+                    } catch (error) {
+                        console.error('导入失败:', error);
+                        showNotification('导入失败: ' + error.message, true);
+                    }
+                };
+                
+                reader.onerror = function() {
+                    showNotification('读取文件失败', true);
+                };
+                
+                reader.readAsText(file);
+            }
+            
+            // 生成唯一ID
+            function generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            
+            // 格式化时间显示
+            function formatTime(date) {
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                return `${hours}:${minutes}`;
+            }
+            
+            // 格式化日期显示
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                return `${year}年${month}月${day}日`;
+            }
+            
+            // 应用配色方案
+            function applyColorScheme(schemeName) {
+                const scheme = colorSchemes[schemeName];
+                if (!scheme) return;
+                
+                const root = document.documentElement;
+                
+                // 应用所有CSS变量
+                Object.keys(scheme).forEach(key => {
+                    root.style.setProperty(`--${key}`, scheme[key]);
+                });
+                
+                // 更新body背景，使其与主题协调
+                if (schemeName === 'cyberpunk') {
+                    document.body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
+                } else if (schemeName === 'midnight-purple') {
+                    document.body.style.background = 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)';
+                } else if (schemeName === 'rose-pink') {
+                    document.body.style.background = 'linear-gradient(135deg, #451a03 0%, #7c2d12 100%)';
+                } else if (schemeName === 'light-mode') {
+                    document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+                } else {
+                    document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+                }
+                
+                // 保存到本地存储
+                localStorage.setItem('calendarTheme', schemeName);
+            }
+            
+            // 初始化配色方案
+            function initColorScheme() {
+                const savedTheme = localStorage.getItem('calendarTheme') || 'light-mode';
+                themeSelect.value = savedTheme;
+                applyColorScheme(savedTheme);
+            }
+            
+            // 初始化日历
+            async function initCalendar() {
+                // 初始化配色方案
+                initColorScheme();
+                
+                await renderCalendar();
+                await updateStats();
+                setupEventListeners();
+                // 默认选择今天
+                await selectDate(new Date());
+            }
+            
+            // 渲染日历
+            async function renderCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                
+                // 更新月份年份显示
+                monthYearElement.textContent = `${year}年${month + 1}月`;
+                
+                // 获取当月第一天和最后一天
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDayOfWeek = firstDay.getDay();
+                
+                // 清空日历网格
+                calendarDaysElement.innerHTML = '';
+                
+                // 计算上个月的日期
+                const prevMonthLastDay = new Date(year, month, 0).getDate();
+                
+                // 计算日历起始位置（周一为第一天）
+                // JavaScript中getDay()返回0-6，0是周日，1是周一，...6是周六
+                // 我们要以周一为第一天，所以需要调整
+                let adjustedStartingDay = startingDayOfWeek - 1;
+                if (adjustedStartingDay < 0) {
+                    adjustedStartingDay = 6; // 如果周日，则调整为6
+                }
+                
+                // 添加上个月的日期
+                for (let i = adjustedStartingDay - 1; i >= 0; i--) {
+                    const dayElement = await createDayElement(prevMonthLastDay - i, true, year, month - 1);
+                    calendarDaysElement.appendChild(dayElement);
+                }
+                
+                // 添加当月的日期
+                const today = new Date();
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = await createDayElement(i, false, year, month);
+                    const dateKey = getDateKey(new Date(year, month, i));
+                    
+                    // 标记今天
+                    if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // 获取该日期的备忘录
+                    const memos = await db.getMemosByDate(dateKey);
+                    
+                    // 检查是否有未完成备忘录
+                    const hasIncompleteMemo = memos.some(memo => !memo.completed);
+                    
+                    // 检查是否为搜索匹配
+                    const isSearchMatch = isSearchActive && searchResults.some(result => 
+                        result.dateKey === dateKey
+                    );
+                    
+                    // 根据过滤和搜索状态添加类
+                    if (isIncompleteFilterActive && hasIncompleteMemo) {
+                        dayElement.classList.add('has-incomplete');
+                    }
+                    
+                    if (isSearchActive && isSearchMatch && searchHighlightCalendar.checked) {
+                        dayElement.classList.add('search-match');
+                    }
+                    
+                    // 添加备忘录数量徽章
+                    if (memos.length > 0) {
+                        const memoCount = memos.length;
+                        const incompleteCount = memos.filter(memo => !memo.completed).length;
+                        const badge = document.createElement('div');
+                        badge.className = 'memo-count-badge';
+                        badge.textContent = memoCount > 99 ? '99+' : memoCount;
+                        
+                        // 根据完成状态设置徽章颜色
+                        if (incompleteCount > 0) {
+                            badge.classList.add('incomplete');
+                        } else {
+                            badge.classList.add('completed');
+                        }
+                        
+                        dayElement.appendChild(badge);
+                        
+                        // 根据数量调整徽章样式
+                        if (memoCount > 9) {
+                            badge.style.minWidth = '24px';
+                        }
+                        if (memoCount > 99) {
+                            badge.style.fontSize = '9px';
+                            badge.style.minWidth = '28px';
+                        }
+                    }
+                    
+                    calendarDaysElement.appendChild(dayElement);
+                }
+                
+                // 添加下个月的日期以填充网格
+                const totalCells = 42; // 6行x7天
+                const remainingCells = totalCells - (adjustedStartingDay + daysInMonth);
+                for (let i = 1; i <= remainingCells; i++) {
+                    const dayElement = await createDayElement(i, true, year, month + 1);
+                    calendarDaysElement.appendChild(dayElement);
+                }
+            }
+			
+			// 生成备忘录预览文本
+			function generateMemoPreview(memos) {
+				if (!memos || memos.length === 0) {
+					return '';
+				}
+				
+				const previewWords = [];
+				let memo_i = 0;
+				memos.forEach(memo => {
+					if (memo.text && memo.text.length > 0) {
+						memo_i++;
+						const text = memo.text.trim();
+						// 取前2个字符（支持中英文混合）
+						let firstTwoChars = '';
+						const charCount = text.length;
+						
+						// 如果文本长度大于2，取前2个字符
+						if (charCount >= 10) {
+							firstTwoChars = text.substring(0, 10);
+						} else {
+							// 如果文本长度小于2，直接使用整个文本
+							firstTwoChars = text;
+						}
+						
+						// 添加非空预览词
+						if (firstTwoChars) {
+							firstTwoChars = memo_i+"."+firstTwoChars
+							if(memo.completed){
+								firstTwoChars = "<del>"+firstTwoChars+"</del>"
+							}
+							previewWords.push(firstTwoChars);
+						}
+					}
+				});
+				
+				// 用空格连接所有预览词
+				return previewWords.join(' ');
+			}
+            
+            // 创建日期元素
+			async function createDayElement(day, isOtherMonth, year, month) {
+				const dayDate = new Date(year, month, day);
+				const dateKey = getDateKey(dayDate);
+				
+				const dayElement = document.createElement('div');
+				dayElement.className = 'calendar-day';
+				
+				if (isOtherMonth) {
+					dayElement.classList.add('other-month');
+				}
+				
+				// 获取该日期的备忘录
+				const memos = await db.getMemosByDate(dateKey);
+				
+				// 检查是否有备忘录
+				const hasMemos = memos.length > 0;
+				
+				// 生成预览文本
+				let previewText = '';
+				if (hasMemos && !isOtherMonth) {
+					previewText = generateMemoPreview(memos);
+					
+					// 如果有备忘录，添加特殊类名
+					dayElement.classList.add('has-memos');
+				}
+				
+				const today = new Date();
+				// 标记今天
+				if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+					dayElement.classList.add('today');
+				}
+				
+				// 创建日期格子的HTML内容
+				dayElement.innerHTML = `
+					<div class="day-number">${day}</div>
+					${previewText ? `<div class="memo-preview">${previewText}</div>` : ''}
+				`;
+				
+				// 添加点击事件
+				dayElement.addEventListener('click', async function() {
+					await selectDate(dayDate);
+				});
+				
+				return dayElement;
+			}
+            
+            // 选择日期
+            async function selectDate(date) {
+                // 如果正在编辑备忘录，先取消编辑
+                if (editingMemoId) {
+                    cancelEdit();
+                }
+                
+                selectedDate = date;
+                const dateKey = getDateKey(date);
+                
+                // 更新选中日期显示
+                selectedDateDisplay.textContent = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+                
+                // 显示该日期的备忘录
+                await displayMemosForDate(dateKey);
+                
+                // 更新日历中的选中状态
+                updateSelectedDayInCalendar();
+                
+                // 更新统计信息
+                await updateStats();
+            }
+            
+            // 更新日历中的选中状态
+            function updateSelectedDayInCalendar() {
+                // 移除之前选中的日期样式
+                document.querySelectorAll('.calendar-day').forEach(day => {
+                    day.classList.remove('selected');
+                });
+                
+                // 为当前选中的日期添加样式
+                if (selectedDate) {
+                    const year = selectedDate.getFullYear();
+                    const month = selectedDate.getMonth();
+                    const day = selectedDate.getDate();
+                    
+                    // 检查选中的日期是否在当前显示的月份
+                    if (year === currentDate.getFullYear() && month === currentDate.getMonth()) {
+                        const dayElements = document.querySelectorAll('.calendar-day:not(.other-month)');
+                        const dayIndex = day - 1;
+                        if (dayElements[dayIndex]) {
+                            dayElements[dayIndex].classList.add('selected');
+                        }
+                    }
+                }
+            }
+            
+            // 显示指定日期的备忘录
+            async function displayMemosForDate(dateKey) {
+                memoListElement.innerHTML = '';
+                
+                const memos = await db.getMemosByDate(dateKey);
+                
+                if (!memos || memos.length === 0) {
+                    // 不显示任何内容，保持空白
+                    return;
+                }
+                
+                // 显示所有备忘录，不限制数量
+                memos.forEach((memo, index) => {
+                    const memoElement = createMemoElement(memo, dateKey, index + 1); // 传递序号（从1开始）
+                    memoListElement.appendChild(memoElement);
+                });
+            }
+            
+            // 创建备忘录元素
+            function createMemoElement(memo, dateKey, index) {
+                const memoElement = document.createElement('div');
+                memoElement.className = 'memo-item';
+                if (memo.completed) {
+                    memoElement.classList.add('completed');
+                }
+                memoElement.setAttribute('data-id', memo.id);
+                
+                // 安全处理memo.text
+                const memoText = memo.text ? String(memo.text) : "（无内容）";
+                
+                // 格式化创建时间
+                const createdTime = memo.createdAt ? new Date(memo.createdAt) : new Date();
+                const timeText = memo.updatedAt && memo.updatedAt !== memo.createdAt 
+                    ? `编辑于 ${formatTime(new Date(memo.updatedAt))}` 
+                    : `创建于 ${formatTime(createdTime)}`;
+                
+                // 完成按钮的类，如果已完成则添加incomplete类
+                const completeBtnClass = memo.completed ? 'complete-btn incomplete' : 'complete-btn';
+                const completeBtnText = memo.completed ? '✗' : '✓';
+                
+                memoElement.innerHTML = `
+                    <div class="memo-item-content">
+                        <div class="memo-content">
+                            <div class="memo-index">${index}.</div>
+                            <div class="memo-text">${memoText}</div>
+                            <div class="memo-time">${timeText}</div>
+                        </div>
+                        <div class="memo-actions">
+                            <button class="${completeBtnClass}" title="${memo.completed ? '标记为未完成' : '标记完成'}">${completeBtnText}</button>
+                            <button class="edit-btn" title="编辑备忘录" style="${memo.completed ? 'display: none;' : ''}">✎</button>
+                            <button class="save-btn" title="保存修改" style="display: none;">✓</button>
+                            <button class="cancel-btn" title="取消编辑" style="display: none;">×</button>
+                            <button class="delete-btn" title="删除备忘录">×</button>
+                        </div>
+                    </div>
+                    <div class="memo-edit-container">
+                        <input type="text" class="memo-edit-input" value="${memoText.replace(/"/g, '&quot;')}">
+                    </div>
+                `;
+                
+                // 获取元素引用
+                const memoTextElement = memoElement.querySelector('.memo-text');
+                const editContainer = memoElement.querySelector('.memo-edit-container');
+                const editInput = memoElement.querySelector('.memo-edit-input');
+                const completeBtn = memoElement.querySelector('.complete-btn');
+                const editBtn = memoElement.querySelector('.edit-btn');
+                const saveBtn = memoElement.querySelector('.save-btn');
+                const cancelBtn = memoElement.querySelector('.cancel-btn');
+                const deleteBtn = memoElement.querySelector('.delete-btn');
+                
+                // 完成按钮点击事件 - 修复：确保只影响当前备忘录
+                completeBtn.addEventListener('click', async function() {
+					await toggleMemoCompletion(dateKey, memo.id, memoElement);
+				});
+                
+                // 编辑按钮点击事件
+                editBtn.addEventListener('click', function() {
+                    startEditMemo(memoElement, memo.id, dateKey, index);
+                });
+                
+                // 保存按钮点击事件
+                saveBtn.addEventListener('click', async function() {
+                    await saveEditMemo(memoElement, memo.id, dateKey, index);
+                });
+                
+                // 取消按钮点击事件
+                cancelBtn.addEventListener('click', function() {
+                    cancelEditMemo(memoElement, memo.id, dateKey, index);
+                });
+                
+                // 删除按钮点击事件
+                deleteBtn.addEventListener('click', async function() {
+                    await deleteMemo(dateKey, memo.id);
+                });
+                
+                // 输入框回车保存
+                editInput.addEventListener('keypress', async function(e) {
+                    if (e.key === 'Enter') {
+                        await saveEditMemo(memoElement, memo.id, dateKey, index);
+                    }
+                });
+                
+                return memoElement;
+            }
+            
+            // 切换备忘录完成状态 - 修复：确保只影响当前备忘录
+            async function toggleMemoCompletion(dateKey, memoId, memoElement) {
+				try {
+					const memo = await db.getMemoById(memoId);
+					if (!memo) return;
+					
+					// 切换完成状态
+					memo.completed = !memo.completed;
+					memo.updatedAt = new Date().toISOString();
+					
+					// 更新到数据库
+					await db.updateMemo(memo);
+					
+					// 直接更新当前备忘录元素的显示
+					if (memoElement) {
+						// 更新当前备忘录元素的类
+						if (memo.completed) {
+							memoElement.classList.add('completed');
+						} else {
+							memoElement.classList.remove('completed');
+						}
+						
+						// 更新完成按钮
+						const completeBtn = memoElement.querySelector('.complete-btn');
+						const editBtn = memoElement.querySelector('.edit-btn');
+						
+						if (completeBtn) {
+							if (memo.completed) {
+								completeBtn.classList.add('incomplete');
+								completeBtn.textContent = '✗';
+								completeBtn.title = '标记为未完成';
+							} else {
+								completeBtn.classList.remove('incomplete');
+								completeBtn.textContent = '✓';
+								completeBtn.title = '标记完成';
+							}
+						}
+						
+						// 更新编辑按钮显示
+						if (editBtn) {
+							editBtn.style.display = memo.completed ? 'none' : 'flex';
+						}
+						
+						// 更新备忘录文本样式
+						const memoText = memoElement.querySelector('.memo-text');
+						if (memoText) {
+							if (memo.completed) {
+								memoText.style.textDecoration = 'line-through';
+								memoText.style.color = 'var(--text-muted)';
+							} else {
+								memoText.style.textDecoration = 'none';
+								memoText.style.color = '';
+							}
+						}
+						
+						// 更新备忘录索引颜色
+						const memoIndex = memoElement.querySelector('.memo-index');
+						if (memoIndex) {
+							memoIndex.style.color = memo.completed ? 'var(--completed-color)' : 'var(--accent-color)';
+						}
+					}
+					
+					// 重新渲染日历（更新徽章颜色）
+					await renderCalendar();
+					updateSelectedDayInCalendar();
+					
+					// 更新统计信息
+					await updateStats();
+					
+					// 显示通知
+					const status = memo.completed ? '完成' : '未完成';
+					showNotification(`备忘录已标记为${status}`);
+				} catch (error) {
+					console.error('切换完成状态失败:', error);
+					showNotification('操作失败: ' + error.message, true);
+				}
+			}
+            
+            // 一键完成当月所有备忘录
+            async function completeAllMemos() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                
+                try {
+                    const updatedCount = await db.completeAllMemos(year, month);
+                    
+                    if (updatedCount === 0) {
+                        showNotification('本月没有未完成的备忘录', true);
+                        return;
+                    }
+                    
+                    // 更新显示
+                    if (selectedDate) {
+                        const dateKey = getDateKey(selectedDate);
+                        await displayMemosForDate(dateKey);
+                    }
+                    
+                    // 重新渲染日历
+                    await renderCalendar();
+                    updateSelectedDayInCalendar();
+                    await updateStats();
+                    
+                    showNotification(`成功完成 ${updatedCount} 条备忘录`);
+                } catch (error) {
+                    console.error('一键完成失败:', error);
+                    showNotification('操作失败: ' + error.message, true);
+                }
+            }
+            
+            // 搜索备忘录
+            async function searchMemos() {
+                const keyword = searchInput.value.trim();
+                if (!keyword) {
+                    showNotification('请输入搜索关键词', true);
+                    return;
+                }
+                
+                const searchIncompleteOnly = document.getElementById('search-incomplete-only').checked;
+                const searchCurrentMonthOnly = document.getElementById('search-current-month').checked;
+                
+                try {
+                    searchResults = await db.searchMemos(keyword, {
+                        incompleteOnly: searchIncompleteOnly,
+                        currentMonthOnly: searchCurrentMonthOnly,
+                        currentDate: currentDate
+                    });
+                    
+                    // 显示搜索结果
+                    displaySearchResults(keyword);
+                    
+                    // 更新搜索面板状态
+                    isSearchActive = true;
+                    
+                    // 重新渲染日历以高亮匹配的日期
+                    await renderCalendar();
+                    updateSelectedDayInCalendar();
+                    
+                    // 显示通知
+                    showNotification(`找到 ${searchResults.length} 条匹配的备忘录`);
+                } catch (error) {
+                    console.error('搜索失败:', error);
+                    showNotification('搜索失败: ' + error.message, true);
+                }
+            }
+            
+            // 显示搜索结果
+            function displaySearchResults(keyword) {
+				searchResultsElement.innerHTML = '';
+				
+				if (searchResults.length === 0) {
+					searchResultsElement.innerHTML = '<div class="no-results">没有找到匹配的备忘录</div>';
+					return;
+				}
+				
+				searchResults.forEach(result => {
+					const resultElement = document.createElement('div');
+					resultElement.className = 'search-result-item';
+					
+					// 高亮显示搜索关键词
+					const memoText = result.memo.text || '';
+					const highlightedText = memoText.replace(
+						new RegExp(keyword, 'gi'),
+						match => `<span class="highlight">${match}</span>`
+					);
+					
+					// 格式化日期 - 使用正确的日期格式
+					let dateDisplay;
+					try {
+						// 尝试从 dateKey 解析日期
+						if (result.memo.dateKey) {
+							const dateParts = result.memo.dateKey.split('-');
+							if (dateParts.length === 3) {
+								const year = parseInt(dateParts[0]);
+								const month = parseInt(dateParts[1]);
+								const day = parseInt(dateParts[2]);
+								dateDisplay = `${year}年${month}月${day}日`;
+							} else {
+								dateDisplay = formatDate(result.date);
+							}
+						} else {
+							dateDisplay = formatDate(result.date);
+						}
+					} catch (e) {
+						dateDisplay = formatDate(result.date);
+					}
+					
+					// 添加完成状态标记
+					const statusIcon = result.memo.completed ? '✓ ' : '⭕ ';
+					const statusTitle = result.memo.completed ? '已完成' : '未完成';
+					
+					resultElement.innerHTML = `
+						<div class="search-result-date">${dateDisplay} <span style="color: ${result.memo.completed ? 'var(--completed-color)' : 'var(--incomplete-highlight)'}; font-size: 12px;">${statusIcon}${statusTitle}</span></div>
+						<div class="search-result-memo">${highlightedText}</div>
+					`;
+					
+					// 点击搜索结果跳转到对应日期
+					resultElement.addEventListener('click', async function() {
+						let targetDate;
+						
+						// 优先使用 memo.dateKey 来跳转
+						if (result.memo.dateKey) {
+							try {
+								const dateParts = result.memo.dateKey.split('-');
+								if (dateParts.length === 3) {
+									const year = parseInt(dateParts[0]);
+									const month = parseInt(dateParts[1]) - 1; // 月份从0开始
+									const day = parseInt(dateParts[2]);
+									targetDate = new Date(year, month, day);
+								} else {
+									targetDate = result.date;
+								}
+							} catch (e) {
+								targetDate = result.date;
+							}
+						} else {
+							targetDate = result.date;
+						}
+						
+						// 切换到目标日期所在的月份
+						if (targetDate.getFullYear() !== currentDate.getFullYear() || 
+							targetDate.getMonth() !== currentDate.getMonth()) {
+							currentDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+							await renderCalendar();
+							await updateStats();
+						}
+						
+						// 选择目标日期
+						await selectDate(targetDate);
+						
+						// 关闭搜索面板
+						closeSearchPanel();
+						
+						// 滚动到备忘录列表顶部
+						memoListElement.scrollTop = 0;
+						
+						// 高亮显示对应的备忘录（如果有）
+						const memoId = result.memo.id;
+						setTimeout(() => {
+							const memoElement = document.querySelector(`.memo-item[data-id="${memoId}"]`);
+							if (memoElement) {
+								memoElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+								memoElement.style.animation = 'none';
+								setTimeout(() => {
+									memoElement.style.animation = 'fadeIn 0.5s ease';
+									memoElement.style.backgroundColor = 'rgba(245, 158, 11, 0.2)';
+									memoElement.style.border = '1px solid var(--search-highlight)';
+									
+									setTimeout(() => {
+										memoElement.style.backgroundColor = '';
+										memoElement.style.border = '';
+									}, 2000);
+								}, 10);
+							}
+						}, 300);
+					});
+					
+					searchResultsElement.appendChild(resultElement);
+				});
+			}
+            
+            // 显示/隐藏搜索面板
+            function toggleSearchPanel() {
+                if (searchPanel.classList.contains('active')) {
+                    closeSearchPanel();
+                } else {
+                    openSearchPanel();
+                }
+            }
+            
+            // 打开搜索面板
+            function openSearchPanel() {
+				searchPanel.classList.add('active');
+				searchInput.focus();
+				searchInput.value = '';
+				searchResultsElement.innerHTML = '<div class="no-results">输入关键词后点击搜索</div>';
+				isSearchActive = false;
+				searchResults = [];
+			}
+            
+            // 关闭搜索面板
+            function closeSearchPanel() {
+                searchPanel.classList.remove('active');
+                isSearchActive = false;
+                searchResults = [];
+                
+                // 重新渲染日历以清除搜索高亮
+                renderCalendar();
+                updateSelectedDayInCalendar();
+            }
+            
+            // 切换未完成备忘录过滤
+            async function toggleIncompleteFilter() {
+                isIncompleteFilterActive = !isIncompleteFilterActive;
+                
+                // 更新按钮文本
+                if (isIncompleteFilterActive) {
+                    incompleteFilterBtn.textContent = '✅ 显示所有';
+                    incompleteFilterBtn.style.background = 'var(--success-color)';
+                    incompleteFilterBtn.style.borderColor = 'var(--success-color)';
+                } else {
+                    incompleteFilterBtn.textContent = '⭕ 未完成';
+                    incompleteFilterBtn.style.background = 'var(--danger-color)';
+                    incompleteFilterBtn.style.borderColor = 'var(--danger-color)';
+                }
+                
+                // 重新渲染日历
+                await renderCalendar();
+                updateSelectedDayInCalendar();
+                
+                // 显示通知
+                showNotification(isIncompleteFilterActive ? 
+                    '已过滤显示有未完成备忘录的日期' : 
+                    '已显示所有日期');
+            }
+            
+            // 解析日期键为日期对象
+            function parseDateKey(dateKey) {
+                const parts = dateKey.split('-');
+                return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            }
+            
+            // 开始编辑备忘录
+            function startEditMemo(memoElement, memoId, dateKey, index) {
+                // 如果已经有备忘录在编辑中，先取消
+                if (editingMemoId && editingMemoId !== memoId) {
+                    const currentEditing = document.querySelector(`.memo-item[data-id="${editingMemoId}"]`);
+                    if (currentEditing) {
+                        cancelEditMemo(currentEditing, editingMemoId, dateKey, 
+                            Array.from(memoListElement.children).indexOf(currentEditing));
+                    }
+                }
+                
+                // 设置编辑状态
+                editingMemoId = memoId;
+                memoElement.classList.add('editing');
+                
+                const memoText = memoElement.querySelector('.memo-text');
+                const editContainer = memoElement.querySelector('.memo-edit-container');
+                const editInput = memoElement.querySelector('.memo-edit-input');
+                const completeBtn = memoElement.querySelector('.complete-btn');
+                const editBtn = memoElement.querySelector('.edit-btn');
+                const saveBtn = memoElement.querySelector('.save-btn');
+                const cancelBtn = memoElement.querySelector('.cancel-btn');
+                
+                // 切换显示/隐藏元素
+                memoText.classList.add('edit-mode');
+                editContainer.classList.add('active');
+                completeBtn.style.display = 'none';
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'flex';
+                cancelBtn.style.display = 'flex';
+                
+                // 聚焦到输入框并选中所有文本
+                editInput.focus();
+                editInput.select();
+            }
+            
+            // 保存编辑的备忘录
+            async function saveEditMemo(memoElement, memoId, dateKey, index) {
+                const editInput = memoElement.querySelector('.memo-edit-input');
+                const newText = editInput.value.trim();
+                
+                if (!newText) {
+                    alert('备忘录内容不能为空');
+                    editInput.focus();
+                    return;
+                }
+                
+                try {
+                    // 从数据库获取备忘录
+                    const memo = await db.getMemoById(memoId);
+                    if (!memo) {
+                        showNotification('备忘录不存在', true);
+                        return;
+                    }
+                    
+                    // 更新备忘录
+                    memo.text = newText;
+                    memo.updatedAt = new Date().toISOString();
+                    
+                    // 保存到数据库
+                    await db.updateMemo(memo);
+                    
+                    // 更新显示
+                    const updatedElement = createMemoElement(memo, dateKey, index);
+                    const oldElement = memoListElement.children[index - 1];
+                    memoListElement.replaceChild(updatedElement, oldElement);
+                    
+                    // 更新日历显示
+                    await renderCalendar();
+                    updateSelectedDayInCalendar();
+                    await updateStats();
+                    
+                    editingMemoId = null;
+                    
+                    showNotification('备忘录更新成功');
+                } catch (error) {
+                    console.error('保存编辑失败:', error);
+                    showNotification('保存失败: ' + error.message, true);
+                }
+            }
+            
+            // 取消编辑
+            function cancelEditMemo(memoElement, memoId, dateKey, index) {
+                memoElement.classList.remove('editing');
+                
+                const memoText = memoElement.querySelector('.memo-text');
+                const editContainer = memoElement.querySelector('.memo-edit-container');
+                const completeBtn = memoElement.querySelector('.complete-btn');
+                const editBtn = memoElement.querySelector('.edit-btn');
+                const saveBtn = memoElement.querySelector('.save-btn');
+                const cancelBtn = memoElement.querySelector('.cancel-btn');
+                
+                // 切换显示/隐藏元素
+                memoText.classList.remove('edit-mode');
+                editContainer.classList.remove('active');
+                completeBtn.style.display = 'flex';
+                editBtn.style.display = 'flex';
+                saveBtn.style.display = 'none';
+                cancelBtn.style.display = 'none';
+                
+                if (editingMemoId === memoId) {
+                    editingMemoId = null;
+                }
+            }
+            
+            // 取消所有编辑
+            function cancelEdit() {
+                if (editingMemoId) {
+                    const memoElement = document.querySelector(`.memo-item[data-id="${editingMemoId}"]`);
+                    if (memoElement) {
+                        const memoId = memoElement.getAttribute('data-id');
+                        const dateKey = getDateKey(selectedDate);
+                        const index = Array.from(memoListElement.children).indexOf(memoElement) + 1;
+                        cancelEditMemo(memoElement, memoId, dateKey, index);
+                    }
+                }
+            }
+            
+            // 添加备忘录
+            async function addMemo() {
+                const memoText = memoInput.value.trim();
+                if (!memoText || !selectedDate) return;
+                
+                const dateKey = getDateKey(selectedDate);
+                
+                // 创建备忘录对象
+                const memoObj = {
+                    id: generateId(),
+                    dateKey: dateKey,
+                    text: memoText,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    completed: false
+                };
+                
+                try {
+                    // 添加到数据库
+                    await db.addMemo(memoObj);
+                    
+                    // 更新显示
+                    await displayMemosForDate(dateKey);
+                    await updateStats();
+                    
+                    // 更新日历显示
+                    await renderCalendar();
+                    updateSelectedDayInCalendar();
+                    
+                    // 清空输入框
+                    memoInput.value = '';
+                    memoInput.focus();
+                    
+                    showNotification('备忘录添加成功');
+                } catch (error) {
+                    console.error('添加备忘录失败:', error);
+                    showNotification('添加失败: ' + error.message, true);
+                }
+            }
+            
+            // 删除备忘录
+            async function deleteMemo(dateKey, memoId) {
+				try {
+					// 从数据库删除
+					await db.deleteMemo(memoId);
+					
+					// 如果正在编辑这个备忘录，先取消编辑
+					if (editingMemoId === memoId) {
+						editingMemoId = null;
+					}
+					
+					// 重新显示备忘录列表
+					await displayMemosForDate(dateKey);
+					await updateStats();
+					
+					// 重新渲染日历
+					await renderCalendar();
+					updateSelectedDayInCalendar();
+					
+					showNotification('备忘录删除成功');
+				} catch (error) {
+					console.error('删除备忘录失败:', error);
+					showNotification('删除失败: ' + error.message, true);
+				}
+			}
+            
+            // 更新统计信息
+            async function updateStats() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                
+                try {
+                    const stats = await db.getMonthStats(year, month);
+                    
+                    // 更新当月统计显示
+                    totalMemosElement.textContent = stats.totalMemos;
+                    daysWithMemosElement.textContent = stats.daysWithMemos;
+                    
+                    // 计算完成百分比
+                    const completionPercentage = stats.completionPercentage;
+                    completionPercentageElement.textContent = `${completionPercentage}%`;
+                    
+                    // 根据完成百分比设置颜色
+                    if (completionPercentage === 100) {
+                        completionPercentageElement.style.color = 'var(--completed-color)';
+                    } else if (completionPercentage >= 70) {
+                        completionPercentageElement.style.color = 'var(--success-color)';
+                    } else if (completionPercentage >= 30) {
+                        completionPercentageElement.style.color = 'var(--memo-indicator)';
+                    } else {
+                        completionPercentageElement.style.color = 'var(--danger-color)';
+                    }
+                } catch (error) {
+                    console.error('更新统计信息失败:', error);
+                    // 如果出错，显示默认值
+                    totalMemosElement.textContent = '0';
+                    daysWithMemosElement.textContent = '0';
+                    completionPercentageElement.textContent = '0%';
+                }
+            }
+            
+            // 获取日期键
+            function getDateKey(date) {
+                return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            }
+            
+            // 设置事件监听器
+            function setupEventListeners() {
+                prevMonthButton.addEventListener('click', async function() {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    await renderCalendar();
+                    await updateStats();
+                });
+                
+                nextMonthButton.addEventListener('click', async function() {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    await renderCalendar();
+                    await updateStats();
+                });
+                
+                addMemoButton.addEventListener('click', addMemo);
+                
+                memoInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addMemo();
+                    }
+                });
+                
+                // 主题选择器事件
+                themeSelect.addEventListener('change', function() {
+                    applyColorScheme(this.value);
+                });
+                
+                // 导出按钮事件
+                exportBtn.addEventListener('click', exportMemos);
+                
+                // 导入按钮事件
+                importBtn.addEventListener('click', function() {
+                    importFileInput.click();
+                });
+                
+                // 文件选择事件
+                importFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        importMemos(file);
+                        // 清空输入框，以便再次选择同一文件
+                        e.target.value = '';
+                    }
+                });
+                
+                // 一键完成按钮事件
+                completeAllBtn.addEventListener('click', async function() {
+                    if (confirm('确定要标记本月所有备忘录为完成吗？')) {
+                        await completeAllMemos();
+                    }
+                });
+                
+                // 搜索按钮事件
+                searchBtn.addEventListener('click', toggleSearchPanel);
+                
+                // 关闭搜索按钮事件
+                closeSearchBtn.addEventListener('click', closeSearchPanel);
+                
+                // 执行搜索按钮事件
+                searchExecuteBtn.addEventListener('click', searchMemos);
+                
+                // 搜索输入框回车事件
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchMemos();
+                    }
+                });
+                
+                // 未完成过滤按钮事件
+                incompleteFilterBtn.addEventListener('click', async function() {
+                    await toggleIncompleteFilter();
+                });
+                
+                // 修改键盘导航支持部分，添加对输入框焦点的检查
+				document.addEventListener('keydown', async function(e) {
+					// 检查当前焦点是否在输入框中
+					const activeElement = document.activeElement;
+					const isInputElement = 
+						activeElement.tagName === 'INPUT' || 
+						activeElement.tagName === 'TEXTAREA' ||
+						activeElement.classList.contains('memo-edit-input') ||
+						activeElement.id === 'memo-input' ||
+						activeElement.id === 'search-input';
+					
+					// 如果焦点在输入框中，且按下的是左右箭头键，则不切换月份
+					if (isInputElement && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+						return; // 直接返回，不执行月份切换
+					}
+					
+					if (e.key === 'ArrowLeft') {
+						currentDate.setMonth(currentDate.getMonth() - 1);
+						await renderCalendar();
+						await updateStats();
+					} else if (e.key === 'ArrowRight') {
+						currentDate.setMonth(currentDate.getMonth() + 1);
+						await renderCalendar();
+						await updateStats();
+					} else if (e.key === 'Escape' && editingMemoId) {
+						cancelEdit();
+					} else if (e.key === 'Escape' && searchPanel.classList.contains('active')) {
+						closeSearchPanel();
+					} else if (e.key === 'f' && (e.ctrlKey || e.metaKey)) {
+						e.preventDefault();
+						toggleSearchPanel();
+					}
+				});
+                
+                // 页面卸载前关闭数据库连接
+                window.addEventListener('beforeunload', function() {
+                    if (db && db.close) {
+                        db.close();
+                    }
+                });
+            }
+            
+            // 初始化应用
+            initCalendar();
+        });
+    </script>
+</body>
+</html>
