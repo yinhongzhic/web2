@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PushPlus 钉钉机器人 · 消息发送</title>
+    <title>PushPlus QQ机器人 · 消息发送</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
     <style>
+        /* ===== 样式与之前微信版基本一致，仅调整品牌色 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -52,14 +53,14 @@
         .header .icon {
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            background: linear-gradient(135deg, #12b7f5, #0e8ec9); /* QQ蓝 */
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-size: 30px;
-            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 8px 18px rgba(18, 183, 245, 0.25);
             flex-shrink: 0;
         }
 
@@ -81,15 +82,15 @@
 
         .badge {
             display: inline-block;
-            background: #e6f0ff;
-            color: #1d4ed8;
+            background: #e6f4fb;
+            color: #12b7f5;
             font-size: 12px;
             font-weight: 600;
             padding: 2px 14px;
             border-radius: 40px;
             margin-left: 8px;
             letter-spacing: 0.3px;
-            border: 1px solid rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(18, 183, 245, 0.15);
         }
 
         .form-group {
@@ -137,8 +138,8 @@
 
         .input-wrap input:focus,
         .input-wrap textarea:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+            border-color: #12b7f5;
+            box-shadow: 0 0 0 4px rgba(18, 183, 245, 0.12);
             background: #ffffff;
         }
 
@@ -190,12 +191,12 @@
             font-size: 17px;
             font-weight: 700;
             color: #fff;
-            background: linear-gradient(135deg, #2563eb, #6d28d9);
+            background: linear-gradient(135deg, #12b7f5, #0e8ec9);
             border: none;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.30);
+            box-shadow: 0 8px 24px rgba(18, 183, 245, 0.30);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -208,20 +209,20 @@
 
         .btn-send:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 32px rgba(37, 99, 235, 0.35);
-            background: linear-gradient(135deg, #1d4ed8, #5b21b6);
+            box-shadow: 0 14px 32px rgba(18, 183, 245, 0.35);
+            background: linear-gradient(135deg, #0ea8e0, #0d7fb3);
         }
 
         .btn-send:active {
             transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 4px 12px rgba(18, 183, 245, 0.25);
         }
 
         .btn-send:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            box-shadow: 0 4px 12px rgba(18, 183, 245, 0.15);
         }
 
         .btn-send .material-symbols-outlined {
@@ -499,14 +500,14 @@
 
     <div class="header">
         <div class="icon">
-            <span class="material-symbols-outlined">notifications</span>
+            <span class="material-symbols-outlined">sms</span>
         </div>
         <div>
             <h1>
-                PushPlus 钉钉机器人
-                <span class="badge">钉钉</span>
+                PushPlus QQ机器人
+                <span class="badge">QQ</span>
             </h1>
-            <span class="sub">向钉钉群发送自定义消息</span>
+            <span class="sub">向 QQ 好友或群发送消息</span>
         </div>
     </div>
 
@@ -523,7 +524,7 @@
                     type="text"
                     id="title"
                     placeholder="消息标题"
-                    value="来自 PushPlus 的测试消息"
+                    value="来自 PushPlus 的 QQ 消息"
                     required
                     />
                 </div>
@@ -543,8 +544,9 @@
                 id="content"
                 placeholder="输入要发送的消息内容 …"
                 required
-            >📢 这是一条来自 PushPlus 的测试通知。</textarea>
+            >📢 这是一条来自 PushPlus 的 QQ 机器人测试消息。</textarea>
         </div>
+        <!-- 时间追加提示（自动） -->
         <!-- <span class="field-note">⏱️ 发送时将自动在末尾添加 <code>发送时间：</code> + 当前时间</span> -->
     </div>
 
@@ -588,9 +590,9 @@
 </div>
 
 <div class="footer">
-    <!-- <span>🔗 <a href="https://www.pushplus.plus/" target="_blank">PushPlus 官网</a></span>
-    <span>📘 <a href="https://www.pushplus.plus/doc/" target="_blank">API 文档</a></span> -->
-    <span>⚡ 钉钉机器人 · webhook</span>
+    <!-- <span>🔗 <a href="https://www.pushplus.plus/" target="_blank">PushPlus 官网</a></span> -->
+    <!-- <span>📘 <a href="https://www.pushplus.plus/doc/" target="_blank">API 文档</a></span> -->
+    <span>⚡ QQ机器人 · qq</span>
 </div>
 </div>
 
@@ -598,11 +600,11 @@
     (function() {
         'use strict';
 
-        // ===== 固定参数（隐藏） =====
-        const TOKEN = '64d990ae6f564e3fb120b7161b8bd2c5';
-        const OPTION = 'dingding';
-        const CHANNEL = 'webhook';
-        const STORAGE_KEY = 'pushplus_history';
+        // ===== 固定参数（隐藏），请务必替换为您的真实信息 =====
+        const TOKEN = '64d990ae6f564e3fb120b7161b8bd2c5';   // 替换为您的 PushPlus token
+        // const OPTION = '123456789';         // ⚠️ 替换为接收消息的 QQ 号或群号（必须与 PushPlus 后台配置一致）
+        const CHANNEL = 'qq';              // QQ机器人通道固定为 'qq'
+        const STORAGE_KEY = 'qq_history';
 
         // ===== DOM 引用 =====
         const form = document.getElementById('sendForm');
@@ -641,7 +643,6 @@
 
         function addHistoryRecord(record) {
             const records = loadHistory();
-            // 限制最多50条，删除最早的
             records.unshift(record);
             if (records.length > 50) {
                 records.pop();
@@ -667,7 +668,7 @@
 
             historyCount.textContent = `(${records.length})`;
 
-            records.forEach((item, index) => {
+            records.forEach((item) => {
                 const div = document.createElement('div');
                 div.className = 'history-item';
 
@@ -689,7 +690,6 @@
             });
         }
 
-        // 简单的防 XSS 转义
         function escapeHtml(text) {
             if (!text) return '';
             const map = {
@@ -758,7 +758,7 @@
                 title: title,
                 content: content,
                 channel: CHANNEL,
-                option: OPTION
+                // option: OPTION   // QQ机器人必须提供 option（QQ号或群号）
             };
 
             setLoading(true);
@@ -782,7 +782,6 @@
                 const isSuccess = (data && (data.code === 200 || data.code === '200'));
                 if (isSuccess) {
                     showResult('success', '消息发送成功！', true);
-                    // 保存成功记录
                     addHistoryRecord({
                         title: title,
                         content: content,
@@ -792,7 +791,6 @@
                 } else {
                     const errorMsg = data?.msg || data?.message || '服务器返回错误';
                     showResult('error', '发送失败：' + errorMsg, false);
-                    // 保存失败记录
                     addHistoryRecord({
                         title: title,
                         content: content,
@@ -802,7 +800,6 @@
                 }
             } catch (error) {
                 showResult('error', '网络请求异常：' + (error.message || '未知错误'), false);
-                // 保存失败记录（网络异常）
                 addHistoryRecord({
                     title: title,
                     content: content,
@@ -833,7 +830,8 @@
         const initialRecords = loadHistory();
         renderHistory(initialRecords);
 
-        console.log('✅ PushPlus 钉钉机器人已就绪，已加载历史记录');
+        console.log('✅ PushPlus QQ机器人页面已就绪');
+        console.log('💡 请确保 TOKEN 和 OPTION 已正确配置（OPTION 为 QQ 号或群号）');
     })();
 </script>
 
